@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FVC Records</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@1,500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #07070a;
+    --fg: #ecedf0;
+    --muted: #7c7f88;
+    --sans: "Futura", "Jost", "Century Gothic", sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--bg); color: var(--fg); }
+  body { font-family: var(--sans); font-weight: 500; font-style: italic; overflow: hidden; -webkit-font-smoothing: antialiased; }
+  a { color: inherit; text-decoration: none; }
+
+  .hero { position: relative; height: 100vh; height: 100svh; width: 100%; overflow: hidden; }
+
+  /* soft light pool behind the logo */
+  .hero::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 45% 38% at 50% 50%, rgba(170, 180, 200, 0.14), transparent 70%),
+      radial-gradient(ellipse 90% 70% at 50% 110%, rgba(90, 100, 120, 0.18), transparent 70%);
+  }
+  canvas#logo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+  /* film grain */
+  .grain {
+    position: absolute; inset: -50%; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: grain 1s steps(6) infinite;
+  }
+  @keyframes grain {
+    0% { transform: translate(0,0) } 20% { transform: translate(-3%,2%) } 40% { transform: translate(2%,-3%) }
+    60% { transform: translate(-2%,-1%) } 80% { transform: translate(3%,3%) } 100% { transform: translate(0,0) }
+  }
+
+  /* ---------- chrome UI ---------- */
+  .ui { position: absolute; inset: 0; pointer-events: none; display: grid;
+        grid-template-rows: auto 1fr; padding: 28px 40px; }
+  .ui > * { pointer-events: auto; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { letter-spacing: .02em; font-size: 20px; }
+  .brand small { font-size: 11px;
+                 letter-spacing: .14em; color: var(--muted); margin-left: 10px; vertical-align: 3px; }
+  .links { display: flex; gap: 36px; font-size: 13px; letter-spacing: .16em; text-transform: uppercase; }
+  .links a { position: relative; color: var(--muted); transition: color .25s; }
+  .links a:hover { color: var(--fg); }
+  .links a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -6px; height: 1px;
+                    background: var(--fg); transition: right .35s cubic-bezier(.2,.7,.2,1); }
+  .links a:hover::after { right: 0; }
+
+  @media (max-width: 820px) {
+    .ui { padding: 20px 16px; }
+    .links { display: none; }
+  }
+</style>
+</head>
+<body>
+<section class="hero">
+  <canvas id="logo"></canvas>
+  <div class="grain"></div>
+
+  <div class="ui">
+    <nav>
+      <a class="brand" href="#">FVC<small>RECORDS</small></a>
+      <div class="links">
+        <a href="#">Releases</a>
+        <a href="#">Artists</a>
+        <a href="#">Shop</a>
+        <a href="#">About</a>
+      </div>
+    </nav>
+  </div>
+</section>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { Font } from "three/addons/loaders/FontLoader.js";
+import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
+
+// Futura Bold — F, V, C outlines extracted from the system font
+const FUTURA_BOLD = {"glyphs":{"F":{"ha":549,"x_min":0,"x_max":549,"o":"m 511 588 l 275 588 l 275 462 l 490 462 l 490 296 l 275 296 l 275 0 l 79 0 l 79 754 l 511 754"},"V":{"ha":791,"x_min":0,"x_max":791,"o":"m 213 754 l 395 295 l 578 754 l 791 754 l 473 0 l 317 0 l 0 754"},"C":{"ha":667,"x_min":0,"x_max":667,"o":"m 622 502 q 454 585 554 585 q 372 569 410 585 q 308 526 335 553 q 266 460 281 498 q 250 378 250 422 q 266 295 250 333 q 308 229 281 257 q 373 185 336 201 q 453 169 410 169 q 622 249 547 169 l 622 17 l 602 10 q 518 -14 557 -6 q 441 -21 479 -21 q 292 8 363 -21 q 166 92 220 38 q 78 218 111 145 q 45 379 45 292 q 78 538 45 466 q 164 664 110 611 q 291 746 219 716 q 442 775 363 775 q 530 766 487 775 q 622 736 574 756"}},"familyName":"Futura","resolution":1000,"ascender":1039,"descender":-260,"underlinePosition":-100,"underlineThickness":50,"boundingBox":{"yMin":-344,"xMin":-227,"yMax":1099,"xMax":1459},"original_font_information":{}};
+
+const canvas = document.getElementById("logo");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+
+// ---------- studio environment for the chrome reflections ----------
+function studioEnv() {
+  const env = new THREE.Scene();
+  env.background = new THREE.Color(0x050506);
+
+  // dark room with a subtle vertical gradient
+  const room = new THREE.Mesh(
+    new THREE.SphereGeometry(20, 64, 32),
+    new THREE.ShaderMaterial({
+      side: THREE.BackSide,
+      uniforms: {},
+      vertexShader: `varying vec3 p; void main(){ p = position; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }`,
+      fragmentShader: `varying vec3 p; void main(){
+        float h = normalize(p).y;
+        vec3 top = vec3(0.30,0.32,0.36), mid = vec3(0.02,0.02,0.025), bot = vec3(0.10,0.10,0.11);
+        vec3 c = h > 0. ? mix(mid, top, pow(h, 1.6)) : mix(mid, bot, pow(-h, .8));
+        c += vec3(0.9) * exp(-pow(h * 22., 2.));   // thin bright horizon line
+        c += vec3(0.12) * exp(-pow(h * 4., 2.));   // soft haze around it
+        gl_FragColor = vec4(c, 1.);
+      }`
+    })
+  );
+  env.add(room);
+
+  // softbox strips — these become the crisp highlights on the chrome
+  const strip = (w, h, intensity, pos, rot) => {
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h),
+      new THREE.MeshBasicMaterial({ color: new THREE.Color(1, 1, 1).multiplyScalar(intensity), side: THREE.DoubleSide }));
+    m.position.set(...pos); m.rotation.set(...rot); m.lookAt(0, 0, 0); env.add(m);
+  };
+  strip(1.2, 14, 6, [-6, 0, 4], [0, 0, 0]);
+  strip(1.2, 14, 6, [6, 0, 4], [0, 0, 0]);
+  strip(0.5, 14, 3, [0, 0, 8], [0, 0, 0]);
+  strip(14, 1.5, 4, [0, 8, 0], [0, 0, 0]);
+  strip(0.8, 12, 5, [-4, 0, -7], [0, 0, 0]);
+  strip(0.8, 12, 5, [5, 0, -6], [0, 0, 0]);
+  strip(10, 0.6, 2, [0, -6, 3], [0, 0, 0]);
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const tex = pmrem.fromScene(env, 0.02).texture;
+  pmrem.dispose();
+  return tex;
+}
+scene.environment = studioEnv();
+
+// ---------- logo geometry ----------
+const font = new Font(FUTURA_BOLD);
+const geo = new TextGeometry("FVC", {
+  font,
+  size: 1,
+  depth: 0.34,
+  curveSegments: 32,
+  bevelEnabled: true,
+  bevelThickness: 0.055,
+  bevelSize: 0.032,
+  bevelSegments: 10,
+});
+
+// synthetic italic — shear x by y (≈12°, Futura oblique angle)
+const slant = Math.tan(THREE.MathUtils.degToRad(12));
+geo.applyMatrix4(new THREE.Matrix4().set(
+  1, slant, 0, 0,
+  0, 1,     0, 0,
+  0, 0,     1, 0,
+  0, 0,     0, 1
+));
+geo.center();
+geo.computeVertexNormals();
+geo.computeBoundingBox();
+const logoWidth = geo.boundingBox.max.x - geo.boundingBox.min.x;
+
+const chrome = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  metalness: 1,
+  roughness: 0.06,
+  clearcoat: 1,
+  clearcoatRoughness: 0.04,
+  envMapIntensity: 1.25,
+});
+
+const logo = new THREE.Mesh(geo, chrome);
+scene.add(logo);
+
+// ---------- sizing ----------
+function resize() {
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  // keep the logo at ~46% of viewport width on desktop, wider on phones
+  const frac = w < 820 ? 0.78 : 0.46;
+  const visibleW = logoWidth / frac;
+  const vFov = THREE.MathUtils.degToRad(camera.fov);
+  const dist = (visibleW / camera.aspect) / (2 * Math.tan(vFov / 2));
+  camera.position.set(0, 0, Math.max(dist, 4));
+  camera.updateProjectionMatrix();
+}
+addEventListener("resize", resize);
+resize();
+
+// ---------- linear rotation ----------
+const SPEED = (Math.PI * 2) / 9; // one full turn every 9s, constant
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  if (!reduce) logo.rotation.y += SPEED * dt;
+  renderer.render(scene, camera);
+});
+
+</script>
+</body>
+</html>
