@@ -39,3 +39,11 @@ Run from the repo root: `npm run dev` / `npm run build` / `npm run lint` / `npm 
 2. **M8**: create the Vercel project (root `apps/web`, install from the repo root), add `fvc.ai.kr` (A `76.76.21.21` / CNAME `cname.vercel-dns.com` — use the values Vercel shows), enable Vercel Analytics (Q9).
 3. Decide Q4 (submission email provider) and Q5 (newsletter provider), then set the env vars.
 4. Replace placeholders in `content/*.json` (Q1) — no code changes needed.
+
+## Update — GitHub Pages (static export)
+
+fvc.ai.kr stays on GitHub Pages (decided 2026-11-15), so the site is built with `output: 'export'` + `trailingSlash: true` and deployed by `.github/workflows/pages.yml`.
+- Route Handlers are gone: forms validate in the browser and POST to `NEXT_PUBLIC_SUBMIT_ENDPOINT` / `NEXT_PUBLIC_SPREAD_ENDPOINT` (repo Variables). Unset → "opens soon".
+- OG cards are real files: `/og/site.png`, `/og/FVC-###.png`; app icon `/icons/apple-touch-icon.png`.
+- `/dev/components` exports as a 404 page.
+- One-time setup: Settings → Pages → Source = **GitHub Actions**.

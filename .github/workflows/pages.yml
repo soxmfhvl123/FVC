@@ -1,0 +1,47 @@
+# Builds the static site (apps/web → out/) and publishes it to GitHub Pages at fvc.ai.kr.
+# Repo Settings → Pages → Source must be "GitHub Actions".
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test --workspace @fvc/engine
+      - run: npm run build
+        env:
+          # Hosted form endpoints (e.g. Formspree). Leave unset and the forms say "opens soon".
+          NEXT_PUBLIC_SUBMIT_ENDPOINT: ${{ vars.NEXT_PUBLIC_SUBMIT_ENDPOINT }}
+          NEXT_PUBLIC_SPREAD_ENDPOINT: ${{ vars.NEXT_PUBLIC_SPREAD_ENDPOINT }}
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

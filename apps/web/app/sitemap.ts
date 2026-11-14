@@ -1,6 +1,8 @@
 import type { MetadataRoute } from 'next';
 import { getOutbreaks, getStrains, site } from '@/lib/content';
 
+export const dynamic = 'force-static';
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = `https://${site.domain}`;
   const pages = ['', '/strains', '/lab', '/lab/germinator', '/lab/pressing-plant', '/lab/colony', '/lab/mutator', '/outbreaks', '/goods', '/about', '/submit', '/spread-report'];

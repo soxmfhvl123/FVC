@@ -26,7 +26,7 @@ You are building the website for **FVC RECORDS** at **fvc.ai.kr**: a Seoul recor
 - Accessibility: real buttons/links/labels, `aria-label` on mutating text, contrast ≥ 4.5:1 (never white on acid/yellow).
 
 ## Stack
-Next.js (App Router) + TypeScript · CSS Modules + `design/tokens/tokens.css` · `next/font/google` (Archivo needs the `wdth` axis) · `@fvc/engine` workspace package (`transpilePackages`) · Vercel.
+Next.js (App Router, `output: 'export'`) + TypeScript · CSS Modules + `design/tokens/tokens.css` · Google Fonts stylesheet · `@fvc/engine` workspace package (`transpilePackages`) · GitHub Pages.
 
 ## Commands
 ```bash
@@ -41,7 +41,8 @@ npm run build       # next build (static pages + OG images)
 npm run lint        # eslint
 npm run typecheck   # app + engine
 ```
-Env (all optional, see `apps/web/.env.example`): `FVC_HIDE_DRAFTS`, `RESEND_API_KEY` + `SUBMISSIONS_TO`, `NEWSLETTER_WEBHOOK_URL`, `FVC_DEV_PAGES`.
+Deploy: static export (`apps/web/out`) → GitHub Pages via `.github/workflows/pages.yml` on push to `main` (domain in `CNAME`). No server: no Route Handlers, forms POST to hosted endpoints.
+Env (all optional, see `apps/web/.env.example`): `FVC_HIDE_DRAFTS`, `NEXT_PUBLIC_SUBMIT_ENDPOINT`, `NEXT_PUBLIC_SPREAD_ENDPOINT`.
 
 ## Repo map
 ```

@@ -12,3 +12,4 @@ next-env.d.ts
 # Source audio masters stay local; the site ships MP3 only.
 *.wav
 *.WAV
+out

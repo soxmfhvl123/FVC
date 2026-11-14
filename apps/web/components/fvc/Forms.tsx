@@ -1,19 +1,29 @@
 'use client';
 
 import { type FormEvent, type ReactNode, useRef, useState } from 'react';
-import type { FieldErrors } from '@/lib/forms';
+import { type FieldErrors, fieldErrors, SPREAD_ENDPOINT, spreadSchema, SUBMIT_ENDPOINT, submissionSchema } from '@/lib/forms';
 
 type Status = { kind: 'idle' | 'sending' | 'done' | 'error'; message?: string; fields?: FieldErrors };
 
+/** POST JSON to a hosted form endpoint (Formspree-style: 2xx = accepted). */
 async function post(url: string, data: Record<string, unknown>): Promise<Status> {
   try {
-    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-    const json = await res.json().catch(() => ({}));
-    if (res.ok && json.ok) return { kind: 'done' };
-    return { kind: 'error', message: json.error ?? 'Something went wrong. Try again.', fields: json.fields };
+    const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(data) });
+    if (res.ok) return { kind: 'done' };
+    if (res.status === 429) return { kind: 'error', message: 'Too many tries. Give it a few minutes.' };
+    return { kind: 'error', message: 'Could not send right now. Please try again later.' };
   } catch {
     return { kind: 'error', message: 'No connection. Try again.' };
   }
+}
+
+/** Shown instead of a form while no endpoint is configured. */
+function OpensSoon({ what }: { what: string }) {
+  return (
+    <p role="status" className="fvc-prose" style={{ fontSize: 24, fontWeight: 500, letterSpacing: '-0.02em', margin: 0 }}>
+      {what} opens soon. <span className="fvc-serif">Check back.</span>
+    </p>
+  );
 }
 
 function Field({ id, label, error, hint, children }: { id: string; label: string; error?: string; hint?: string; children: ReactNode }) {
@@ -42,12 +52,12 @@ export function SubmissionForm() {
   const [st, setSt] = useState<Status>({ kind: 'idle' });
   const form = useRef<HTMLFormElement>(null);
   const f = st.fields ?? {};
+  if (!SUBMIT_ENDPOINT) return <OpensSoon what="Sample Submission" />;
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
-    setSt({ kind: 'sending' });
-    const next = await post('/api/submit', {
+    const parsed = submissionSchema.safeParse({
       name: fd.get('name'),
       email: fd.get('email'),
       link: fd.get('link'),
@@ -55,6 +65,14 @@ export function SubmissionForm() {
       consent: fd.get('consent') === 'on',
       company: fd.get('company'),
     });
+    let next: Status;
+    if (!parsed.success) next = { kind: 'error', message: 'Check the highlighted fields.', fields: fieldErrors(parsed.error) };
+    else if (parsed.data.company) next = { kind: 'done' }; // honeypot: drop quietly
+    else {
+      setSt({ kind: 'sending' });
+      const { name, email, link, message } = parsed.data;
+      next = await post(SUBMIT_ENDPOINT, { name, email, link, message, consent: true, _subject: `Sample: ${name}` });
+    }
     setSt(next);
     if (next.kind === 'error' && next.fields) {
       const first = Object.keys(next.fields)[0];
@@ -115,11 +133,15 @@ export function SubmissionForm() {
 export function SpreadForm() {
   const [st, setSt] = useState<Status>({ kind: 'idle' });
   const err = st.fields?.email;
+  if (!SPREAD_ENDPOINT) return <OpensSoon what="The Spread Report" />;
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
+    const parsed = spreadSchema.safeParse({ email: fd.get('email'), company: fd.get('company') });
+    if (!parsed.success) return setSt({ kind: 'error', message: 'Check your email address.', fields: fieldErrors(parsed.error) });
+    if (parsed.data.company) return setSt({ kind: 'done' });
     setSt({ kind: 'sending' });
-    setSt(await post('/api/spread', { email: fd.get('email'), company: fd.get('company') }));
+    setSt(await post(SPREAD_ENDPOINT, { email: parsed.data.email, source: 'fvc.ai.kr' }));
   }
   if (st.kind === 'done')
     return (

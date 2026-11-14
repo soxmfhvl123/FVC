@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: strain.id,
     description: `${what}. Strain type: ${ph(strain.strainType, 'Genre')}. Highly contagious.`,
+    openGraph: { images: [{ url: `/og/${strain.id}.png`, width: 1200, height: 630, alt: `${strain.id}: a bitmap germ on grey` }] },
   };
 }
 

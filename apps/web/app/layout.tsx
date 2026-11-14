@@ -12,7 +12,8 @@ export const metadata: Metadata = {
   metadataBase: new URL(`https://${site.domain}`),
   title: { default: `FVC RECORDS — ${site.tagline.main}`, template: '%s — FVC RECORDS' },
   description: `${site.name}, ${site.city}. ${site.tagline.main} Fat sound spreads. Listen once. Carry forever.`,
-  openGraph: { siteName: 'FVC RECORDS', locale: 'en', type: 'website' },
+  openGraph: { siteName: 'FVC RECORDS', locale: 'en', type: 'website', images: [{ url: '/og/site.png', width: 1200, height: 630 }] },
+  icons: { apple: '/icons/apple-touch-icon.png' },
   twitter: { card: 'summary_large_image' },
 };
 

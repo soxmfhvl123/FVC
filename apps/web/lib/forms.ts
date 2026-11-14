@@ -1,6 +1,15 @@
 import { z } from 'zod';
 
-/** Shared by the forms (client hints) and the Route Handlers (the real check). */
+/**
+ * Form validation. The site is a static export (GitHub Pages), so forms validate in the browser
+ * and POST straight to a hosted form endpoint (e.g. Formspree) set at build time:
+ *   NEXT_PUBLIC_SUBMIT_ENDPOINT  — Sample Submission (docs/06 Q4)
+ *   NEXT_PUBLIC_SPREAD_ENDPOINT  — Spread Report signup (docs/06 Q5)
+ * Without an endpoint the page says the form opens soon instead of pretending to send.
+ */
+export const SUBMIT_ENDPOINT = process.env.NEXT_PUBLIC_SUBMIT_ENDPOINT || '';
+export const SPREAD_ENDPOINT = process.env.NEXT_PUBLIC_SPREAD_ENDPOINT || '';
+
 export const submissionSchema = z.object({
   name: z.string().trim().min(1, 'Tell us who you are.').max(120, 'Keep the name under 120 characters.'),
   email: z.string().trim().email('That email does not look right.').max(200),
