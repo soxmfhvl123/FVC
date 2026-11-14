@@ -1,0 +1,318 @@
+{
+  "schema": {
+    "$comment": "Seeds are the source of truth. Never store generated SVG. Fields in [PLACEHOLDER] / null wait for real content (see docs/06_open-questions.md).",
+    "fields": {
+      "id": "FVC-### catalog number (also the display title)",
+      "seed": "integer — drives germ, vinyl, colony",
+      "strainType": "genre label shown in pill",
+      "formats": "12in-vinyl | 7in-vinyl | cassette | digital | film | goods | editorial",
+      "isolated": "release date ISO yyyy-mm-dd",
+      "spreadLevel": "1-5 catchiness (editorial, shown as ■■■■□)",
+      "coverStyle": "golova | creatura | glitch | connwax — which cover template",
+      "eyes": "two | cyclops | three | none",
+      "spot": "one spot ink hex from tokens",
+      "sideA/sideB": "tracks; incubation = duration m:ss",
+      "vinyl": "Pressing Plant params when a vinyl exists",
+      "status": "draft | scheduled | live | dormant"
+    }
+  },
+  "strains": [
+    {
+      "id": "FVC-001",
+      "seed": 23,
+      "title": "[PLACEHOLDER]",
+      "carrier": "[PLACEHOLDER]",
+      "strainType": "Low-End",
+      "formats": [
+        "12in-vinyl"
+      ],
+      "isolated": null,
+      "spreadLevel": 4,
+      "coverStyle": "golova",
+      "eyes": "two",
+      "spot": "#FF5B47",
+      "sideA": [
+        {
+          "no": 1,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 2,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 3,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        }
+      ],
+      "sideB": [],
+      "blurb": "[PLACEHOLDER]",
+      "links": {
+        "listen": null,
+        "buy": null,
+        "bandcamp": null
+      },
+      "vinyl": {
+        "seed": 28,
+        "base": "smoke",
+        "palette": "outbreak"
+      },
+      "status": "draft"
+    },
+    {
+      "id": "FVC-002",
+      "seed": 41,
+      "title": "[PLACEHOLDER]",
+      "carrier": "[PLACEHOLDER]",
+      "strainType": "Club",
+      "formats": [
+        "digital"
+      ],
+      "isolated": null,
+      "spreadLevel": 5,
+      "coverStyle": "creatura",
+      "eyes": "cyclops",
+      "spot": "#0B0B0B",
+      "sideA": [
+        {
+          "no": 1,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 2,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 3,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        }
+      ],
+      "sideB": [],
+      "blurb": "[PLACEHOLDER]",
+      "links": {
+        "listen": null,
+        "buy": null,
+        "bandcamp": null
+      },
+      "vinyl": null,
+      "status": "draft"
+    },
+    {
+      "id": "FVC-003",
+      "seed": 88,
+      "title": "[PLACEHOLDER]",
+      "carrier": "[PLACEHOLDER]",
+      "strainType": "Pop",
+      "formats": [
+        "cassette"
+      ],
+      "isolated": null,
+      "spreadLevel": 3,
+      "coverStyle": "glitch",
+      "eyes": "two",
+      "spot": "#FF2DB4",
+      "sideA": [
+        {
+          "no": 1,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 2,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 3,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        }
+      ],
+      "sideB": [],
+      "blurb": "[PLACEHOLDER]",
+      "links": {
+        "listen": null,
+        "buy": null,
+        "bandcamp": null
+      },
+      "vinyl": null,
+      "status": "draft"
+    },
+    {
+      "id": "FVC-004",
+      "seed": 112,
+      "title": "[PLACEHOLDER]",
+      "carrier": "[PLACEHOLDER]",
+      "strainType": "Live",
+      "formats": [
+        "film",
+        "digital"
+      ],
+      "isolated": null,
+      "spreadLevel": 4,
+      "coverStyle": "connwax",
+      "eyes": "none",
+      "spot": "#0B0B0B",
+      "sideA": [
+        {
+          "no": 1,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 2,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 3,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        }
+      ],
+      "sideB": [],
+      "blurb": "[PLACEHOLDER]",
+      "links": {
+        "listen": null,
+        "buy": null,
+        "bandcamp": null
+      },
+      "vinyl": null,
+      "status": "draft"
+    },
+    {
+      "id": "FVC-005",
+      "seed": 5,
+      "title": "[PLACEHOLDER]",
+      "carrier": "[PLACEHOLDER]",
+      "strainType": "Quarantine Goods",
+      "formats": [
+        "goods"
+      ],
+      "isolated": null,
+      "spreadLevel": null,
+      "coverStyle": "glitch",
+      "eyes": "two",
+      "spot": "#FF5B47",
+      "sideA": [
+        {
+          "no": 1,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 2,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 3,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        }
+      ],
+      "sideB": [],
+      "blurb": "[PLACEHOLDER]",
+      "links": {
+        "listen": null,
+        "buy": null,
+        "bandcamp": null
+      },
+      "vinyl": null,
+      "status": "draft"
+    },
+    {
+      "id": "FVC-006",
+      "seed": 131,
+      "title": "[PLACEHOLDER]",
+      "carrier": "[PLACEHOLDER]",
+      "strainType": "Archive",
+      "formats": [
+        "editorial"
+      ],
+      "isolated": null,
+      "spreadLevel": null,
+      "coverStyle": "golova",
+      "eyes": "none",
+      "spot": "#2B44FF",
+      "sideA": [
+        {
+          "no": 1,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 2,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 3,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        }
+      ],
+      "sideB": [],
+      "blurb": "[PLACEHOLDER]",
+      "links": {
+        "listen": null,
+        "buy": null,
+        "bandcamp": null
+      },
+      "vinyl": null,
+      "status": "draft"
+    },
+    {
+      "id": "FVC-007",
+      "seed": 7,
+      "title": "[PLACEHOLDER]",
+      "carrier": "[PLACEHOLDER]",
+      "strainType": "[Genre]",
+      "formats": [
+        "12in-vinyl",
+        "digital"
+      ],
+      "isolated": null,
+      "spreadLevel": 4,
+      "coverStyle": "golova",
+      "eyes": "two",
+      "spot": "#FF5B47",
+      "sideA": [
+        {
+          "no": 1,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 2,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        },
+        {
+          "no": 3,
+          "title": "[PLACEHOLDER]",
+          "incubation": "0:00"
+        }
+      ],
+      "sideB": [],
+      "blurb": "[PLACEHOLDER]",
+      "links": {
+        "listen": null,
+        "buy": null,
+        "bandcamp": null
+      },
+      "vinyl": {
+        "seed": 12,
+        "base": "smoke",
+        "palette": "outbreak"
+      },
+      "status": "draft"
+    }
+  ]
+}

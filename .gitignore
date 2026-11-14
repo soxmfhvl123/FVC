@@ -1,1 +1,10 @@
+node_modules
+.next
+.vercel/
+dist/
 .DS_Store
+packages/fvc-engine/playground/index.html
+*.nosync
+next-env.d.ts
+*.tsbuildinfo
+.env*.local

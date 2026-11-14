@@ -1,0 +1,45 @@
+{
+  "name": "Fat Virus Carrier Records",
+  "short": "FVC",
+  "domain": "fvc.ai.kr",
+  "city": "Seoul",
+  "timezone": "Asia/Seoul",
+  "tagline": {
+    "main": "Highly Contagious.",
+    "alt": [
+      "Catch it.",
+      "Fat sound spreads.",
+      "Listen once. Carry forever.",
+      "No known cure."
+    ]
+  },
+  "about": "FVC stands for Fat Virus Carrier. We carry fat sound — thick, warm, impossible to shake — and every record we press is a carrier too. Play it once and it lives in you. Pass it on, and you’re one of us.",
+  "vocabulary": {
+    "release": "Strain",
+    "listener": "Carrier",
+    "demo": "Sample (Sample Submission)",
+    "releaseParty": "Outbreak Night",
+    "merch": "Quarantine Goods",
+    "newsletter": "Spread Report",
+    "trackLength": "Incubation",
+    "genre": "Strain Type",
+    "catchiness": "Spread Level"
+  },
+  "nav": {
+    "left": [
+      "Home",
+      "Strains",
+      "Quarantine Goods",
+      "Outbreak Nights"
+    ],
+    "right": [
+      "About FVC",
+      "Instagram",
+      "Sample Submission"
+    ]
+  },
+  "social": {
+    "instagram": null
+  },
+  "copyStatus": "English only. No Korean on the site (decided 2026-11-14)."
+}

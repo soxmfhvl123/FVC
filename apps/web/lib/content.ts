@@ -1,0 +1,126 @@
+/**
+ * Typed loaders for content/*.json (repo root). Seeds are the source of truth —
+ * nothing generated is stored here; components regenerate art from `seed`.
+ */
+import strainsJson from '@content/strains.json';
+import outbreaksJson from '@content/outbreaks.json';
+import goodsJson from '@content/goods.json';
+import siteJson from '@content/site.json';
+import type { EyeSet } from '@fvc/engine';
+
+export type CoverStyle = 'golova' | 'creatura' | 'glitch' | 'connwax';
+export type Status = 'draft' | 'scheduled' | 'live' | 'dormant';
+export type Format = '12in-vinyl' | '7in-vinyl' | 'cassette' | 'digital' | 'film' | 'goods' | 'editorial';
+
+export interface Track {
+  no: number;
+  title: string;
+  incubation: string;
+}
+
+export interface Strain {
+  id: string;
+  seed: number;
+  title: string;
+  carrier: string;
+  strainType: string;
+  formats: Format[];
+  isolated: string | null;
+  spreadLevel: number | null;
+  coverStyle: CoverStyle;
+  eyes: EyeSet;
+  spot: string;
+  sideA: Track[];
+  sideB: Track[];
+  blurb: string;
+  links: { listen: string | null; buy: string | null; bandcamp: string | null };
+  vinyl: { seed: number; base: VinylBase; palette: VinylPalette } | null;
+  status: Status;
+}
+
+export type VinylBase = 'smoke' | 'clear' | 'black' | 'white';
+export type VinylPalette = 'outbreak' | 'photocopy' | 'riso';
+
+export interface Outbreak {
+  id: string;
+  title: string;
+  date: string | null;
+  doors: string;
+  venue: string;
+  city: string;
+  lineup: string[];
+  strain: string;
+  posterStyle: 'golova' | 'creatura' | 'noise';
+  ticketUrl: string | null;
+  status: Status;
+}
+
+export interface Good {
+  id: string;
+  name: string;
+  graphic: string;
+  price: string | null;
+  url: string | null;
+}
+
+export interface Site {
+  name: string;
+  short: string;
+  domain: string;
+  city: string;
+  timezone: string;
+  tagline: { main: string; alt: string[] };
+  about: string;
+  vocabulary: Record<string, string>;
+  nav: { left: string[]; right: string[] };
+  social: { instagram: string | null };
+}
+
+/**
+ * Draft visibility. Every strain is a placeholder draft today, and the plan (00 §10) is to
+ * launch on placeholders, so drafts are shown unless FVC_HIDE_DRAFTS=true.
+ * Flip it once real releases exist (docs/06 Q1).
+ */
+const HIDE_DRAFTS = process.env.FVC_HIDE_DRAFTS === 'true';
+const visible = (s: { status: Status }) => !HIDE_DRAFTS || s.status !== 'draft';
+
+const allStrains = strainsJson.strains as Strain[];
+
+/** Newest `isolated` first; undated strains fall back to catalog number, newest first. */
+function byNewest(a: Strain, b: Strain) {
+  if (a.isolated && b.isolated) return b.isolated.localeCompare(a.isolated);
+  if (a.isolated) return -1;
+  if (b.isolated) return 1;
+  return b.id.localeCompare(a.id);
+}
+
+/** Catalog order (FVC-001 first) — used by the home page cards. */
+export function getStrains(): Strain[] {
+  return allStrains.filter(visible);
+}
+
+export function getStrainsNewest(): Strain[] {
+  return [...getStrains()].sort(byNewest);
+}
+
+export function getStrain(id: string): Strain | undefined {
+  return getStrains().find((s) => s.id.toLowerCase() === id.toLowerCase());
+}
+
+export function getLatestStrain(): Strain {
+  return getStrainsNewest()[0] ?? allStrains[allStrains.length - 1];
+}
+
+export function getOutbreaks(): Outbreak[] {
+  return (outbreaksJson.outbreaks as Outbreak[]).filter(visible);
+}
+
+export function getOutbreak(id: string): Outbreak | undefined {
+  return getOutbreaks().find((o) => o.id.toLowerCase() === id.toLowerCase());
+}
+
+export function getGoods(): Good[] {
+  return goodsJson.goods as Good[];
+}
+
+export const site = siteJson as Site;

@@ -1,0 +1,174 @@
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { Cover } from '@/components/fvc/Cover';
+import { Footer } from '@/components/fvc/Footer';
+import { ShareButton } from '@/components/fvc/ShareButton';
+import { SpecimenLabel } from '@/components/fvc/SpecimenLabel';
+import { StrainCard } from '@/components/fvc/StrainCard';
+import { TopBar } from '@/components/fvc/TopBar';
+import { VinylRecord } from '@/components/fvc/Vinyl';
+import { getStrain, getStrains, type Track } from '@/lib/content';
+import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, spreadBlocks, totalIncubation, trackTime } from '@/lib/format';
+import s from './strain.module.css';
+
+export function generateStaticParams() {
+  return getStrains().map((x) => ({ id: x.id }));
+}
+export const dynamicParams = false;
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const strain = getStrain((await params).id);
+  if (!strain) return {};
+  const who = isPlaceholder(strain.carrier) ? '' : ` by ${strain.carrier}`;
+  const what = isPlaceholder(strain.title) ? strain.id : `${strain.title}${who}`;
+  return {
+    title: strain.id,
+    description: `${what}. Strain type: ${ph(strain.strainType, 'Genre')}. Highly contagious.`,
+  };
+}
+
+function Side({ name, tracks }: { name: string; tracks: Track[] }) {
+  if (!tracks.length) return null;
+  return (
+    <tbody>
+      <tr>
+        <th colSpan={3} scope="rowgroup" className={s.side}>
+          Side {name}
+        </th>
+      </tr>
+      {tracks.map((t) => (
+        <tr key={`${name}${t.no}`}>
+          <td className="fvc-mono" style={{ width: 60 }}>
+            {name}
+            {t.no}
+          </td>
+          <td>{ph(t.title, 'Track Title')}</td>
+          <td className="fvc-mono" style={{ textAlign: 'right' }}>
+            {trackTime(t)}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  );
+}
+
+export default async function StrainPage({ params }: { params: Promise<{ id: string }> }) {
+  const strain = getStrain((await params).id);
+  if (!strain) notFound();
+  const all = getStrains().filter((x) => x.id !== strain.id);
+  const related = [...all.filter((x) => x.coverStyle === strain.coverStyle), ...all.filter((x) => x.coverStyle !== strain.coverStyle)].slice(0, 2);
+  const links = [
+    ['Listen', strain.links.listen],
+    ['Buy', strain.links.buy],
+    ['Bandcamp', strain.links.bandcamp],
+  ].filter((l): l is [string, string] => !!l[1]);
+
+  return (
+    <>
+      <TopBar current="/strains" />
+      <main id="main">
+        <section className={s.top}>
+          <div className={s.coverWrap}>
+            <Cover strain={strain} />
+          </div>
+          <div className={s.meta}>
+            <div className="fvc-section-label">
+              <span>Strain {catalogNo(strain.id)}</span>
+              <span>Isolated {isolatedLabel(strain.isolated)} Seoul</span>
+            </div>
+            <h1 className={s.catalog}>{strain.id}</h1>
+            <p className={s.title}>
+              {ph(strain.carrier, 'Artist')} — <span className="fvc-serif">{ph(strain.title, 'Release Title')}</span>
+            </p>
+            <div className={s.pills}>
+              <span className="fvc-pill" style={{ background: 'var(--fvc-white)' }}>
+                {ph(strain.strainType, 'Genre')}
+              </span>
+              {strain.formats.map((f) => (
+                <span key={f} className="fvc-pill">
+                  {formatLabel(f)}
+                </span>
+              ))}
+            </div>
+            <p className="fvc-prose">{isPlaceholder(strain.blurb) ? `[Blurb] — one line about how ${strain.id} spreads.` : strain.blurb}</p>
+            <dl className={`fvc-mono ${s.stats}`}>
+              <div>
+                <dt>Incubation</dt>
+                <dd>{totalIncubation(strain)}</dd>
+              </div>
+              <div>
+                <dt>Spread</dt>
+                <dd aria-label={strain.spreadLevel ? `${strain.spreadLevel} of 5` : 'not rated'}>{spreadBlocks(strain.spreadLevel)}</dd>
+              </div>
+              <div>
+                <dt>Seed</dt>
+                <dd>{strain.seed}</dd>
+              </div>
+            </dl>
+            <div className={s.actions}>
+              {links.map(([label, href]) => (
+                <a key={label} href={href} className={`fvc-cta fvc-inv ${s.action}`} target="_blank" rel="noopener noreferrer">
+                  {label} ↗
+                </a>
+              ))}
+              {!links.length && <span className="fvc-mono" style={{ fontSize: 12 }}>Listen / Buy links coming soon.</span>}
+              <ShareButton title={`${strain.id} — FVC RECORDS`} className={`fvc-cta fvc-inv ${s.action}`} />
+            </div>
+          </div>
+        </section>
+
+        <section className={`fvc-grid2 fvc-rule-b`} aria-label="Specimen details">
+          <div className={`fvc-col-l ${s.cell}`} style={{ borderRight: 'var(--fvc-rule)' }}>
+            <h2 className={s.h2}>Specimen label</h2>
+            <SpecimenLabel strain={strain} />
+          </div>
+          <div className={s.cell}>
+            <h2 className={s.h2}>Tracklist</h2>
+            <table className="fvc-table">
+              <caption className="sr-only">Tracklist of {strain.id}</caption>
+              <thead>
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">Title</th>
+                  <th scope="col" style={{ textAlign: 'right' }}>
+                    Incubation
+                  </th>
+                </tr>
+              </thead>
+              <Side name="A" tracks={strain.sideA} />
+              <Side name="B" tracks={strain.sideB} />
+            </table>
+          </div>
+        </section>
+
+        {strain.vinyl && (
+          <section className={s.vinyl} aria-labelledby="pp-h">
+            <div className="fvc-section-label">
+              <h2 id="pp-h" style={{ font: 'inherit', margin: 0 }}>
+                Pressing Plant ▮ Pressing Nº {strain.vinyl.seed}
+              </h2>
+              <span>
+                {strain.vinyl.base} base ▮ {strain.vinyl.palette} splat
+              </span>
+            </div>
+            <VinylRecord seed={strain.vinyl.seed} base={strain.vinyl.base} pal={strain.vinyl.palette} labelSeed={strain.seed + 3} catalog={strain.id} size={560} />
+          </section>
+        )}
+
+        {related.length > 0 && (
+          <section aria-labelledby="rel-h">
+            <h2 id="rel-h" className={s.relH}>
+              Also spreading
+            </h2>
+            <div className="fvc-grid2 fvc-rule-b">
+              {related.map((x, i) => (
+                <StrainCard key={x.id} strain={x} className={i === 0 ? 'fvc-col-l' : undefined} />
+              ))}
+            </div>
+          </section>
+        )}
+      </main>
+      <Footer spot={strain.spot === '#0B0B0B' ? undefined : strain.spot} />
+    </>
+  );
+}

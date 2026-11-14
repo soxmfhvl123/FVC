@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "fvc-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--workspace", "@fvc/web", "run", "dev", "--", "--port", "3007"],
+      "port": 3007
+    }
+  ]
+}

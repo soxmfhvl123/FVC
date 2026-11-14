@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FVC — Banner series</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!--HEAD-->
+<style>
+body{margin:0}
+.fvc-b{border:none;cursor:pointer;font-family:'Inter Tight',sans-serif;font-weight:700;font-size:14px;padding:0 16px;height:40px}
+</style>
+</helmet>
+<div style="position: relative; width: 1500px; height: 2830px; box-sizing: border-box; background: #0B0B0B; color: #F7F7F5; font-family: 'Inter Tight', system-ui, sans-serif; padding: 0 50px 40px">
+<!--DEFS-->
+  <div style="height: 96px; display: flex; align-items: center; justify-content: space-between">
+    <h1 style="margin: 0; font-size: 34px; font-weight: 500; letter-spacing: -0.03em">07 Banner series — <span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; letter-spacing: 0">infected</span> <span style="font-family: 'Instrument Serif', serif; font-style: italic">type</span></h1>
+    <div style="display: flex; gap: 8px; align-items: center">
+      <span style="font-size: 13px; margin-right: 8px">Seed {{seed}}</span>
+      <button type="button" class="fvc-b" onClick="{{shuffle}}" style="background: #A6FF00; color: #0B0B0B">↻ Shuffle</button>
+      <button type="button" class="fvc-b" onClick="{{toggle}}" aria-pressed="{{livePressed}}" style="background: #F7F7F5; color: #0B0B0B">{{liveBtn}}</button>
+    </div>
+  </div>
+  <div style="display: flex; flex-direction: column; gap: 28px">
+<!--INC:b1-->
+<!--INC:b2-->
+<!--INC:b3-->
+<!--INC:b4-->
+<!--INC:b5-->
+<!--INC:b6-->
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1500,"height":2830}}'>
+class Component extends DCLogic {
+/*ENGINE*/
+  componentDidMount() {
+    var self = this;
+    this.timer = setInterval(function () { var st = self.state || {}; if (st.live !== false) self.setState({ tick: (st.tick || 0) + 1 }); }, 1000);
+    var go = function () { self.ensureGlyphs(self.bannerChars()); self.setState({ gv: 1 }); };
+    try { if (document.fonts && document.fonts.load) { Promise.all([document.fonts.load('900 300px Archivo'), document.fonts.load('800 200px "Grenze Gotisch"'), document.fonts.load('italic 200px "Instrument Serif"')]).then(go, go); } else go(); } catch (e) { go(); }
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  bannerChars() { var s = 'FATsoundpreadsNoiseIStheewcarriercatchit!spreadINFECTEDno.7', out = []; s.split('').forEach(function (c) { if (c !== ' ' && out.indexOf(c) < 0) out.push(c); }); return out; }
+  renderVals() {
+    var self = this, st = this.state || {};
+    if (!this._h) {
+      this._h = { shuffle: function () { self.setState({ seed: 1 + Math.floor(Math.random() * 999) }); }, toggle: function () { self.setState({ live: !((self.state && self.state.live) !== false) }); } };
+      this._bg = { m1: this.germBits(41, { N: 60, two: false, dust: 0, eyes: 'cyclops' }), m2: this.germBits(131, { N: 60, two: false, dust: 0 }), t1: this.germBits(23, { N: 90, dust: 0.002 }) };
+    }
+    var seed = st.seed || 7, tick = st.tick || 0, live = st.live !== false;
+    return { BN: this.banners(seed, tick), bG: this._bg, seed: seed, shuffle: this._h.shuffle, toggle: this._h.toggle, liveBtn: live ? 'Freeze' : 'Go live', livePressed: live ? 'true' : 'false' };
+  }
+}
+</script>
+</body>
+</html>

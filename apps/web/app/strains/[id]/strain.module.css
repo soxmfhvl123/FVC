@@ -1,0 +1,122 @@
+.top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  border-bottom: var(--fvc-rule);
+}
+.coverWrap {
+  border-right: var(--fvc-rule);
+  padding: 18px;
+}
+.coverWrap svg {
+  aspect-ratio: 4 / 3;
+}
+.meta {
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.catalog {
+  margin: 0;
+  font-family: var(--fvc-font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  letter-spacing: -0.05em;
+  font-size: clamp(64px, 7.4vw, 120px);
+  line-height: 0.86;
+}
+.title {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 4px 28px;
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  border-top: var(--fvc-rule);
+  border-bottom: var(--fvc-rule);
+  padding: 10px 0;
+}
+.stats dt {
+  opacity: 0.75;
+}
+.stats dd {
+  margin: 2px 0 0;
+  font-size: 16px;
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+.action {
+  background: transparent;
+  cursor: pointer;
+  color: var(--fvc-ink);
+}
+.cell {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.h2 {
+  margin: 0;
+  font-family: var(--fvc-font-mono);
+  font-weight: 400;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+.side {
+  font-family: var(--fvc-font-display) !important;
+  font-weight: 900 !important;
+  font-stretch: 125%;
+  font-size: 22px !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase;
+  background: var(--fvc-ink);
+  color: var(--fvc-white);
+}
+.vinyl {
+  background: var(--fvc-paper);
+  border-bottom: var(--fvc-rule);
+  padding: 18px 24px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+.vinyl > :first-child {
+  align-self: stretch;
+}
+.relH {
+  margin: 0;
+  padding: 18px 18px 14px;
+  font-size: 44px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  border-bottom: var(--fvc-rule);
+}
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .coverWrap {
+    border-right: none;
+    border-bottom: var(--fvc-rule);
+  }
+}

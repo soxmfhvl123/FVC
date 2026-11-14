@@ -1,0 +1,31 @@
+/* FVC design tokens — generated from tokens.json. Import once in the app root. */
+:root {
+  --fvc-paper: #E8E7E3;
+  --fvc-grey: #D4D3CF;
+  --fvc-grey-dark: #CFCECA;
+  --fvc-white: #F7F7F5;
+  --fvc-ink: #0B0B0B;
+  --fvc-spot: #FF5B47;      /* FVC Coral */
+  --fvc-acid: #A6FF00;
+  --fvc-magenta: #FF2DB4;
+  --fvc-red: #FF2A1A;
+  --fvc-cobalt: #2B44FF;
+  --fvc-yellow: #FFE800;
+  --fvc-orange: #FF6C2F;
+
+  --fvc-font-info: 'Inter Tight', system-ui, sans-serif;
+  --fvc-font-display: 'Archivo', sans-serif;      /* 900 + font-stretch 62% | 125% */
+  --fvc-font-goth: 'Grenze Gotisch', serif;
+  --fvc-font-serif: 'Instrument Serif', serif;    /* italic */
+  --fvc-font-mono: 'DM Mono', monospace;
+
+  --fvc-rule: 2px solid var(--fvc-ink);
+  --fvc-rule-heavy: 3px solid var(--fvc-ink);
+}
+.fvc-condensed { font-family: var(--fvc-font-display); font-weight: 900; font-stretch: 62%; }
+.fvc-wide      { font-family: var(--fvc-font-display); font-weight: 900; font-stretch: 125%; letter-spacing: -0.03em; }
+.fvc-goth      { font-family: var(--fvc-font-goth); font-weight: 800; }
+.fvc-serif     { font-family: var(--fvc-font-serif); font-style: italic; }
+.fvc-mono      { font-family: var(--fvc-font-mono); }
+.fvc-bar       { background: var(--fvc-ink); color: var(--fvc-white); padding: 2px 10px; }
+@media (prefers-reduced-motion: reduce) { .fvc-anim { animation: none !important; } }

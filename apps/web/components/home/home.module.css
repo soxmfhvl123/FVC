@@ -1,0 +1,358 @@
+/* Home sections — measurements from design/canvas/_templates/Main.dc.html (1440 wide). */
+
+.abs {
+  position: absolute;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- 1 hero ---------- */
+.hero {
+  position: relative;
+  height: 940px;
+  overflow: hidden;
+  background: var(--fvc-grey);
+  border-bottom: var(--fvc-rule);
+}
+.heroGerm {
+  position: absolute;
+  right: -8%;
+  top: 40px;
+  width: min(1000px, 74vw);
+  transform: rotate(-9deg);
+}
+.heroSat {
+  position: absolute;
+  left: 25%;
+  top: 56px;
+  width: 150px;
+  height: 150px;
+  transform: rotate(18deg);
+}
+.heroStack {
+  position: absolute;
+  left: 30px;
+  top: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  z-index: 1;
+}
+.heroBarSm {
+  background: var(--fvc-ink);
+  color: var(--fvc-grey);
+  font-weight: 800;
+  font-size: 11px;
+  padding: 1px 8px;
+  white-space: nowrap;
+}
+.heroTop {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  top: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  font-size: clamp(26px, 2.6vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.heroDish {
+  position: absolute;
+  left: 28px;
+  top: 82px;
+}
+.heroInfo {
+  position: absolute;
+  font-size: 17px;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+.heroMark {
+  position: absolute;
+  left: 18px;
+  bottom: 84px;
+  z-index: 2;
+}
+.heroVert {
+  position: absolute;
+  right: 26px;
+  top: 120px;
+  bottom: 120px;
+  writing-mode: vertical-rl;
+  font-size: clamp(26px, 2.6vw, 40px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  display: flex;
+  justify-content: space-between;
+}
+.heroAddr {
+  position: absolute;
+  left: 10px;
+  bottom: 90px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.heroNow {
+  position: absolute;
+  right: 80px;
+  bottom: 26px;
+  font-size: clamp(26px, 2.6vw, 40px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  z-index: 2;
+}
+.heroNow:hover {
+  text-decoration: underline;
+}
+
+/* ---------- 2 connwax ---------- */
+.connwax {
+  background: var(--fvc-white);
+  border-bottom: var(--fvc-rule);
+  padding: 14px 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.connwaxRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.cwLabel {
+  background: var(--fvc-ink);
+  color: var(--fvc-white);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.38em;
+  padding: 2px 10px;
+}
+.cwWide {
+  font-family: var(--fvc-font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.cwOval {
+  border: 3px solid var(--fvc-ink);
+  border-radius: 50%;
+  padding: 0 18px;
+  font-family: var(--fvc-font-display);
+  font-weight: 900;
+  font-stretch: 62%;
+  font-size: 40px;
+  line-height: 1.1;
+  transform: rotate(-3deg);
+}
+.cwBar,
+.cwWord {
+  font-family: var(--fvc-font-display);
+  font-weight: 900;
+  font-stretch: 100%;
+  font-size: 30px;
+  line-height: 1.2;
+}
+.cwBar {
+  background: var(--fvc-ink);
+  color: var(--fvc-white);
+  padding: 0 10px;
+}
+
+/* ---------- 4 manifesto ---------- */
+.manifesto {
+  position: relative;
+  padding: 30px 24px 40px;
+  border-bottom: var(--fvc-rule);
+  overflow: hidden;
+}
+.manifestoP {
+  margin: 0;
+  font-size: clamp(34px, 4.6vw, 70px);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+  max-width: 1400px;
+}
+.manifestoP :global(.fvc-goth) {
+  letter-spacing: -0.01em;
+}
+.manifestoP :global(.fvc-serif) {
+  letter-spacing: -0.02em;
+}
+.mfBar {
+  font-family: var(--fvc-font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  background: var(--fvc-ink);
+  color: var(--fvc-paper);
+  padding: 0 0.1em;
+}
+.mfOval {
+  border: 0.06em solid var(--fvc-ink);
+  border-radius: 50%;
+  padding: 0 0.3em;
+}
+.manifestoOut {
+  margin: 26px 0 0;
+  font-family: var(--fvc-font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  font-size: clamp(56px, 8.4vw, 132px);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--fvc-ink);
+}
+
+/* ---------- 5 mini lab ---------- */
+.mini {
+  position: relative;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+}
+.miniHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+.miniOut {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.miniBar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 14px 20px;
+  background: var(--fvc-ink);
+  flex-wrap: wrap;
+}
+.miniBar :focus-visible {
+  outline-color: var(--fvc-paper);
+  box-shadow: 0 0 0 5px var(--fvc-ink);
+}
+.miniBtn {
+  height: 40px;
+  padding: 0 18px;
+  border: none;
+  color: var(--fvc-ink);
+  font-family: var(--fvc-font-info);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+.miniIn {
+  flex: 1;
+  min-width: 140px;
+  height: 40px;
+  padding: 0 12px;
+  border: 2px solid var(--fvc-paper);
+  background: var(--fvc-white);
+  font-family: var(--fvc-font-info);
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: var(--fvc-ink);
+}
+
+/* ---------- 9 dictionary ---------- */
+.dict {
+  background: var(--fvc-white);
+  border-bottom: var(--fvc-rule);
+  padding: 18px 0;
+}
+.dictList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 0 18px;
+  margin: 0;
+}
+.dictRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 2px 12px;
+}
+.dictRow dt {
+  font-size: 12px;
+  width: 170px;
+  flex-shrink: 0;
+}
+.dictRow dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- mobile ---------- */
+@media (max-width: 760px) {
+  .hero {
+    height: 640px;
+  }
+  .heroGerm {
+    right: -24%;
+    top: 90px;
+    width: 120vw;
+  }
+  .heroMark {
+    bottom: 70px;
+  }
+  .heroMark svg {
+    width: 30vw !important;
+  }
+  .heroVert {
+    right: 12px;
+    font-size: 22px;
+  }
+  .heroNow {
+    right: 16px;
+    bottom: 18px;
+    font-size: 22px;
+  }
+  .heroTop {
+    left: 16px;
+    right: 16px;
+  }
+  .heroDish {
+    left: 16px;
+  }
+  .mini {
+    min-height: 480px;
+  }
+  .miniHead {
+    font-size: 22px;
+  }
+  .dictRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 6px 12px;
+  }
+  .dictRow dd {
+    font-size: 34px !important;
+  }
+}

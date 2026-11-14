@@ -1,0 +1,20 @@
+{
+  "name": "fvc-records",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm --workspace @fvc/web run dev",
+    "build": "npm --workspace @fvc/web run build",
+    "start": "npm --workspace @fvc/web run start",
+    "lint": "npm --workspace @fvc/web run lint",
+    "typecheck": "npm --workspace @fvc/web run typecheck && npm --workspace @fvc/engine run typecheck",
+    "test:engine": "npm --workspace @fvc/engine test",
+    "typecheck:engine": "npm --workspace @fvc/engine run typecheck"
+  },
+  "engines": {
+    "node": ">=22.6"
+  }
+}

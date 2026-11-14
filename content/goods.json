@@ -1,0 +1,25 @@
+{
+  "goods": [
+    {
+      "id": "QG-001",
+      "name": "Colony tote",
+      "graphic": "pattern/colony-repeat",
+      "price": null,
+      "url": null
+    },
+    {
+      "id": "QG-002",
+      "name": "Splatter slipmat 12\"",
+      "graphic": "press/vinyl seed 12",
+      "price": null,
+      "url": null
+    },
+    {
+      "id": "QG-003",
+      "name": "Sticker sheet",
+      "graphic": "kit/07-stickers",
+      "price": null,
+      "url": null
+    }
+  ]
+}

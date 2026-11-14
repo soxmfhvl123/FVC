@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FVC — Color, type and rules</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!--HEAD-->
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 1600px; height: 1240px; box-sizing: border-box; background: #E8E7E3; color: #0B0B0B; font-family: 'Inter Tight', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+<!--DEFS-->
+  <div style="height: 54px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 2px solid #0B0B0B">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -0.03em">05 Color · Type · <span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; letter-spacing: 0">Rules</span></h1>
+    <span style="font-size: 14px">Fat Virus Carrier Records — system v1</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 2px solid #0B0B0B">
+    <div style="border-right: 2px solid #0B0B0B; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px">
+      <div style="display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 6px"><span>COLOR</span><span>BASE = 3 GREYS + INK · ONE SPOT PER PIECE</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #E8E7E3; border: 2px solid #0B0B0B"><span style="font-weight: 600">Paper</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#E8E7E3</span><span style="font-size: 14px">Page ground</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #D4D3CF; border: 2px solid #0B0B0B"><span style="font-weight: 600">Golova grey</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#D4D3CF</span><span style="font-size: 14px">Hero, posters, lens</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #F7F7F5; border: 2px solid #0B0B0B"><span style="font-weight: 600">Copy white</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#F7F7F5</span><span style="font-size: 14px">Photocopy pieces, labels</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #0B0B0B; color: #E8E7E3"><span style="font-weight: 600">Ink</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#0B0B0B</span><span style="font-size: 14px">Bitmap, bars, type</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: {{accent}}"><span style="font-weight: 600">FVC Coral (spot)</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">{{accent}}</span><span style="font-size: 14px">The house spot ink</span></div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-top: 4px">
+        <div style="height: 76px; background: #A6FF00; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Acid</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#A6FF00</span></div>
+        <div style="height: 76px; background: #FF2DB4; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Magenta</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#FF2DB4</span></div>
+        <div style="height: 76px; background: #FF2A1A; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Signal red</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#FF2A1A</span></div>
+        <div style="height: 76px; background: #2B44FF; color: #F7F7F5; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Cobalt</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#2B44FF</span></div>
+      </div>
+      <span style="font-size: 12px; margin-top: 4px">Outbreak colours (acid, magenta, red, cobalt) only for banners, stickers and special strains.</span>
+    </div>
+    <div style="padding: 14px 18px; display: flex; flex-direction: column">
+      <div style="display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 6px"><span>TYPE</span><span>MIX STRAINS — NEVER MORE THAN 3 PER LINE</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-size: 44px; font-weight: 500; letter-spacing: -0.03em">11/13 Strain·007</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">INTER TIGHT 500<br>INFO, CORNERS</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 48px; letter-spacing: -0.04em; background: #0B0B0B; color: #E8E7E3; padding: 0 8px">CARRIER</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">ARCHIVO 900 · 125%<br>BARS, NUMBERS</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 62%; font-size: 64px; line-height: 1">FAT VIRUS CARRIER</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">ARCHIVO 900 · 62%<br>HEADLINES</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; font-size: 60px; line-height: 1">Outbreak night</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">GRENZE GOTISCH 800<br>ONE WORD OF FLAVOUR</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 60px; line-height: 1">impossible to shake</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">INSTRUMENT SERIF ITALIC<br>ASIDES</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0"><span style="font-family: 'DM Mono', monospace; font-size: 18px">INCUBATION [0:00] ▮ SPREAD ■■■■□</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">DM MONO 400<br>DATA</span></div>
+    </div>
+  </div>
+  <div style="flex: 1; display: grid; grid-template-columns: 1.4fr 1fr 1fr">
+    <div style="border-right: 2px solid #0B0B0B; padding: 14px 18px">
+      <div style="font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 10px">RULES</div>
+      <ol style="margin: 0; padding-left: 22px; font-size: 17px; line-height: 1.42">
+        <li>Images are <b>bitmap only</b>: two inks max, grain on top. No gradients, no soft shadows.</li>
+        <li>Every germ is <b>generated from a seed</b>. One release = one seed = one body.</li>
+        <li>The wordmark <b>mutates</b>. Never show it the same way twice on one page.</li>
+        <li>Small type lives in the <b>corners and edges</b>, big things go in the middle.</li>
+        <li>Black bars hold lineups and data. Ovals hold grain.</li>
+        <li>Placeholders stay in [brackets] until real names arrive.</li>
+      </ol>
+    </div>
+    <div style="border-right: 2px solid #0B0B0B; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px">
+      <div style="font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 6px">VOCABULARY</div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Release</span><b>STRAIN</b></div>
+      <div style="border: 2px solid #0B0B0B; padding: 1px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Listener</span><b>CARRIER</b></div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Demo</span><b>SAMPLE</b></div>
+      <div style="border: 2px solid #0B0B0B; padding: 1px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Party</span><b>OUTBREAK NIGHT</b></div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Merch</span><b>QUARANTINE GOODS</b></div>
+      <div style="border: 2px solid #0B0B0B; padding: 1px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Newsletter</span><b>SPREAD REPORT</b></div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Track length</span><b>INCUBATION</b></div>
+    </div>
+    <div style="position: relative; background: #D4D3CF; overflow: hidden">
+      <div style="position: absolute; left: 18px; top: 14px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.5">GERM RECIPE<br>seed 7 · grid 110 · eyes 2<br>lumps 5 · hair 54 · two inks</div>
+      <svg viewBox="0 0 300 300" role="img" aria-label="Example germ from seed 7" style="position: absolute; right: -20px; bottom: -30px; width: 330px; height: 330px"><path d="{{demo.spot}}" fill="{{accent}}"></path><path d="{{demo.ink}}" fill="#0B0B0B"></path></svg>
+    </div>
+  </div>
+  <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: multiply; opacity: 0.12"><rect width="100%" height="100%" filter="url(#fvc-grain)"></rect></svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FF5B47","options":["#FF5B47","#2B44FF","#A6FF00","#FF2DB4"]},"$preview":{"width":1600,"height":1240}}'>
+class Component extends DCLogic {
+/*ENGINE*/
+  renderVals() {
+    if (!this._s) this._s = { demo: this.germBits(7, { N: 110 }) };
+    return { accent: this.props.accent ?? '#FF5B47', demo: this._s.demo };
+  }
+}
+</script>
+</body>
+</html>

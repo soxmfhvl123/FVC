@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FVC RECORDS — Fat Virus Carrier</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!--HEAD-->
+<style>
+body{margin:0;background:#E8E7E3}
+a{color:#0B0B0B}
+@keyframes fvc-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.fvc-tape{animation:fvc-marquee 34s linear infinite}
+.fvc-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.fvc-inv{transition:background .12s,color .12s}
+.fvc-inv:hover{background:#0B0B0B !important;color:#E8E7E3 !important}
+@media (max-width:760px){.fvc-grid2{grid-template-columns:minmax(0,1fr)}.fvc-col-l{border-right:none !important;border-bottom:2px solid #0B0B0B}.fvc-hide-sm{display:none !important}}
+@media (prefers-reduced-motion:reduce){.fvc-tape{animation:none}}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 7500px; background: #E8E7E3; color: #0B0B0B; font-family: 'Inter Tight', system-ui, sans-serif; overflow-x: hidden">
+
+<!--DEFS-->
+
+  <!-- ============ HERO (Golova / Into the Noise) ============ -->
+  <header onMouseMove="{{onMove}}" style="position: relative; height: 940px; overflow: hidden; background: #D4D3CF; border-bottom: 2px solid #0B0B0B">
+    <h1 style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); margin: 0">FVC RECORDS — Fat Virus Carrier</h1>
+
+    <svg viewBox="0 0 300 300" aria-hidden="true" style="position: absolute; right: -8%; top: 40px; width: min(1000px, 74vw); height: auto; transform: rotate(-9deg)">
+      <path d="{{hero.spot}}" fill="{{accent}}" transform="translate(1.2 0.8)"></path>
+      <path d="{{hero.ink}}" fill="#0B0B0B"></path>
+      <g transform="translate(119 135.5)"><path d="{{eye.w1}}" fill="#F2F1ED"></path><path d="{{eye.r1}}" fill="#0B0B0B"></path><g style="transform: translate({{pup.x1}}px, {{pup.y1}}px); transition: transform 0.18s ease-out"><path d="{{eye.p1}}" fill="#0B0B0B"></path></g></g>
+      <g transform="translate(179 125.2)"><path d="{{eye.w2}}" fill="#F2F1ED"></path><path d="{{eye.r2}}" fill="#0B0B0B"></path><g style="transform: translate({{pup.x2}}px, {{pup.y2}}px); transition: transform 0.18s ease-out"><path d="{{eye.p2}}" fill="#0B0B0B"></path></g></g>
+    </svg>
+    <svg viewBox="0 0 300 300" aria-hidden="true" class="fvc-hide-sm" style="position: absolute; left: 25%; top: 56px; width: 150px; height: 150px; transform: rotate(18deg)"><path d="{{sat.ink}}" fill="#0B0B0B"></path></svg>
+    <div class="fvc-hide-sm" aria-hidden="true" style="position: absolute; left: 30px; top: 420px; display: flex; flex-direction: column; align-items: flex-start; gap: 3px; z-index: 1">
+      <div style="display: flex; align-items: center; gap: 6px"><span style="background: #0B0B0B; color: #D4D3CF; font-weight: 800; font-size: 11px; letter-spacing: 0.4em; padding: 1px 8px">SPECIMEN FVC-007</span><svg viewBox="0 0 26 26" width="18" height="18"><circle cx="13" cy="13" r="7" fill="none" stroke="#0B0B0B" stroke-width="1.5"></circle><path d="M13 0 V26 M0 13 H26" stroke="#0B0B0B" stroke-width="1.5"></path></svg></div>
+      <div style="display: flex; align-items: center; gap: 6px"><svg viewBox="0 0 120 34" width="96" height="27"><defs><clipPath id="hov"><ellipse cx="60" cy="17" rx="58" ry="15"></ellipse></clipPath></defs><rect width="120" height="34" filter="url(#fvc-bitnoise)" clip-path="url(#hov)"></rect><ellipse cx="60" cy="17" rx="58" ry="15" fill="none" stroke="#0B0B0B" stroke-width="2"></ellipse></svg><span style="background: #0B0B0B; color: #D4D3CF; font-weight: 800; font-size: 18px; padding: 0 8px">[ARTIST] [ARTIST]</span></div>
+      <span style="background: #0B0B0B; color: #D4D3CF; font-weight: 800; font-size: 11px; padding: 1px 8px">LOW-END SOUNDSYSTEM ▮ OUTBREAK NIGHT ▮ [DATE]</span>
+    </div>
+    <svg aria-hidden="true" width="30" height="30" viewBox="0 0 30 30" style="position: absolute; left: 47%; top: 120px"><circle cx="15" cy="15" r="8" fill="none" stroke="#0B0B0B" stroke-width="1.5"></circle><path d="M15 0 V30 M0 15 H30" stroke="#0B0B0B" stroke-width="1.5"></path></svg>
+    <svg aria-hidden="true" width="30" height="30" viewBox="0 0 30 30" style="position: absolute; right: 120px; bottom: 90px"><circle cx="15" cy="15" r="8" fill="none" stroke="#0B0B0B" stroke-width="1.5"></circle><path d="M15 0 V30 M0 15 H30" stroke="#0B0B0B" stroke-width="1.5"></path></svg>
+
+    <div style="position: absolute; left: 28px; right: 28px; top: 22px; display: flex; justify-content: space-between; align-items: flex-start; font-size: clamp(26px, 2.6vw, 40px); font-weight: 500; letter-spacing: -0.02em; line-height: 1">
+      <span>11/13 Strain·007</span><span>{{clockShort}}</span>
+    </div>
+    <div style="position: absolute; left: 28px; top: 82px; width: 92px; height: 56px; border: 3px solid #0B0B0B; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: Archivo, sans-serif; font-weight: 800; font-stretch: 100%; font-size: 20px">FVC</div>
+
+    <div class="fvc-hide-sm" style="position: absolute; left: 34%; top: 160px; font-family: 'Inter Tight', sans-serif; font-size: 17px; line-height: 1.25; text-transform: uppercase">(A) Strain:<br>FVC-007<br>[Artist]</div>
+    <div class="fvc-hide-sm" style="position: absolute; left: 52%; top: 250px; font-size: 17px; line-height: 1.25; text-transform: uppercase; text-align: right">(B) Outbreak Night:<br>[Date] 23:00<br>Location undisclosed</div>
+
+    <div role="img" aria-label="FVC, letters mutating" style="position: absolute; left: 18px; bottom: 84px; display: flex; gap: 0; z-index: 2">
+      <sc-for list="{{letters}}" as="l" hint-placeholder-count="3">
+        <svg viewBox="0 0 200 260" aria-hidden="true" style="display: block; width: min(300px, 24vw); height: auto">
+          <path d="{{l.d}}" fill="#0B0B0B" fill-rule="evenodd"></path>
+          <text x="100" y="244" text-anchor="middle" font-family="{{l.font}}" font-style="{{l.fstyle}}" font-weight="{{l.weight}}" font-stretch="{{l.stretch}}" font-size="{{l.size}}" fill="{{l.tfill}}">{{l.ch}}</text>
+        </svg>
+      </sc-for>
+    </div>
+
+    <div style="position: absolute; right: 26px; top: 120px; bottom: 120px; writing-mode: vertical-rl; font-size: clamp(26px, 2.6vw, 40px); font-weight: 500; letter-spacing: -0.02em; display: flex; justify-content: space-between"><span>Fat Virus Carrier</span><span style="font-family: 'Instrument Serif', serif; font-style: italic">Records</span></div>
+    <div style="position: absolute; left: 10px; bottom: 90px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 11px; letter-spacing: 0.02em; white-space: nowrap">FVC Records&#160;&#160;&#160;fvc.ai.kr&#160;&#160;&#160;Seoul</div>
+    <div style="position: absolute; right: 80px; bottom: 26px; font-size: clamp(26px, 2.6vw, 40px); font-weight: 600; letter-spacing: -0.02em">Now Spreading</div>
+
+    <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: multiply; opacity: 0.2"><rect width="100%" height="100%" filter="url(#fvc-grain)"></rect></svg>
+  </header>
+
+  <!-- ============ CONNWAX STACK ============ -->
+  <section aria-label="Now spreading" style="background: #F7F7F5; border-bottom: 2px solid #0B0B0B; padding: 14px 0; overflow: hidden">
+    <div style="display: flex; flex-direction: column; gap: 4px">
+      <div style="display: flex; align-items: center; gap: 6px; padding: 0 14px; flex-wrap: nowrap; white-space: nowrap; overflow: hidden">
+        <span style="background: #0B0B0B; color: #F7F7F5; font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.38em; padding: 2px 10px">FAT VIRUS CARRIER RECORDS</span>
+        <svg viewBox="0 0 120 40" width="120" height="40" aria-hidden="true"><defs><clipPath id="ov1"><ellipse cx="60" cy="20" rx="58" ry="18"></ellipse></clipPath></defs><rect width="120" height="40" filter="url(#fvc-bitnoise)" clip-path="url(#ov1)"></rect><ellipse cx="60" cy="20" rx="58" ry="18" fill="none" stroke="#0B0B0B" stroke-width="2"></ellipse></svg>
+        <span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 40px; line-height: 1; letter-spacing: -0.04em">strain·007</span>
+        <span style="border: 3px solid #0B0B0B; border-radius: 50%; padding: 0 18px; font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 62%; font-size: 40px; line-height: 1.1; transform: rotate(-3deg)">CATCH IT</span>
+        <span style="font-family: 'DM Mono', monospace; font-size: 22px">+</span>
+        <span style="background: #0B0B0B; color: #F7F7F5; font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 100%; font-size: 30px; padding: 0 10px; line-height: 1.2">[ARTIST]</span>
+        <span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 100%; font-size: 30px; line-height: 1.2">[RELEASE TITLE]</span>
+        <span style="background: {{accent}}; font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 100%; font-size: 30px; padding: 0 10px; line-height: 1.2">OUT [DATE]</span>
+      </div>
+      <div style="background: #0B0B0B; color: #F7F7F5; overflow: hidden; height: 26px; display: flex; align-items: center">
+        <div class="{{tapeClass}}" style="display: flex; width: max-content">
+          <sc-for list="{{tiles}}" as="t" hint-placeholder-count="8">
+            <span aria-hidden="true" style="font-family: 'Inter Tight', sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.02em; white-space: nowrap; padding-right: 26px">FVC-007 ▮ [ARTIST] ▮ [TITLE] ▮ HIGHLY CONTAGIOUS ▮ NO KNOWN CURE ▮ SAMPLE SUBMISSION OPEN ▮</span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ STRAINS 1-2 ============ -->
+  <section class="fvc-grid2" style="border-bottom: 2px solid #0B0B0B">
+    <article class="fvc-col-l" style="padding: 18px; border-right: 2px solid #0B0B0B; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><h3 style="margin: 0; font-size: 44px; font-weight: 500; letter-spacing: -0.035em; line-height: 1">FVC-001</h3><span style="font-family: 'DM Mono', monospace; font-size: 12px">LOW-END ▮ 12" VINYL</span></div>
+      <svg viewBox="0 0 400 300" role="img" aria-label="Cover of FVC-001: a bitmap germ in coral and black on grey" style="display: block; width: 100%; height: auto">
+        <rect width="400" height="300" fill="#CFCECA"></rect>
+        <g transform="translate(150 20) rotate(12 140 140)"><svg viewBox="0 0 300 300" width="290" height="290"><path d="{{c1.spot}}" fill="{{accent}}"></path><path d="{{c1.ink}}" fill="#0B0B0B"></path></svg></g>
+        <text x="14" y="34" font-family="Inter Tight, sans-serif" font-weight="500" font-size="24" letter-spacing="-0.5" fill="#0B0B0B">1/12 Low-End</text>
+        <text x="386" y="34" text-anchor="end" font-family="Inter Tight, sans-serif" font-weight="500" font-size="24" fill="#0B0B0B">33⅓</text>
+        <text x="386" y="286" text-anchor="end" font-family="Inter Tight, sans-serif" font-weight="600" font-size="22" fill="#0B0B0B">[Release Title]</text>
+        <text transform="translate(18 286) rotate(-90)" font-family="Inter Tight, sans-serif" font-size="10" fill="#0B0B0B">FVC Records   Strain 001   Seoul</text>
+      </svg>
+      <p style="margin: 0; font-size: 15px; line-height: 1.45">[Carrier] — [Release Title]. One line about how this strain spreads.</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0B0B0B; padding-top: 10px"><span style="font-family: 'DM Mono', monospace; font-size: 11px">INCUBATION [0:00] ▮ SPREAD ■■■■□</span><a href="#" class="fvc-inv" style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border: 2px solid #0B0B0B; padding: 6px 12px">Catch it ↗</a></div>
+    </article>
+    <article style="padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><h3 style="margin: 0; font-size: 44px; font-weight: 500; letter-spacing: -0.035em; line-height: 1">FVC-002</h3><span style="font-family: 'DM Mono', monospace; font-size: 12px">CLUB ▮ DIGITAL</span></div>
+      <svg viewBox="0 0 400 300" role="img" aria-label="Cover of FVC-002: a one-colour bitmap germ with blackletter title" style="display: block; width: 100%; height: auto">
+        <rect width="400" height="300" fill="#EEEEEC"></rect>
+        <g font-family="Inter Tight, sans-serif" font-size="12" fill="#0B0B0B"><text x="14" y="24">(A) SIDE A:</text><text x="14" y="38">[TRACK TITLE]</text><text x="386" y="24" text-anchor="end">(B) SIDE B:</text><text x="386" y="38" text-anchor="end">[TRACK TITLE]</text><text x="236" y="70" text-anchor="end">PLAY LOUD</text><text x="236" y="84" text-anchor="end">23:00</text></g>
+        <g transform="translate(70 40)"><svg viewBox="0 0 300 300" width="260" height="260"><path d="{{c2.ink}}" fill="#0B0B0B"></path></svg></g>
+        <text x="14" y="270" font-family="Grenze Gotisch, serif" font-weight="800" font-size="88" fill="#0B0B0B">Stra</text>
+        <text x="182" y="270" font-family="Archivo, sans-serif" font-weight="900" font-stretch="125%" font-size="66" fill="#0B0B0B">in002</text>
+        <g font-family="Inter Tight, sans-serif" font-size="11" fill="#0B0B0B"><text x="14" y="292">FVC RECORDS PRESENTS / ENTRY BY WORD OF MOUTH</text><text x="386" y="292" text-anchor="end">©2026</text></g>
+      </svg>
+      <p style="margin: 0; font-size: 15px; line-height: 1.45">[Carrier] — [Release Title]. One line about how this strain spreads.</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0B0B0B; padding-top: 10px"><span style="font-family: 'DM Mono', monospace; font-size: 11px">INCUBATION [0:00] ▮ SPREAD ■■■■■</span><a href="#" class="fvc-inv" style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border: 2px solid #0B0B0B; padding: 6px 12px">Catch it ↗</a></div>
+    </article>
+  </section>
+
+  <!-- ============ MANIFESTO (mixed type) ============ -->
+  <section style="position: relative; padding: 30px 24px 40px; border-bottom: 2px solid #0B0B0B; overflow: hidden">
+    <div style="display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase; margin-bottom: 20px"><span>(i) What is FVC</span><span>F.V.C. = Fat Virus Carrier</span></div>
+    <p style="margin: 0; font-size: clamp(34px, 4.6vw, 70px); line-height: 1.02; letter-spacing: -0.04em; font-weight: 500; max-width: 1400px">
+      We carry <span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; letter-spacing: -0.01em">fat sound</span> — thick, warm, <span style="font-family: 'Instrument Serif', serif; font-style: italic; letter-spacing: -0.02em">impossible to shake.</span> Every record we press is a <span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; background: #0B0B0B; color: #E8E7E3; padding: 0 0.1em">CARRIER</span><svg viewBox="0 0 300 300" width="1em" height="1em" aria-hidden="true" style="vertical-align: -0.12em; margin: 0 0.06em"><path d="{{mini.spot}}" fill="{{accent}}"></path><path d="{{mini.ink}}" fill="#0B0B0B"></path></svg>. Play it once and it lives in you. <span style="border: 0.06em solid #0B0B0B; border-radius: 50%; padding: 0 0.3em">Pass it on</span> and you’re one of us.
+    </p>
+    <div style="margin-top: 26px; font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: clamp(56px, 8.4vw, 132px); letter-spacing: -0.05em; line-height: 0.9; color: transparent; -webkit-text-stroke: 2px #0B0B0B">LISTEN ONCE. <span style="color: {{accent}}; -webkit-text-stroke: 0">CARRY</span> FOREVER.</div>
+  </section>
+
+  <!-- ============ FVC LAB (mini tools) ============ -->
+  <section class="fvc-grid2" style="border-bottom: 2px solid #0B0B0B">
+    <div class="fvc-col-l" style="position: relative; background: #D4D3CF; border-right: 2px solid #0B0B0B; min-height: 620px; display: flex; flex-direction: column">
+      <div style="display: flex; justify-content: space-between; padding: 16px 20px; font-size: 30px; font-weight: 500; letter-spacing: -0.03em"><span>FVC Lab ▮ Germinator</span><span>Seed {{labSeed}}</span></div>
+      <div style="flex: 1; display: flex; align-items: center; justify-content: center"><svg viewBox="0 0 300 300" role="img" aria-label="Your generated germ" style="width: min(460px, 80%); height: auto"><path d="{{labG.spot}}" fill="{{accent}}"></path><path d="{{labG.ink}}" fill="#0B0B0B"></path></svg></div>
+      <div style="display: flex; gap: 8px; align-items: center; padding: 14px 20px; background: #0B0B0B; flex-wrap: wrap">
+        <button type="button" onClick="{{labNew}}" style="height: 40px; padding: 0 18px; border: none; background: {{accent}}; color: #0B0B0B; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer">↻ Grow a new carrier</button>
+        <span style="color: #E8E7E3; font-size: 13px">Every release gets its own seed — and its own germ.</span>
+      </div>
+    </div>
+    <div style="position: relative; background: #F7F7F5; min-height: 620px; display: flex; flex-direction: column">
+      <div style="display: flex; justify-content: space-between; padding: 16px 20px; font-size: 30px; font-weight: 500; letter-spacing: -0.03em"><span>FVC Lab ▮ Mutator</span><span style="font-family: 'Instrument Serif', serif; font-style: italic">catch your name</span></div>
+      <div role="img" aria-label="{{labText}}, mutated" style="flex: 1; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; padding: 10px 20px; row-gap: 6px">
+        <sc-for list="{{labLetters}}" as="l" hint-placeholder-count="7">
+          <svg viewBox="0 0 200 260" aria-hidden="true" style="display: block; width: {{l.w}}px; height: {{l.h}}px"><path d="{{l.d}}" fill="#0B0B0B" fill-rule="evenodd"></path><text x="100" y="244" text-anchor="middle" font-family="{{l.font}}" font-style="{{l.fstyle}}" font-weight="{{l.weight}}" font-stretch="{{l.stretch}}" font-size="{{l.size}}" fill="{{l.tfill}}">{{l.ch}}</text></svg>
+        </sc-for>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center; padding: 14px 20px; background: #0B0B0B; flex-wrap: wrap">
+        <label for="fvc-lab-name" style="color: #E8E7E3; font-size: 13px">Your name</label>
+        <input id="fvc-lab-name" type="text" maxlength="14" value="{{labText}}" onChange="{{labType}}" style="flex: 1; min-width: 140px; height: 40px; padding: 0 12px; border: 2px solid #E8E7E3; background: #F7F7F5; font-family: 'Inter Tight', sans-serif; font-weight: 600; font-size: 16px; text-transform: uppercase">
+        <button type="button" onClick="{{labMutate}}" style="height: 40px; padding: 0 16px; border: none; background: #FF2DB4; color: #0B0B0B; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer">↻ Mutate</button>
+        <a href="Lab.dc.html" style="color: #E8E7E3; font-size: 13px">All 4 tools →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 1-BIT VU METER ============ -->
+  <section class="fvc-grid2" style="background: #0B0B0B; color: #E8E7E3; border-bottom: 2px solid #0B0B0B">
+    <div class="fvc-col-l" style="padding: 36px 26px; border-right: 2px solid #E8E7E3; display: flex; flex-direction: column; justify-content: space-between; gap: 28px">
+      <div>
+        <div style="font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase">Spread Meter ▮ FVC-007</div>
+        <h2 style="margin: 10px 0 0; font-weight: 500; font-size: clamp(54px, 6.4vw, 100px); letter-spacing: -0.05em; line-height: 0.9">How <span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; letter-spacing: 0">catchy</span><br><span style="font-family: 'Instrument Serif', serif; font-style: italic">is it?</span></h2>
+      </div>
+      <div>
+        <div style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 24px; text-transform: uppercase; margin-bottom: 14px">{{levelName}}</div>
+        <div role="group" aria-label="Choose a spread level" style="display: flex; gap: 6px; flex-wrap: wrap">
+          <sc-for list="{{levels}}" as="lv" hint-placeholder-count="5">
+            <button type="button" onClick="{{lv.pick}}" aria-pressed="{{lv.pressed}}" style="width: 58px; height: 50px; border: 2px solid #E8E7E3; background: {{lv.bg}}; color: {{lv.fg}}; font-family: 'DM Mono', monospace; font-size: 18px; cursor: pointer">{{lv.n}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 36px 26px; display: flex; flex-direction: column; justify-content: flex-end; gap: 10px; min-height: 420px">
+      <div role="img" aria-label="{{levelName}}" style="display: flex; align-items: flex-end; gap: 5px; height: 280px">
+        <sc-for list="{{bars}}" as="b" hint-placeholder-count="24">
+          <div style="flex: 1; height: {{b.h}}px; background: repeating-linear-gradient(to top, {{b.c}} 0 9px, transparent 9px 13px)"></div>
+        </sc-for>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 11px; border-top: 1px solid #E8E7E3; padding-top: 8px"><span>-20</span><span>-10</span><span>-5</span><span>0</span><span>+3 FAT</span></div>
+    </div>
+  </section>
+
+  <!-- ============ STRAINS 3-4 ============ -->
+  <section class="fvc-grid2" style="border-bottom: 2px solid #0B0B0B">
+    <article class="fvc-col-l" style="padding: 18px; border-right: 2px solid #0B0B0B; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><h3 style="margin: 0; font-size: 44px; font-weight: 500; letter-spacing: -0.035em; line-height: 1">FVC-003</h3><span style="font-family: 'DM Mono', monospace; font-size: 12px">POP ▮ CASSETTE</span></div>
+      <svg viewBox="0 0 400 300" role="img" aria-label="Cover of FVC-003: glitch type on acid green with a bitmap germ" style="display: block; width: 100%; height: auto">
+        <rect width="400" height="300" fill="#A6FF00"></rect>
+        <g font-family="Inter Tight, sans-serif" font-size="8.5" fill="#0B0B0B"><text x="12" y="18">The colony woke under a sodium light. Somebody pressed play and nobody pressed stop.</text><text x="12" y="29">Every speaker in the room became a carrier. The bass kept multiplying.</text></g>
+        <g transform="translate(206 26)"><svg viewBox="0 0 300 300" width="200" height="200"><path d="{{c3.spot}}" fill="#FF2DB4"></path><path d="{{c3.ink}}" fill="#0B0B0B"></path></svg></g>
+        <text x="10" y="150" font-family="Grenze Gotisch, serif" font-weight="900" font-size="120" fill="#0B0B0B" stroke="#A6FF00" stroke-width="2">C</text>
+        <text x="70" y="140" font-family="Archivo, sans-serif" font-weight="900" font-stretch="62%" font-size="96" fill="#A6FF00" stroke="#0B0B0B" stroke-width="3">o</text>
+        <text x="112" y="160" font-family="Instrument Serif, serif" font-style="italic" font-size="110" fill="#0B0B0B">l</text>
+        <text x="132" y="132" font-family="Archivo, sans-serif" font-weight="900" font-stretch="125%" font-size="80" fill="#FF2DB4" stroke="#0B0B0B" stroke-width="2">o</text>
+        <text x="194" y="158" font-family="Grenze Gotisch, serif" font-weight="900" font-size="108" fill="#0B0B0B">n</text>
+        <text x="252" y="146" font-family="Archivo, sans-serif" font-weight="900" font-stretch="62%" font-size="100" fill="none" stroke="#0B0B0B" stroke-width="3">Y</text>
+        <rect x="10" y="236" width="380" height="2" fill="#0B0B0B"></rect>
+        <text x="10" y="270" font-family="Archivo, sans-serif" font-weight="900" font-stretch="100%" font-size="30" fill="#0B0B0B">BASS BOUNCING</text>
+        <text x="390" y="270" text-anchor="end" font-family="DM Mono, monospace" font-size="13" fill="#0B0B0B">@ FVC-003 0423 1113</text>
+        <rect x="290" y="168" width="96" height="22" rx="11" fill="none" stroke="#0B0B0B" stroke-width="2"></rect>
+        <text x="338" y="184" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#0B0B0B">9:00–18:00</text>
+      </svg>
+      <p style="margin: 0; font-size: 15px; line-height: 1.45">[Carrier] — [Release Title]. One line about how this strain spreads.</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0B0B0B; padding-top: 10px"><span style="font-family: 'DM Mono', monospace; font-size: 11px">INCUBATION [0:00] ▮ SPREAD ■■■□□</span><a href="#" class="fvc-inv" style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border: 2px solid #0B0B0B; padding: 6px 12px">Catch it ↗</a></div>
+    </article>
+    <article style="padding: 18px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: baseline"><h3 style="margin: 0; font-size: 44px; font-weight: 500; letter-spacing: -0.035em; line-height: 1">FVC-004</h3><span style="font-family: 'DM Mono', monospace; font-size: 12px">LIVE ▮ OUTBREAK NIGHT</span></div>
+      <svg viewBox="0 0 400 300" role="img" aria-label="Cover of FVC-004: photocopied black bars, a grain oval and a giant 04" style="display: block; width: 100%; height: auto">
+        <defs><clipPath id="ov4"><ellipse cx="96" cy="196" rx="84" ry="34"></ellipse></clipPath></defs>
+        <rect width="400" height="300" fill="#F7F7F5"></rect>
+        <rect x="14" y="12" width="372" height="16" fill="#0B0B0B"></rect>
+        <text x="200" y="24.5" text-anchor="middle" font-family="Inter Tight, sans-serif" font-weight="800" font-size="11" letter-spacing="7" fill="#F7F7F5">OUTBREAK NIGHT ▮ SEOUL</text>
+        <text x="14" y="70" font-family="Archivo, sans-serif" font-weight="900" font-stretch="100%" font-size="44" letter-spacing="-1" fill="#0B0B0B">fvc·live</text>
+        <ellipse cx="292" cy="56" rx="90" ry="24" fill="none" stroke="#0B0B0B" stroke-width="3"></ellipse>
+        <text x="292" y="68" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-stretch="62%" font-size="38" fill="#0B0B0B">OUTBREAK</text>
+        <rect x="14" y="86" width="372" height="96" fill="#0B0B0B"></rect>
+        <text x="200" y="176" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-stretch="125%" font-size="118" letter-spacing="-6" fill="#F7F7F5">0 4</text>
+        <rect x="12" y="160" width="168" height="72" filter="url(#fvc-bitnoise)" clip-path="url(#ov4)"></rect>
+        <ellipse cx="96" cy="196" rx="84" ry="34" fill="none" stroke="#0B0B0B" stroke-width="2"></ellipse>
+        <g transform="translate(212 182)"><svg viewBox="0 0 300 300" width="110" height="110"><path d="{{c4.ink}}" fill="#0B0B0B"></path></svg></g>
+        <g font-family="Inter Tight, sans-serif" font-weight="800" font-size="13" fill="#0B0B0B"><text x="326" y="210">[ARTIST]</text><text x="326" y="226">[ARTIST]</text><text x="326" y="242">[ARTIST]</text></g>
+        <rect x="14" y="252" width="372" height="14" fill="#0B0B0B"></rect>
+        <text x="20" y="263" font-family="Inter Tight, sans-serif" font-weight="800" font-size="10" fill="#F7F7F5">[ARTIST]  [ARTIST]  [ARTIST]  LOW-END SOUNDSYSTEM  [ARTIST]  [ARTIST]</text>
+        <path d="M380 200 V240 M360 220 H400 M24 270 V296 M11 283 H37" stroke="#0B0B0B" stroke-width="1.5"></path>
+        <rect width="400" height="300" filter="url(#fvc-grain)" opacity="0.2" style="mix-blend-mode: multiply"></rect>
+      </svg>
+      <p style="margin: 0; font-size: 15px; line-height: 1.45">[Carrier] — [Live Session Title]. Recorded at an Outbreak Night.</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #0B0B0B; padding-top: 10px"><span style="font-family: 'DM Mono', monospace; font-size: 11px">LIVE ▮ FILM ▮ SPREAD ■■■■□</span><a href="#" class="fvc-inv" style="font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; border: 2px solid #0B0B0B; padding: 6px 12px">Watch ↗</a></div>
+    </article>
+  </section>
+
+  <!-- ============ INFECTED TYPE BANNERS ============ -->
+  <section aria-label="Slogans" style="background: #0B0B0B; padding: 26px 24px 30px; display: flex; flex-direction: column; gap: 22px; border-bottom: 2px solid #0B0B0B">
+    <div style="display: flex; justify-content: space-between; align-items: center; color: #E8E7E3"><span style="font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase">Infected type ▮ banner series</span><button type="button" onClick="{{bnShuffle}}" style="height: 36px; padding: 0 14px; border: none; background: #A6FF00; color: #0B0B0B; font-family: 'Inter Tight', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer">↻ Shuffle</button></div>
+<!--INC:b1-->
+<!--INC:b2-->
+<!--INC:b6-->
+  </section>
+
+  <!-- ============ DICTIONARY (inverted bars) ============ -->
+  <section style="background: #F7F7F5; border-bottom: 2px solid #0B0B0B; padding: 18px 0">
+    <div style="padding: 0 18px 12px; display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 12px; text-transform: uppercase"><span>Carrier’s dictionary</span><span>8 entries</span></div>
+    <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 18px">
+      <div style="display: flex; align-items: center; gap: 12px; background: #0B0B0B; color: #F7F7F5; padding: 2px 12px"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">RELEASE →</span><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 46px; letter-spacing: -0.03em; line-height: 1.1">STRAIN</span></div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 2px 12px; border: 2px solid #0B0B0B"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">LISTENER →</span><span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; font-size: 54px; line-height: 1">Carrier</span></div>
+      <div style="display: flex; align-items: center; gap: 12px; background: #0B0B0B; color: #F7F7F5; padding: 2px 12px"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">DEMO →</span><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 46px; letter-spacing: -0.03em; line-height: 1.1">SAMPLE SUBMISSION</span></div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 2px 12px; border: 2px solid #0B0B0B"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">RELEASE PARTY →</span><span style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 56px; line-height: 1">Outbreak Night</span></div>
+      <div style="display: flex; align-items: center; gap: 12px; background: {{accent}}; padding: 2px 12px"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">MERCH →</span><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 62%; font-size: 54px; line-height: 1.05">QUARANTINE GOODS</span></div>
+      <div style="display: flex; align-items: center; gap: 12px; background: #0B0B0B; color: #F7F7F5; padding: 2px 12px"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">NEWSLETTER →</span><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 46px; letter-spacing: -0.03em; line-height: 1.1">SPREAD REPORT</span></div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 2px 12px; border: 2px solid #0B0B0B"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">TRACK LENGTH →</span><span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; font-size: 54px; line-height: 1">Incubation</span></div>
+      <div style="display: flex; align-items: center; gap: 12px; background: #0B0B0B; color: #F7F7F5; padding: 2px 12px"><span style="font-family: 'DM Mono', monospace; font-size: 12px; width: 170px">GENRE →</span><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 46px; letter-spacing: -0.03em; line-height: 1.1">STRAIN TYPE</span></div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="position: relative; background: #D4D3CF; overflow: hidden">
+    <div style="position: relative; height: 640px">
+      <svg viewBox="0 0 1440 640" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%">
+        <defs><clipPath id="foot-oval"><ellipse cx="720" cy="330" rx="640" ry="250"></ellipse></clipPath></defs>
+        <rect x="80" y="80" width="1280" height="500" filter="url(#fvc-bitnoise)" clip-path="url(#foot-oval)"></rect>
+        <ellipse cx="720" cy="330" rx="640" ry="250" fill="none" stroke="#0B0B0B" stroke-width="6"></ellipse>
+        <rect x="300" y="236" width="840" height="190" fill="#0B0B0B"></rect>
+        <text x="720" y="400" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-stretch="125%" font-size="196" letter-spacing="-10" fill="#D4D3CF">FVC</text>
+        <g transform="translate(1030 40) rotate(14 150 150)"><svg viewBox="0 0 300 300" width="300" height="300"><path d="{{foot.spot}}" fill="{{accent}}"></path><path d="{{foot.ink}}" fill="#0B0B0B"></path></svg></g>
+        <path d="M60 60 V110 M35 85 H85 M1380 560 V610 M1355 585 H1405" stroke="#0B0B0B" stroke-width="2"></path>
+      </svg>
+      <div style="position: absolute; left: 24px; top: 20px; font-size: 28px; font-weight: 500; letter-spacing: -0.02em">Fat Virus Carrier Records</div>
+      <div style="position: absolute; right: 24px; top: 20px; font-size: 28px; font-weight: 500; letter-spacing: -0.02em">{{clockShort}}</div>
+    </div>
+    <nav aria-label="Footer" class="fvc-grid2" style="border-top: 2px solid #0B0B0B; font-size: 15px; background: #E8E7E3">
+      <div class="fvc-col-l" style="border-right: 2px solid #0B0B0B">
+        <a href="#" class="fvc-inv" style="display: block; padding: 9px 20px; border-bottom: 2px solid #0B0B0B; text-decoration: none">Home</a>
+        <a href="#" class="fvc-inv" style="display: block; padding: 9px 20px; border-bottom: 2px solid #0B0B0B; text-decoration: none">Strains</a>
+        <a href="#" class="fvc-inv" style="display: block; padding: 9px 20px; border-bottom: 2px solid #0B0B0B; text-decoration: none">Quarantine Goods</a>
+        <a href="#" class="fvc-inv" style="display: block; padding: 9px 20px; text-decoration: none">Outbreak Nights</a>
+      </div>
+      <div>
+        <a href="#" class="fvc-inv" style="display: block; padding: 9px 20px; border-bottom: 2px solid #0B0B0B; text-decoration: none">About FVC</a>
+        <a href="#" class="fvc-inv" style="display: block; padding: 9px 20px; border-bottom: 2px solid #0B0B0B; text-decoration: none">Instagram</a>
+        <a href="#" class="fvc-inv" style="display: block; padding: 9px 20px; border-bottom: 2px solid #0B0B0B; text-decoration: none">Sample Submission</a>
+        <div style="padding: 9px 20px; font-family: 'DM Mono', monospace; font-size: 13px">Seoul {{clock}}</div>
+      </div>
+    </nav>
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 12px 20px 24px; background: #E8E7E3; border-top: 2px solid #0B0B0B; font-size: 12px"><span>©2026 Fat Virus Carrier Records</span><span>fvc.ai.kr ▮ Seoul</span></div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FF5B47","options":["#FF5B47","#2B44FF","#A6FF00","#FF2DB4"]},"motion":{"editor":"boolean","default":true},"$preview":{"width":1440,"height":7500}}'>
+class Component extends DCLogic {
+/*ENGINE*/
+  pixRing(R, W, cell) {
+    var n = Math.ceil((R + W) * 2 / cell) + 2, g = new Uint8Array(n * n), i, j, o = n * cell / 2;
+    for (j = 0; j < n; j++) for (i = 0; i < n; i++) { var x = (i + 0.5) * cell - o, y = (j + 0.5) * cell - o, d = Math.sqrt(x * x + y * y); g[j * n + i] = (W > 0 ? (d >= R && d < R + W) : d < R) ? 1 : 0; }
+    var p = this.runs(g, n, n, cell, 1);
+    return p.replace(/M([-\d.]+) ([-\d.]+)/g, function (m, a, b) { return 'M' + (Math.round((parseFloat(a) - o) * 100) / 100) + ' ' + (Math.round((parseFloat(b) - o) * 100) / 100); });
+  }
+  componentDidMount() {
+    var self = this;
+    this.timer = setInterval(function () { self.setState({ now: self.fmt(), tick: ((self.state && self.state.tick) || 0) + 1 }); }, 900);
+    this.loadGlyphs(['F', 'V', 'C']);
+    var go = function () { self._fontsReady = true; self.ensureGlyphs(self.charsOf((self.state && self.state.labText) || 'CARRIER').concat('FATsoundpreadsNoiseIStheewcarrierno.7'.split(''))); self.setState({ gv: 1 }); };
+    try { if (document.fonts && document.fonts.load) { Promise.all([document.fonts.load('900 300px Archivo'), document.fonts.load('800 200px "Grenze Gotisch"'), document.fonts.load('italic 200px "Instrument Serif"')]).then(go, go); } else go(); } catch (e) { go(); }
+  }
+  componentWillUnmount() { clearInterval(this.timer); if (this._raf) cancelAnimationFrame(this._raf); }
+  charsOf(t) { var out = []; t.split('').forEach(function (c) { if (/[A-Z0-9]/.test(c) && out.indexOf(c) < 0) out.push(c); }); return out; }
+  ltr(ch, mode) { var gl = this._gl || {}; if ((mode === 'pixel' || mode === 'dots' || mode === 'outline' || mode === 'noise') && !gl[ch]) mode = 'wide'; return this.letter(ch, mode, gl); }
+  renderVals() {
+    var self = this;
+    if (!this._s) {
+      var c = 300 / 140;
+      this._s = {
+        hero: this.germBits(7, { N: 140, lumps: 5, hair: 60, eyes: 'none' }), sat: this.germBits(150, { N: 60, two: false, lumps: 4, dust: 0.004 }),
+        c1: this.germBits(23, { N: 96, lumps: 6 }), c2: this.germBits(41, { N: 104, two: false, eyes: 'cyclops', hair: 70 }),
+        c3: this.germBits(88, { N: 84, lumps: 4 }), c4: this.germBits(112, { N: 70, two: false, eyes: 'none', lumps: 3 }), mini: this.germBits(5, { N: 40, dust: 0.0001 }), foot: this.germBits(131, { N: 90, lumps: 7 }),
+        eye: { w1: this.pixRing(23, 0, c), r1: this.pixRing(22, 5, c), p1: this.pixRing(10.5, 0, c), w2: this.pixRing(17, 0, c), r2: this.pixRing(16, 4.5, c), p2: this.pixRing(8, 0, c) },
+        onMove: function (e) {
+          var r = e.currentTarget.getBoundingClientRect();
+          var mx = ((e.clientX - r.left) / r.width - 0.62) * 2.2, my = ((e.clientY - r.top) / r.height - 0.32) * 2.2, m = Math.sqrt(mx * mx + my * my);
+          if (m > 1) { mx /= m; my /= m; }
+          self._mv = { mx: mx, my: my };
+          if (!self._raf) self._raf = requestAnimationFrame(function () { self._raf = 0; self.setState(self._mv); });
+        }
+      };
+    }
+    var S = this._s, st = this.state || {}, motion = this.props.motion ?? true;
+    var tick = motion ? (st.tick || 0) : 0, glyphs = st.glyphs;
+    var modes = ['pixel', 'dots', 'outline', 'noise', 'goth', 'serif', 'wide'];
+    var letters = ['F', 'V', 'C'].map(function (ch, idx) { return self.letter(ch, modes[(tick + idx * 2) % modes.length], glyphs); });
+    var mx = st.mx, my = st.my;
+    if (mx == null) { mx = Math.sin(tick * 0.7) * 0.8; my = Math.cos(tick * 0.45) * 0.5; }
+    var pup = { x1: Math.round(mx * 9 * 10) / 10, y1: Math.round(my * 9 * 10) / 10, x2: Math.round(mx * 6 * 10) / 10, y2: Math.round(my * 6 * 10) / 10 };
+    var level = st.level || 4, names = ['Level 1 — Mild', 'Level 2 — Hummable', 'Level 3 — Catchy', 'Level 4 — Stuck in your head', 'Level 5 — Fully infected'];
+    var accent = this.props.accent ?? '#FF5B47';
+    var levels = [1, 2, 3, 4, 5].map(function (n) { var on = n === level; return { n: n, pressed: on ? 'true' : 'false', bg: on ? '#E8E7E3' : '#0B0B0B', fg: on ? '#0B0B0B' : '#E8E7E3', pick: function () { self.setState({ level: n }); } }; });
+    var lit = Math.round(level * 24 / 5), bars = [];
+    for (var i = 0; i < 24; i++) bars.push({ h: 60 + i * 9, c: i < lit ? (i > 18 ? accent : '#E8E7E3') : '#2A2A2A' });
+    var now = st.now || this.fmt();
+    if (!this._lh) {
+      this._lh = {
+        labNew: function () { self.setState({ labSeed: 1 + Math.floor(Math.random() * 9999) }); },
+        labMutate: function () { self.setState({ labM: 1 + Math.floor(Math.random() * 9999) }); },
+        labType: function (e) { var t = String(e.target.value || '').toUpperCase().slice(0, 14); if (self._fontsReady) self.ensureGlyphs(self.charsOf(t)); self.setState({ labText: t }); }
+      };
+    }
+    if (!this._bg) { this._bg = { m1: this.germBits(41, { N: 60, two: false, dust: 0, eyes: 'cyclops' }), m2: this.germBits(131, { N: 60, two: false, dust: 0 }), t1: this.germBits(23, { N: 90, dust: 0.002 }) }; this._bnS = function () { self.setState({ bnSeed: 1 + Math.floor(Math.random() * 999) }); }; }
+    var labSeed = st.labSeed || 23;
+    if (this._lk !== labSeed) { this._lk = labSeed; this._lg = this.germBits(labSeed, { N: 110 }); }
+    var labText = st.labText == null ? 'CARRIER' : st.labText, labM = st.labM || 3, lprev = -1;
+    var lw = Math.max(44, Math.min(120, Math.floor(560 / Math.max(labText.length, 4))));
+    var labLetters = labText.split('').map(function (ch, i) {
+      if (ch === ' ') return { ch: '', d: '', tfill: 'none', font: 'Archivo', fstyle: 'normal', weight: '900', stretch: '62%', size: '300', w: Math.round(lw * 0.5), h: Math.round(lw * 1.3) };
+      var mi = Math.floor(self.hash(i, labM + tick, 77) * 7); if (mi === lprev) mi = (mi + 1) % 7; lprev = mi;
+      var L = /[A-Z0-9]/.test(ch) ? self.ltr(ch, modes[mi]) : self.letter(ch, 'wide', {}); L.w = lw; L.h = Math.round(lw * 1.3); return L;
+    });
+    return {
+      BN: this.banners(st.bnSeed || 7, tick), bG: this._bg, bnShuffle: this._bnS,
+      labG: this._lg, labSeed: labSeed, labNew: this._lh.labNew, labMutate: this._lh.labMutate, labType: this._lh.labType, labText: labText, labLetters: labLetters,
+      accent: accent, tapeClass: motion ? 'fvc-tape' : '', tiles: [1, 2, 3, 4, 5, 6, 7, 8].map(function (k) { return { k: k }; }),
+      clock: now.full, clockShort: now.short, letters: letters, onMove: S.onMove, eye: S.eye, pup: pup,
+      hero: S.hero, sat: S.sat, c1: S.c1, c2: S.c2, c3: S.c3, c4: S.c4, mini: S.mini, foot: S.foot,
+      levels: levels, levelName: names[level - 1], bars: bars
+    };
+  }
+}
+</script>
+</body>
+</html>

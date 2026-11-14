@@ -1,0 +1,41 @@
+# 07 — Build Notes (what was built, what differs, what is left)
+
+Site: `apps/web` (Next.js 16 App Router + TypeScript, CSS Modules + `design/tokens/tokens.css`, `@fvc/engine` workspace package).
+Run from the repo root: `npm run dev` / `npm run build` / `npm run lint` / `npm run typecheck`.
+
+## Milestones (docs/05) — status
+
+| | Status | Checked |
+|---|---|---|
+| M0 Setup | done | engine `npm test` 7/7 · `next build` clean (37 static pages, no warnings) · germs render server-side |
+| M1 Components | done | all in `components/fvc/*`; side-by-side sheet at `/dev/components` (404 in production unless `FVC_DEV_PAGES=true`) · no console errors |
+| M2 Home | done | sections 1–10 · timers pause off-screen (IntersectionObserver) and stop with reduced motion · 390px: no horizontal scroll |
+| M3 Strains | done | `/strains` (type + format filters, newest first) · `/strains/[id]` (cover, specimen label, tracklist, vinyl, links, share, related) · OG image per strain · `generateStaticParams` — a new object in `content/strains.json` adds a page + OG image with no code change |
+| M4 Lab | done | `/lab` hub + 4 tool pages · every control from the Lab board · state in the URL (`?seed=&eyes=&n=&inks=&spot=`, `?seed=&base=&pal=`, `?seed=&pal=`, `?t=&seed=`); reloading the URL reproduces the output (a Mutator link with `seed` opens frozen) |
+| M5 Banners & posters | done | all six banners (1 s mutate, Shuffle, Freeze) · `/outbreaks`, `/outbreaks/[id]` with `Poster` (golova / creatura / noise) filled from `outbreaks.json` |
+| M6 Forms | built, **not connected** | `/submit` + `/api/submit` (zod, honeypot, rate limit, errors announced via `role=alert` + per-field `aria-describedby`) · `/spread-report` + `/api/spread`. Delivery waits on providers (Q4, Q5) — see Env |
+| M7 Quality | partly verified | real buttons/labels, focus styles, `aria-label` on mutating text, no white on acid/yellow, reduced motion respected, art pre-rendered on the server. **Lighthouse not run yet** (see below) |
+| M8 Launch | pending | favicon (pixel C on coral) + app icon (germ on ink) + OG done. Vercel project, domain, analytics need your accounts |
+
+## Decisions and deviations
+
+- **Fonts are loaded from the Google Fonts stylesheet, not `next/font`.** The engine rasterises letters with `900 300px Archivo` and draws `<text font-family="Grenze Gotisch">`; `next/font` renames families, which would silently break every mutating letter. (`docs/05` M0 asked for `next/font`.)
+- **Drafts are shown by default.** Every entry in `content/*.json` is `status: "draft"` and the plan (00 §10) is to launch on placeholders. Set `FVC_HIDE_DRAFTS=true` once real releases exist (`docs/06` Q1 default would otherwise hide almost everything, including the home cards).
+- **Hero germ = latest strain's seed** (Q8 default). The live pointer eyes (`HERO_EYES`) are drawn for seed 7 only; any other seed keeps its own generated eyes.
+- **Cover templates are data-driven.** The canvas covers c1–c4 hard-code seeds; here each template takes the strain's seed / spot / eyes, keeping the canvas germ settings per template (`COVER_GERM` in `components/fvc/Cover.tsx`).
+- **Footer NavTable** adds `FVC Lab` and `Spread Report`; `Instagram` is hidden until `site.social.instagram` is set (Q6).
+- **Inner pages get a compact TopBar** (the canvas only shows the home page, which keeps its hero corners and no bar).
+- **Forms never pretend to send.** Without provider env vars they log in development and answer "not open yet" (503) in production.
+- **Mutator text** is limited to `A–Z 0–9 space . ! ? & -` so every character has a glyph.
+
+## Env (all optional) — `apps/web/.env.example`
+
+`FVC_HIDE_DRAFTS` · `RESEND_API_KEY` + `SUBMISSIONS_TO` (+ `SUBMISSIONS_FROM`) · `NEWSLETTER_WEBHOOK_URL` · `FVC_DEV_PAGES`
+
+## Left to do
+
+1. **Lighthouse** (M7 “Done when”): run against a production build, e.g.
+   `npm run build && npm run start` then `npx lighthouse http://localhost:3000 --view` and the same for `/strains/FVC-007`.
+2. **M8**: create the Vercel project (root `apps/web`, install from the repo root), add `fvc.ai.kr` (A `76.76.21.21` / CNAME `cname.vercel-dns.com` — use the values Vercel shows), enable Vercel Analytics (Q9).
+3. Decide Q4 (submission email provider) and Q5 (newsletter provider), then set the env vars.
+4. Replace placeholders in `content/*.json` (Q1) — no code changes needed.

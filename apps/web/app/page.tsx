@@ -1,0 +1,52 @@
+import { ConnwaxStack } from '@/components/home/ConnwaxStack';
+import { Dictionary } from '@/components/home/Dictionary';
+import { Hero } from '@/components/home/Hero';
+import { Manifesto } from '@/components/home/Manifesto';
+import { MiniLab } from '@/components/home/MiniLab';
+import { BannerSeries } from '@/components/fvc/Banners';
+import { Footer } from '@/components/fvc/Footer';
+import { SpreadMeter } from '@/components/fvc/SpreadMeter';
+import { StrainCard } from '@/components/fvc/StrainCard';
+import { getLatestStrain, getOutbreaks, getStrains, site } from '@/lib/content';
+
+export default function Home() {
+  const latest = getLatestStrain();
+  const strains = getStrains();
+  const outbreak = getOutbreaks().find((o) => o.strain === latest.id);
+  const pair = (a: number) => strains.slice(a, a + 2);
+  // One spot ink per piece: the page takes the latest strain's spot (coral by default).
+  const spot = latest.spot;
+
+  return (
+    <>
+      <Hero strain={latest} outbreak={outbreak} />
+      <main id="main">
+        <ConnwaxStack strain={latest} />
+
+        {pair(0).length > 0 && (
+          <section className="fvc-grid2 fvc-rule-b" aria-label="Strains">
+            {pair(0).map((s, i) => (
+              <StrainCard key={s.id} strain={s} className={i === 0 ? 'fvc-col-l' : undefined} />
+            ))}
+          </section>
+        )}
+
+        <Manifesto spot={spot} />
+        <MiniLab spot={spot} />
+        <SpreadMeter strainId={latest.id} initial={latest.spreadLevel ?? 4} spot={spot} />
+
+        {pair(2).length > 0 && (
+          <section className="fvc-grid2 fvc-rule-b" aria-label="More strains">
+            {pair(2).map((s, i) => (
+              <StrainCard key={s.id} strain={s} className={i === 0 ? 'fvc-col-l' : undefined} />
+            ))}
+          </section>
+        )}
+
+        <BannerSeries ids={['b1', 'b2', 'b6']} />
+        <Dictionary vocabulary={site.vocabulary} spot={spot} />
+      </main>
+      <Footer spot={spot} />
+    </>
+  );
+}

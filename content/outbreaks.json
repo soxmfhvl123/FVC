@@ -1,0 +1,21 @@
+{
+  "outbreaks": [
+    {
+      "id": "ON-001",
+      "title": "Outbreak Night",
+      "date": null,
+      "doors": "23:00",
+      "venue": "[PLACEHOLDER]",
+      "city": "Seoul",
+      "lineup": [
+        "[PLACEHOLDER]",
+        "[PLACEHOLDER]",
+        "[PLACEHOLDER]"
+      ],
+      "strain": "FVC-007",
+      "posterStyle": "golova",
+      "ticketUrl": null,
+      "status": "draft"
+    }
+  ]
+}

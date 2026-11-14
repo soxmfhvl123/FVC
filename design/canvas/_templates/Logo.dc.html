@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FVC — Logo system</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!--HEAD-->
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 1600px; height: 1000px; box-sizing: border-box; background: #E8E7E3; color: #0B0B0B; font-family: 'Inter Tight', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+<!--DEFS-->
+  <div style="height: 54px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 2px solid #0B0B0B">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -0.03em">01 Logo — <span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; letter-spacing: 0">infected</span> <span style="font-family: 'Instrument Serif', serif; font-style: italic">wordmark</span></h1>
+    <span style="font-size: 14px">The mark never looks the same twice</span>
+  </div>
+  <div style="flex: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: 560px 1fr">
+
+    <div style="grid-column: span 2; position: relative; border-right: 2px solid #0B0B0B; border-bottom: 2px solid #0B0B0B; display: flex; flex-direction: column">
+      <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative">
+        <span style="position: absolute; left: 18px; top: 14px; font-size: 13px">A — Live mark (mutates every 0.9s)</span>
+        <div role="img" aria-label="FVC wordmark, mutating" style="display: flex">
+          <sc-for list="{{live}}" as="l" hint-placeholder-count="3">
+            <svg viewBox="0 0 200 260" aria-hidden="true" style="display: block; width: 250px; height: 325px"><path d="{{l.d}}" fill="#0B0B0B" fill-rule="evenodd"></path><text x="100" y="244" text-anchor="middle" font-family="{{l.font}}" font-style="{{l.fstyle}}" font-weight="{{l.weight}}" font-stretch="{{l.stretch}}" font-size="{{l.size}}" fill="{{l.tfill}}">{{l.ch}}</text></svg>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-top: 2px solid #0B0B0B">
+        <sc-for list="{{states}}" as="st" hint-placeholder-count="7">
+          <div style="border-right: 1px solid #0B0B0B; padding: 8px 6px 6px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+            <div style="display: flex">
+              <sc-for list="{{st.letters}}" as="l" hint-placeholder-count="3">
+                <svg viewBox="0 0 200 260" aria-hidden="true" style="display: block; width: 40px; height: 52px"><path d="{{l.d}}" fill="#0B0B0B" fill-rule="evenodd"></path><text x="100" y="244" text-anchor="middle" font-family="{{l.font}}" font-style="{{l.fstyle}}" font-weight="{{l.weight}}" font-stretch="{{l.stretch}}" font-size="{{l.size}}" fill="{{l.tfill}}">{{l.ch}}</text></svg>
+              </sc-for>
+            </div>
+            <span style="font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase">{{st.name}}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="position: relative; border-bottom: 2px solid #0B0B0B; background: #D4D3CF; overflow: hidden">
+      <span style="position: absolute; left: 18px; top: 14px; font-size: 13px; z-index: 2">B — Petri dish seal</span>
+      <svg viewBox="0 0 533 560" role="img" aria-label="FVC petri dish seal: grain-filled oval with a black bar" style="display: block; width: 100%; height: 100%">
+        <defs><clipPath id="lg-oval"><ellipse cx="266" cy="290" rx="236" ry="150"></ellipse></clipPath></defs>
+        <rect x="30" y="140" width="472" height="300" filter="url(#fvc-bitnoise)" clip-path="url(#lg-oval)"></rect>
+        <ellipse cx="266" cy="290" rx="236" ry="150" fill="none" stroke="#0B0B0B" stroke-width="5"></ellipse>
+        <rect x="96" y="238" width="340" height="104" fill="#0B0B0B"></rect>
+        <text x="266" y="328" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-stretch="125%" font-size="104" letter-spacing="-5" fill="#D4D3CF">FVC</text>
+        <g transform="translate(350 60)"><svg viewBox="0 0 300 300" width="170" height="170"><path d="{{gA.spot}}" fill="{{accent}}"></path><path d="{{gA.ink}}" fill="#0B0B0B"></path></svg></g>
+        <path d="M36 500 V540 M16 520 H56 M496 80 V120 M476 100 H516" stroke="#0B0B0B" stroke-width="1.5"></path>
+        <text x="266" y="490" text-anchor="middle" font-family="Inter Tight, sans-serif" font-weight="800" font-size="13" letter-spacing="6" fill="#0B0B0B">FAT VIRUS CARRIER RECORDS</text>
+      </svg>
+    </div>
+
+    <div style="position: relative; border-right: 2px solid #0B0B0B; display: flex; flex-direction: column; justify-content: space-between; padding: 14px 18px 18px">
+      <span style="font-size: 13px">C — Mixed-strain lockup</span>
+      <div style="display: flex; align-items: flex-end; gap: 0; line-height: 0.8">
+        <span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; font-size: 200px">F</span>
+        <span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 170px; letter-spacing: -0.04em">V</span>
+        <svg viewBox="0 0 200 260" aria-hidden="true" style="display: block; width: 116px; height: 151px; margin-bottom: 4px"><path d="{{cPix.d}}" fill="#0B0B0B" fill-rule="evenodd"></path><text x="100" y="244" text-anchor="middle" font-family="{{cPix.font}}" font-style="{{cPix.fstyle}}" font-weight="{{cPix.weight}}" font-stretch="{{cPix.stretch}}" font-size="{{cPix.size}}" fill="{{cPix.tfill}}">C</text></svg>
+        <span style="width: 22px; height: 22px; border: 2px solid #0B0B0B; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; margin-bottom: 120px">R</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 13px; text-transform: uppercase"><span>Fat Virus Carrier</span><span>Records ©2026</span></div>
+    </div>
+
+    <div style="position: relative; border-right: 2px solid #0B0B0B; display: flex; flex-direction: column; justify-content: center; padding: 0 22px; overflow: hidden">
+      <span style="position: absolute; left: 18px; top: 14px; font-size: 13px">D — Full-name type stack</span>
+      <div style="line-height: 0.86">
+        <div style="font-family: 'Grenze Gotisch', serif; font-weight: 800; font-size: 96px">Fat</div>
+        <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 104px; padding-left: 60px">Virus</div>
+        <div style="display: inline-block; background: #0B0B0B; color: #E8E7E3; font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 64px; letter-spacing: -0.04em; padding: 2px 10px">CARRIER</div>
+      </div>
+      <svg viewBox="0 0 300 300" width="110" height="110" aria-hidden="true" style="position: absolute; right: 24px; top: 46px"><path d="{{gD.ink}}" fill="#0B0B0B"></path></svg>
+      <span style="position: absolute; right: 18px; bottom: 14px; font-size: 13px">Records</span>
+    </div>
+
+    <div style="position: relative; display: flex; align-items: center; justify-content: space-around; padding: 0 16px">
+      <span style="position: absolute; left: 18px; top: 14px; font-size: 13px">E — App icon · Sticker · Favicon</span>
+      <div style="width: 150px; height: 150px; border-radius: 34px; background: #0B0B0B; display: flex; align-items: center; justify-content: center; overflow: hidden"><svg viewBox="0 0 300 300" width="150" height="150" aria-hidden="true"><path d="{{gC.spot}}" fill="{{accent}}"></path><path d="{{gC.ink}}" fill="#E8E7E3"></path></svg></div>
+      <svg viewBox="0 0 180 110" width="180" height="110" aria-hidden="true"><defs><clipPath id="lg-st"><ellipse cx="90" cy="55" rx="86" ry="51"></ellipse></clipPath></defs><rect width="180" height="110" filter="url(#fvc-bitnoise)" clip-path="url(#lg-st)"></rect><ellipse cx="90" cy="55" rx="86" ry="51" fill="none" stroke="#0B0B0B" stroke-width="3"></ellipse><rect x="26" y="38" width="128" height="34" fill="#0B0B0B"></rect><text x="90" y="64" text-anchor="middle" font-family="Archivo, sans-serif" font-weight="900" font-stretch="125%" font-size="28" fill="#E8E7E3">FVC</text></svg>
+      <div style="width: 44px; height: 44px; background: {{accent}}; border: 2px solid #0B0B0B; display: flex; align-items: center; justify-content: center"><svg viewBox="0 0 200 260" width="28" height="36" aria-hidden="true"><path d="{{cPix.d}}" fill="#0B0B0B"></path><text x="100" y="244" text-anchor="middle" font-family="{{cPix.font}}" font-weight="{{cPix.weight}}" font-stretch="{{cPix.stretch}}" font-size="{{cPix.size}}" fill="{{cPix.tfill}}">C</text></svg></div>
+    </div>
+  </div>
+  <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: multiply; opacity: 0.16"><rect width="100%" height="100%" filter="url(#fvc-grain)"></rect></svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FF5B47","options":["#FF5B47","#2B44FF","#A6FF00","#FF2DB4"]},"motion":{"editor":"boolean","default":true},"$preview":{"width":1600,"height":1000}}'>
+class Component extends DCLogic {
+/*ENGINE*/
+  componentDidMount() {
+    var self = this;
+    this.timer = setInterval(function () { self.setState({ tick: ((self.state && self.state.tick) || 0) + 1 }); }, 900);
+    this.loadGlyphs(['F', 'V', 'C']);
+  }
+  componentWillUnmount() { clearInterval(this.timer); }
+  renderVals() {
+    var self = this;
+    if (!this._s) { this._s = { gA: this.germBits(7, { N: 90, lumps: 5 }), gC: this.germBits(41, { N: 70, eyes: 'cyclops', dust: 0.002 }), gD: this.germBits(88, { N: 60, two: false, dust: 0 }) }; }
+    var S = this._s, st = this.state || {}, g = st.glyphs, motion = this.props.motion ?? true, tick = motion ? (st.tick || 0) : 0;
+    var modes = ['pixel', 'dots', 'outline', 'noise', 'goth', 'serif', 'wide'];
+    var live = ['F', 'V', 'C'].map(function (ch, i) { return self.letter(ch, modes[(tick + i * 2) % 7], g); });
+    var states = modes.map(function (m) { return { name: m === 'goth' ? 'blackletter' : m, letters: ['F', 'V', 'C'].map(function (ch) { return self.letter(ch, m, g); }) }; });
+    return { accent: this.props.accent ?? '#FF5B47', live: live, states: states, cPix: this.letter('C', 'pixel', g), gA: S.gA, gC: S.gC, gD: S.gD };
+  }
+}
+</script>
+</body>
+</html>

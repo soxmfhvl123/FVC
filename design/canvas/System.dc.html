@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>FVC — Color, type and rules</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=Inter+Tight:wght@400;500;600;800&amp;family=DM+Mono:wght@400;500&amp;family=Grenze+Gotisch:wght@400..900&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="position: relative; width: 1600px; height: 1240px; box-sizing: border-box; background: #E8E7E3; color: #0B0B0B; font-family: 'Inter Tight', system-ui, sans-serif; display: flex; flex-direction: column; overflow: hidden">
+<svg width="0" height="0" aria-hidden="true" style="position: absolute">
+<defs>
+<filter id="fvc-grain" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter>
+<filter id="fvc-bitnoise" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="4"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix><feComponentTransfer><feFuncR type="discrete" tableValues="0 1"></feFuncR><feFuncG type="discrete" tableValues="0 1"></feFuncG><feFuncB type="discrete" tableValues="0 1"></feFuncB></feComponentTransfer></filter>
+</defs>
+</svg>
+  <div style="height: 54px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 2px solid #0B0B0B">
+    <h1 style="margin: 0; font-size: 30px; font-weight: 500; letter-spacing: -0.03em">05 Color · Type · <span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; letter-spacing: 0">Rules</span></h1>
+    <span style="font-size: 14px">Fat Virus Carrier Records — system v1</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-bottom: 2px solid #0B0B0B">
+    <div style="border-right: 2px solid #0B0B0B; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px">
+      <div style="display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 6px"><span>COLOR</span><span>BASE = 3 GREYS + INK · ONE SPOT PER PIECE</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #E8E7E3; border: 2px solid #0B0B0B"><span style="font-weight: 600">Paper</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#E8E7E3</span><span style="font-size: 14px">Page ground</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #D4D3CF; border: 2px solid #0B0B0B"><span style="font-weight: 600">Golova grey</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#D4D3CF</span><span style="font-size: 14px">Hero, posters, lens</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #F7F7F5; border: 2px solid #0B0B0B"><span style="font-weight: 600">Copy white</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#F7F7F5</span><span style="font-size: 14px">Photocopy pieces, labels</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: #0B0B0B; color: #E8E7E3"><span style="font-weight: 600">Ink</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">#0B0B0B</span><span style="font-size: 14px">Bitmap, bars, type</span></div>
+      <div style="display: grid; grid-template-columns: 1fr 120px 1.6fr; align-items: center; height: 50px; padding: 0 14px; background: {{accent}}"><span style="font-weight: 600">FVC Coral (spot)</span><span style="font-family: 'DM Mono', monospace; font-size: 13px">{{accent}}</span><span style="font-size: 14px">The house spot ink</span></div>
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; margin-top: 4px">
+        <div style="height: 76px; background: #A6FF00; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Acid</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#A6FF00</span></div>
+        <div style="height: 76px; background: #FF2DB4; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Magenta</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#FF2DB4</span></div>
+        <div style="height: 76px; background: #FF2A1A; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Signal red</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#FF2A1A</span></div>
+        <div style="height: 76px; background: #2B44FF; color: #F7F7F5; padding: 8px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between"><span style="font-weight: 600; font-size: 14px">Cobalt</span><span style="font-family: 'DM Mono', monospace; font-size: 12px">#2B44FF</span></div>
+      </div>
+      <span style="font-size: 12px; margin-top: 4px">Outbreak colours (acid, magenta, red, cobalt) only for banners, stickers and special strains.</span>
+    </div>
+    <div style="padding: 14px 18px; display: flex; flex-direction: column">
+      <div style="display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 6px"><span>TYPE</span><span>MIX STRAINS — NEVER MORE THAN 3 PER LINE</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-size: 44px; font-weight: 500; letter-spacing: -0.03em">11/13 Strain·007</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">INTER TIGHT 500<br>INFO, CORNERS</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 125%; font-size: 48px; letter-spacing: -0.04em; background: #0B0B0B; color: #E8E7E3; padding: 0 8px">CARRIER</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">ARCHIVO 900 · 125%<br>BARS, NUMBERS</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: Archivo, sans-serif; font-weight: 900; font-stretch: 62%; font-size: 64px; line-height: 1">FAT VIRUS CARRIER</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">ARCHIVO 900 · 62%<br>HEADLINES</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: 'Grenze Gotisch', serif; font-weight: 800; font-size: 60px; line-height: 1">Outbreak night</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">GRENZE GOTISCH 800<br>ONE WORD OF FLAVOUR</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #0B0B0B; padding: 6px 0"><span style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: 60px; line-height: 1">impossible to shake</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">INSTRUMENT SERIF ITALIC<br>ASIDES</span></div>
+      <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0"><span style="font-family: 'DM Mono', monospace; font-size: 18px">INCUBATION [0:00] ▮ SPREAD ■■■■□</span><span style="font-family: 'DM Mono', monospace; font-size: 11px; text-align: right">DM MONO 400<br>DATA</span></div>
+    </div>
+  </div>
+  <div style="flex: 1; display: grid; grid-template-columns: 1.4fr 1fr 1fr">
+    <div style="border-right: 2px solid #0B0B0B; padding: 14px 18px">
+      <div style="font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 10px">RULES</div>
+      <ol style="margin: 0; padding-left: 22px; font-size: 17px; line-height: 1.42">
+        <li>Images are <b>bitmap only</b>: two inks max, grain on top. No gradients, no soft shadows.</li>
+        <li>Every germ is <b>generated from a seed</b>. One release = one seed = one body.</li>
+        <li>The wordmark <b>mutates</b>. Never show it the same way twice on one page.</li>
+        <li>Small type lives in the <b>corners and edges</b>, big things go in the middle.</li>
+        <li>Black bars hold lineups and data. Ovals hold grain.</li>
+        <li>Placeholders stay in [brackets] until real names arrive.</li>
+      </ol>
+    </div>
+    <div style="border-right: 2px solid #0B0B0B; padding: 14px 18px; display: flex; flex-direction: column; gap: 4px">
+      <div style="font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 6px">VOCABULARY</div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Release</span><b>STRAIN</b></div>
+      <div style="border: 2px solid #0B0B0B; padding: 1px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Listener</span><b>CARRIER</b></div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Demo</span><b>SAMPLE</b></div>
+      <div style="border: 2px solid #0B0B0B; padding: 1px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Party</span><b>OUTBREAK NIGHT</b></div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Merch</span><b>QUARANTINE GOODS</b></div>
+      <div style="border: 2px solid #0B0B0B; padding: 1px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Newsletter</span><b>SPREAD REPORT</b></div>
+      <div style="background: #0B0B0B; color: #E8E7E3; padding: 3px 10px; display: flex; justify-content: space-between"><span style="font-size: 12px">Track length</span><b>INCUBATION</b></div>
+    </div>
+    <div style="position: relative; background: #D4D3CF; overflow: hidden">
+      <div style="position: absolute; left: 18px; top: 14px; font-family: 'DM Mono', monospace; font-size: 12px; line-height: 1.5">GERM RECIPE<br>seed 7 · grid 110 · eyes 2<br>lumps 5 · hair 54 · two inks</div>
+      <svg viewBox="0 0 300 300" role="img" aria-label="Example germ from seed 7" style="position: absolute; right: -20px; bottom: -30px; width: 330px; height: 330px"><path d="{{demo.spot}}" fill="{{accent}}"></path><path d="{{demo.ink}}" fill="#0B0B0B"></path></svg>
+    </div>
+  </div>
+  <svg aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: multiply; opacity: 0.12"><rect width="100%" height="100%" filter="url(#fvc-grain)"></rect></svg>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"color","default":"#FF5B47","options":["#FF5B47","#2B44FF","#A6FF00","#FF2DB4"]},"$preview":{"width":1600,"height":1240}}'>
+class Component extends DCLogic {
+  rng(seed) { var s = seed % 2147483647; if (s <= 0) s += 2147483646; return function () { s = s * 16807 % 2147483647; return (s - 1) / 2147483646; }; }
+  hash(ix, iy, s) { var h = (ix * 374761393 + iy * 668265263 + s * 982451653) | 0; h = Math.imul(h ^ (h >>> 13), 1274126177); h = h ^ (h >>> 16); return (h >>> 0) / 4294967296; }
+  noise(x, y, s) {
+    var x0 = Math.floor(x), y0 = Math.floor(y), fx = x - x0, fy = y - y0;
+    fx = fx * fx * (3 - 2 * fx); fy = fy * fy * (3 - 2 * fy);
+    var a = this.hash(x0, y0, s), b = this.hash(x0 + 1, y0, s), c = this.hash(x0, y0 + 1, s), d = this.hash(x0 + 1, y0 + 1, s);
+    return a + (b - a) * fx + (c - a) * fy + (a - b - c + d) * fx * fy;
+  }
+  fbm(x, y, s) { return this.noise(x, y, s) * 0.55 + this.noise(x * 2.1, y * 2.1, s + 7) * 0.3 + this.noise(x * 4.3, y * 4.3, s + 13) * 0.15; }
+  runs(g, N, M, cell, val) {
+    var d = '', i, j, r = function (n) { return Math.round(n * 100) / 100; };
+    for (j = 0; j < M; j++) { i = 0; while (i < N) { if (g[j * N + i] === val) { var s = i; while (i < N && g[j * N + i] === val) i++; var w = (i - s) * cell; d += 'M' + r(s * cell) + ' ' + r(j * cell) + 'h' + r(w) + 'v' + r(cell) + 'h' + r(-w) + 'z'; } else i++; } }
+    return d;
+  }
+  germBits(seed, o) {
+    o = o || {};
+    var N = o.N || 110, S = 300, cell = S / N, r = this.rng(seed), span = 1.45;
+    var k1 = o.lumps || (4 + Math.floor(r() * 3)), k2 = k1 + 2, p1 = r() * 6.283, p2 = r() * 6.283, a1 = 0.07 + r() * 0.04, a2 = 0.03 + r() * 0.03;
+    var H = o.hair || 54, two = o.two !== false, dust = o.dust == null ? 0.006 : o.dust;
+    var eyes = o.eyes === 'none' ? [] : o.eyes === 'cyclops' ? [[0, -0.08, 0.34, 0.1, 0.02, 0.15]] : o.eyes === 'three' ? [[-0.36, -0.12, 0.15, -0.36, -0.04, 0.07], [0, -0.32, 0.13, 0.02, -0.25, 0.06], [0.34, -0.1, 0.17, 0.34, -0.01, 0.08]] : [[-0.3, -0.14, 0.22, -0.2, -0.12, 0.1], [0.28, -0.24, 0.16, 0.36, -0.22, 0.075]];
+    var g = new Uint8Array(N * N), i, j, e;
+    for (j = 0; j < N; j++) for (i = 0; i < N; i++) {
+      var x = ((i + 0.5) / N * 2 - 1) * span, y = ((j + 0.5) / N * 2 - 1) * span;
+      var dist = Math.sqrt(x * x + y * y), th = Math.atan2(y, x);
+      var R = 1 + a1 * Math.sin(k1 * th + p1) + a2 * Math.sin(k2 * th + p2) + (this.noise(x * 6, y * 6, seed + 3) - 0.5) * 0.08;
+      var v = 0;
+      if (dist < R) {
+        var t = this.fbm(x * 2.2 + 5, y * 2.2 + 5, seed), fine = this.hash(i, j, seed + 11);
+        if (dist > R - 0.07) v = fine > 0.12 ? 1 : 0;
+        else if (two && t > 0.57) v = 2;
+        else if (t < 0.42) v = fine > 0.04 ? 1 : 0;
+        else if (t < 0.49) v = fine > 0.5 ? 1 : 0;
+        else v = fine > 0.9 ? 1 : 0;
+        for (e = 0; e < eyes.length; e++) { var E = eyes[e], de = Math.hypot(x - E[0], y - E[1]), dp = Math.hypot(x - E[3], y - E[4]); if (dp < E[5]) v = 1; else if (de < E[2]) v = 0; else if (de < E[2] + 0.055) v = 1; }
+      } else if (dist < R + 0.45) {
+        var out = dist - R, best = 9, kk, k0 = Math.round(th / 6.2832 * H);
+        for (kk = k0 - 2; kk <= k0 + 2; kk++) {
+          var Lk = 0.1 + this.hash(kk, 0, seed + 5) * 0.3, wob = (this.hash(kk, 1, seed + 5) - 0.5) * 3.2;
+          if (out > Lk) continue;
+          var ang = kk / H * 6.2832 + wob * out * out * 2.2, dth = Math.abs(Math.atan2(Math.sin(th - ang), Math.cos(th - ang))) * dist;
+          if (dth < 0.026 * (1 - 0.55 * out / Lk)) best = 0;
+        }
+        if (best === 0) v = 1;
+      }
+      if (v === 0 && dist >= R) { var hd = this.hash(i, j, seed + 29); if (hd < dust) v = 1; else if (two && hd > 1 - dust * 0.7) v = 2; }
+      g[j * N + i] = v;
+    }
+    return { ink: this.runs(g, N, N, cell, 1), spot: this.runs(g, N, N, cell, 2) };
+  }
+  circ(cx, cy, R) { var r = function (n) { return Math.round(n * 100) / 100; }; return 'M' + r(cx - R) + ' ' + r(cy) + 'a' + r(R) + ' ' + r(R) + ' 0 1 0 ' + r(2 * R) + ' 0a' + r(R) + ' ' + r(R) + ' 0 1 0 ' + r(-2 * R) + ' 0'; }
+  glyphTex(m, C, Rr, cell, mode, seed) {
+    var at = function (i, j) { return i >= 0 && j >= 0 && i < C && j < Rr ? m[j * C + i] : 0; };
+    var g = new Uint8Array(C * Rr), i, j, d = '';
+    if (mode === 'dots') {
+      for (j = 0; j < Rr; j += 2) for (i = 0; i < C; i += 2) if (at(i, j) || at(i + 1, j + 1)) d += this.circ((i + 1) * cell, (j + 1) * cell, cell * 1.18) + this.circ((i + 1) * cell, (j + 1) * cell, cell * 0.5);
+      return d;
+    }
+    for (j = 0; j < Rr; j++) for (i = 0; i < C; i++) {
+      var v = 0;
+      if (mode === 'pixel') v = at(i, j) && this.hash(i, j, seed) > 0.05 ? 1 : 0;
+      else if (mode === 'outline') {
+        var edge = at(i, j) && (!at(i - 1, j) || !at(i + 1, j) || !at(i, j - 1) || !at(i, j + 1));
+        var er = function (a, b) { return at(a, b) && at(a - 3, b) && at(a + 3, b) && at(a, b - 3) && at(a, b + 3); };
+        var edge2 = er(i, j) && (!er(i - 1, j) || !er(i + 1, j) || !er(i, j - 1) || !er(i, j + 1));
+        v = edge || edge2 ? 1 : 0;
+      } else if (mode === 'noise') {
+        var sh = this.hash(0, j, seed) < 0.16 ? Math.round((this.hash(1, j, seed) - 0.5) * 10) : 0;
+        if (at(i - sh, j)) v = this.fbm(i * 0.2, j * 0.2, seed) > 0.4 ? 1 : 0;
+        else if ((at(i + 2, j) || at(i - 2, j) || at(i, j + 2) || at(i, j - 2)) && this.hash(i, j, seed + 3) < 0.16) v = 1;
+      }
+      g[j * C + i] = v;
+    }
+    return this.runs(g, C, Rr, cell, 1);
+  }
+  buildGlyphs(chars) {
+    var self = this, W = 200, Hh = 260, cell = 5, C = W / cell, Rr = Hh / cell, out = {};
+    try {
+      var cv = document.createElement('canvas'); cv.width = W; cv.height = Hh; var ctx = cv.getContext('2d');
+      chars.forEach(function (ch, ci) {
+        ctx.clearRect(0, 0, W, Hh); ctx.fillStyle = '#000'; try { ctx.fontStretch = 'extra-condensed'; } catch (e) {}
+        ctx.font = '900 300px Archivo, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic'; ctx.fillText(ch, W / 2, 248);
+        var data = ctx.getImageData(0, 0, W, Hh).data, m = new Uint8Array(C * Rr);
+        for (var j = 0; j < Rr; j++) for (var i = 0; i < C; i++) { var px = Math.floor((i + 0.5) * cell), py = Math.floor((j + 0.5) * cell); m[j * C + i] = data[(py * W + px) * 4 + 3] > 120 ? 1 : 0; }
+        out[ch] = { pixel: self.glyphTex(m, C, Rr, cell, 'pixel', 3 + ci), dots: self.glyphTex(m, C, Rr, cell, 'dots', 5 + ci), outline: self.glyphTex(m, C, Rr, cell, 'outline', 7 + ci), noise: self.glyphTex(m, C, Rr, cell, 'noise', 9 + ci) };
+      });
+      this.setState({ glyphs: out });
+    } catch (e) {}
+  }
+  loadGlyphs(chars) {
+    var self = this, go = function () { self.buildGlyphs(chars); };
+    try { if (document.fonts && document.fonts.load) { Promise.all([document.fonts.load('900 300px Archivo'), document.fonts.load('800 200px "Grenze Gotisch"'), document.fonts.load('italic 200px "Instrument Serif"')]).then(go, go); } else go(); } catch (e) { go(); }
+  }
+  letter(ch, mode, glyphs, ink) {
+    ink = ink || '#0B0B0B';
+    if (!glyphs && (mode === 'pixel' || mode === 'dots' || mode === 'outline' || mode === 'noise')) mode = 'wide';
+    var L = { ch: ch, d: '', tfill: 'none', font: 'Archivo, sans-serif', fstyle: 'normal', weight: '900', stretch: '62%', size: '300', mode: mode };
+    if (mode === 'goth') { L.tfill = ink; L.font = 'Grenze Gotisch, serif'; L.weight = '800'; L.stretch = 'normal'; L.size = '290'; }
+    else if (mode === 'serif') { L.tfill = ink; L.font = 'Instrument Serif, serif'; L.fstyle = 'italic'; L.weight = '400'; L.stretch = 'normal'; L.size = '330'; }
+    else if (mode === 'wide') { L.tfill = ink; L.stretch = '125%'; L.size = '220'; }
+    else if (mode === 'solid') { L.tfill = ink; }
+    else { L.d = glyphs[ch][mode]; }
+    return L;
+  }
+  fmt() {
+    try {
+      var p = new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Seoul', month: '2-digit', day: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }).formatToParts(new Date());
+      var g = function (t) { var x = p.find(function (y) { return y.type === t; }); return x ? x.value : ''; };
+      return { full: g('month') + '.' + g('day') + '.' + g('year') + ' ' + g('hour') + ':' + g('minute') + ':' + g('second'), short: g('hour') + ':' + g('minute') };
+    } catch (e) { return { full: '', short: '' }; }
+  }
+  bars(seed, w, h) {
+    var r = this.rng(seed), x = 0, d = '';
+    while (x < w) { var bw = 1 + Math.floor(r() * 4); if (x + bw > w) break; d += 'M' + x + ' 0h' + bw + 'v' + h + 'h-' + bw + 'Z'; x += bw + 1 + Math.floor(r() * 3); }
+    return d;
+  }
+
+  renderVals() {
+    if (!this._s) this._s = { demo: this.germBits(7, { N: 110 }) };
+    return { accent: this.props.accent ?? '#FF5B47', demo: this._s.demo };
+  }
+}
+</script>
+</body>
+</html>
