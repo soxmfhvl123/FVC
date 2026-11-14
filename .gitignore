@@ -8,3 +8,7 @@ packages/fvc-engine/playground/index.html
 next-env.d.ts
 *.tsbuildinfo
 .env*.local
+
+# Source audio masters stay local; the site ships MP3 only.
+*.wav
+*.WAV

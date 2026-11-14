@@ -7,7 +7,8 @@ import { SpecimenLabel } from '@/components/fvc/SpecimenLabel';
 import { StrainCard } from '@/components/fvc/StrainCard';
 import { TopBar } from '@/components/fvc/TopBar';
 import { VinylRecord } from '@/components/fvc/Vinyl';
-import { getStrain, getStrains, type Track } from '@/lib/content';
+import { TrackButton } from '@/components/player/TrackButton';
+import { getStrain, getStrains, type QueueTrack, strainQueue, type Track } from '@/lib/content';
 import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, spreadBlocks, totalIncubation, trackTime } from '@/lib/format';
 import s from './strain.module.css';
 
@@ -27,12 +28,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-function Side({ name, tracks }: { name: string; tracks: Track[] }) {
+function Side({ name, tracks, queue }: { name: 'A' | 'B'; tracks: Track[]; queue: QueueTrack[] }) {
   if (!tracks.length) return null;
   return (
     <tbody>
       <tr>
-        <th colSpan={3} scope="rowgroup" className={s.side}>
+        <th colSpan={4} scope="rowgroup" className={s.side}>
           Side {name}
         </th>
       </tr>
@@ -42,7 +43,10 @@ function Side({ name, tracks }: { name: string; tracks: Track[] }) {
             {name}
             {t.no}
           </td>
-          <td>{ph(t.title, 'Track Title')}</td>
+          <td>{t.audio ? <TrackButton queue={queue} index={queue.findIndex((q) => q.side === name && q.no === t.no)} /> : ph(t.title, 'Track Title')}</td>
+          <td className="fvc-mono" aria-label={t.spread ? `Spread ${t.spread} of 5` : 'Spread not rated'}>
+            {spreadBlocks(t.spread ?? null)}
+          </td>
           <td className="fvc-mono" style={{ textAlign: 'right' }}>
             {trackTime(t)}
           </td>
@@ -55,6 +59,7 @@ function Side({ name, tracks }: { name: string; tracks: Track[] }) {
 export default async function StrainPage({ params }: { params: Promise<{ id: string }> }) {
   const strain = getStrain((await params).id);
   if (!strain) notFound();
+  const queue = strainQueue(strain);
   const all = getStrains().filter((x) => x.id !== strain.id);
   const related = [...all.filter((x) => x.coverStyle === strain.coverStyle), ...all.filter((x) => x.coverStyle !== strain.coverStyle)].slice(0, 2);
   const links = [
@@ -130,13 +135,14 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                 <tr>
                   <th scope="col">No.</th>
                   <th scope="col">Title</th>
+                  <th scope="col">Spread</th>
                   <th scope="col" style={{ textAlign: 'right' }}>
                     Incubation
                   </th>
                 </tr>
               </thead>
-              <Side name="A" tracks={strain.sideA} />
-              <Side name="B" tracks={strain.sideB} />
+              <Side name="A" tracks={strain.sideA} queue={queue} />
+              <Side name="B" tracks={strain.sideB} queue={queue} />
             </table>
           </div>
         </section>

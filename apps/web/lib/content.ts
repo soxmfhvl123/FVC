@@ -16,6 +16,21 @@ export interface Track {
   no: number;
   title: string;
   incubation: string;
+  /** 1–5 catchiness for this track, null until rated. */
+  spread?: number | null;
+  /** Path under public/ (e.g. /audio/fvc-001/01.mp3), null when there is no audio yet. */
+  audio?: string | null;
+}
+
+/** A playable track for the global player. */
+export interface QueueTrack {
+  src: string;
+  title: string;
+  no: number;
+  side: 'A' | 'B';
+  strainId: string;
+  carrier: string;
+  incubation: string;
 }
 
 export interface Strain {
@@ -109,6 +124,22 @@ export function getStrain(id: string): Strain | undefined {
 
 export function getLatestStrain(): Strain {
   return getStrainsNewest()[0] ?? allStrains[allStrains.length - 1];
+}
+
+/** Every track of a strain that has audio, in Side A → Side B order. */
+export function strainQueue(s: Strain): QueueTrack[] {
+  const side = (name: 'A' | 'B', tracks: Track[]) =>
+    tracks.filter((t) => t.audio).map((t) => ({ src: t.audio!, title: t.title, no: t.no, side: name, strainId: s.id, carrier: s.carrier, incubation: t.incubation }));
+  return [...side('A', s.sideA), ...side('B', s.sideB)];
+}
+
+/** The player's starting queue: the newest strain that has audio (nothing plays until pressed). */
+export function defaultQueue(): QueueTrack[] {
+  for (const s of getStrainsNewest()) {
+    const q = strainQueue(s);
+    if (q.length) return q;
+  }
+  return [];
 }
 
 export function getOutbreaks(): Outbreak[] {

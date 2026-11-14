@@ -1,13 +1,30 @@
 'use client';
 
 import { color } from '@fvc/engine';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { subscribeLevels, usePlayer } from '@/components/player/PlayerProvider';
+import { useReducedMotion } from '@/lib/hooks';
 import { SPREAD_NAMES } from '@/lib/format';
 
-/** 1-bit VU meter: buttons 1–5 set the level; 24 bars light up (top bars in the spot ink). */
+/**
+ * 1-bit VU meter: buttons 1–5 set the editorial level; 24 bars light up (top bars in the spot ink).
+ * While the player is running the bars follow the real loudness instead (not with reduced motion).
+ */
 export function SpreadMeter({ strainId, initial = 4, spot = color.spot }: { strainId: string; initial?: number; spot?: string }) {
   const [level, setLevel] = useState(initial);
-  const lit = Math.round((level * 24) / 5);
+  const { playing } = usePlayer();
+  const reduce = useReducedMotion();
+  const live = playing && !reduce;
+  const [liveLit, setLiveLit] = useState(0);
+  useEffect(() => {
+    if (!live) return;
+    // Only re-render when the number of lit bars changes.
+    return subscribeLevels(({ loud }) => setLiveLit((prev) => {
+      const n = Math.round(loud * 24);
+      return n === prev ? prev : n;
+    }));
+  }, [live]);
+  const lit = live ? liveLit : Math.round((level * 24) / 5);
   const name = SPREAD_NAMES[level - 1];
   return (
     <section className="fvc-grid2 fvc-meter" aria-labelledby="meter-h">
@@ -36,7 +53,7 @@ export function SpreadMeter({ strainId, initial = 4, spot = color.spot }: { stra
         </div>
       </div>
       <div className="fvc-meter-r">
-        <div role="img" aria-label={name} className="fvc-meter-bars">
+        <div role="img" aria-label={live ? 'Live level of the track playing now' : name} className="fvc-meter-bars">
           {Array.from({ length: 24 }, (_, i) => (
             <div
               key={i}

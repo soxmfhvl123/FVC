@@ -4,7 +4,9 @@ import type { ReactNode } from 'react';
 import '../../../design/tokens/tokens.css';
 import './globals.css';
 import { FvcDefs } from '@/components/fvc/Marks';
-import { site } from '@/lib/content';
+import { PlayerBar } from '@/components/player/PlayerBar';
+import { PlayerProvider } from '@/components/player/PlayerProvider';
+import { defaultQueue, site } from '@/lib/content';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${site.domain}`),
@@ -34,7 +36,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           Skip to content
         </a>
         <FvcDefs />
-        {children}
+        {/* The player lives here so page navigation never stops the music. */}
+        <PlayerProvider initialQueue={defaultQueue()}>
+          {children}
+          <PlayerBar />
+        </PlayerProvider>
       </body>
     </html>
   );

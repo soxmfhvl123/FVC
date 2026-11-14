@@ -9,6 +9,7 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
+  --fvc-player-h: 64px;
   margin: 0;
   background: var(--fvc-paper);
   color: var(--fvc-ink);

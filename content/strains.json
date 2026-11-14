@@ -11,7 +11,7 @@
       "coverStyle": "golova | creatura | glitch | connwax — which cover template",
       "eyes": "two | cyclops | three | none",
       "spot": "one spot ink hex from tokens",
-      "sideA/sideB": "tracks; incubation = duration m:ss",
+      "sideA/sideB": "tracks; incubation = duration m:ss (measured with ffprobe); spread = 1-5 or null; audio = path under apps/web/public or null",
       "vinyl": "Pressing Plant params when a vinyl exists",
       "status": "draft | scheduled | live | dormant"
     }
@@ -22,7 +22,7 @@
       "seed": 23,
       "title": "[PLACEHOLDER]",
       "carrier": "[PLACEHOLDER]",
-      "strainType": "Low-End",
+      "strainType": "Glitch / IDM",
       "formats": [
         "12in-vinyl"
       ],
@@ -34,18 +34,24 @@
       "sideA": [
         {
           "no": 1,
-          "title": "[PLACEHOLDER]",
-          "incubation": "0:00"
+          "title": "Hazy Groove",
+          "incubation": "3:22",
+          "spread": null,
+          "audio": "/audio/fvc-001/01.mp3"
         },
         {
           "no": 2,
-          "title": "[PLACEHOLDER]",
-          "incubation": "0:00"
+          "title": "Bitcrushed Chaos",
+          "incubation": "3:01",
+          "spread": null,
+          "audio": "/audio/fvc-001/02.mp3"
         },
         {
           "no": 3,
-          "title": "[PLACEHOLDER]",
-          "incubation": "0:00"
+          "title": "Bittersweet Outro",
+          "incubation": "2:57",
+          "spread": null,
+          "audio": "/audio/fvc-001/03.mp3"
         }
       ],
       "sideB": [],
