@@ -62,3 +62,15 @@ export const SPREAD_NAMES = [
   'Level 4 — Stuck in your head',
   'Level 5 — Fully infected',
 ];
+
+/** Only the facts we have: "HUGO CHO — 3 tracks, 9:20." (used while blurb is a placeholder). */
+export function strainSummary(s: Strain): string {
+  const n = s.sideA.length + s.sideB.length;
+  const who = isPlaceholder(s.carrier) ? s.id : s.carrier;
+  const title = isPlaceholder(s.title) ? '' : ` — ${s.title}`;
+  const len = totalIncubation(s);
+  return `${who}${title}. ${n} track${n === 1 ? '' : 's'}${len.startsWith('[') ? '' : `, ${len}`}.`;
+}
+
+/** Release title, or the artist while the title is still unknown. */
+export const displayTitle = (s: Strain) => (isPlaceholder(s.title) ? ph(s.carrier, 'Artist') : s.title);

@@ -20,7 +20,7 @@ Run from the repo root: `npm run dev` / `npm run build` / `npm run lint` / `npm 
 ## Decisions and deviations
 
 - **Fonts are loaded from the Google Fonts stylesheet, not `next/font`.** The engine rasterises letters with `900 300px Archivo` and draws `<text font-family="Grenze Gotisch">`; `next/font` renames families, which would silently break every mutating letter. (`docs/05` M0 asked for `next/font`.)
-- **Drafts are shown by default.** Every entry in `content/*.json` is `status: "draft"` and the plan (00 §10) is to launch on placeholders. Set `FVC_HIDE_DRAFTS=true` once real releases exist (`docs/06` Q1 default would otherwise hide almost everything, including the home cards).
+- **Drafts are hidden** (`status: "draft"`). Only real releases (FVC-001, `live`) appear; preview drafts with `FVC_SHOW_DRAFTS=true`.
 - **Hero germ = latest strain's seed** (Q8 default). The live pointer eyes (`HERO_EYES`) are drawn for seed 7 only; any other seed keeps its own generated eyes.
 - **Cover templates are data-driven.** The canvas covers c1–c4 hard-code seeds; here each template takes the strain's seed / spot / eyes, keeping the canvas germ settings per template (`COVER_GERM` in `components/fvc/Cover.tsx`).
 - **Footer NavTable** adds `FVC Lab` and `Spread Report`; `Instagram` is hidden until `site.social.instagram` is set (Q6).
@@ -30,7 +30,7 @@ Run from the repo root: `npm run dev` / `npm run build` / `npm run lint` / `npm 
 
 ## Env (all optional) — `apps/web/.env.example`
 
-`FVC_HIDE_DRAFTS` · `RESEND_API_KEY` + `SUBMISSIONS_TO` (+ `SUBMISSIONS_FROM`) · `NEWSLETTER_WEBHOOK_URL` · `FVC_DEV_PAGES`
+`FVC_SHOW_DRAFTS` · `NEXT_PUBLIC_SUBMIT_ENDPOINT` · `NEXT_PUBLIC_SPREAD_ENDPOINT`
 
 ## Left to do
 

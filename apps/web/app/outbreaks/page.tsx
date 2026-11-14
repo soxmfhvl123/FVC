@@ -52,7 +52,7 @@ export default function OutbreaksPage() {
           </ul>
         ) : (
           <p className="fvc-prose" style={{ padding: 24 }}>
-            No outbreaks scheduled. Subscribe to the Spread Report to hear first.
+            No Outbreak Nights scheduled yet. The next one will be announced here.
           </p>
         )}
         <BannerSeries ids={['b3', 'b4', 'b5']} title="Outbreak banners ▮ shuffle to remix" freeze />

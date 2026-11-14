@@ -16,7 +16,7 @@ export function SpecimenLabel({ strain: s }: { strain: Strain }) {
     ['CARRIER', ph(s.carrier, 'Artist').toUpperCase()],
     ['INCUBATION', totalIncubation(s)],
     ['SPREAD', spreadBlocks(s.spreadLevel)],
-    ['ISOLATED', `${isolatedLabel(s.isolated).toUpperCase()} SEOUL`],
+    ['ISOLATED', s.isolated ? `${isolatedLabel(s.isolated)} SEOUL` : 'SEOUL'],
   ];
   return (
     <figure className="fvc-specimen" style={{ margin: 0 }}>

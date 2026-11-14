@@ -6,6 +6,7 @@ import { MiniLab } from '@/components/home/MiniLab';
 import { BannerSeries } from '@/components/fvc/Banners';
 import { Footer } from '@/components/fvc/Footer';
 import { SpreadMeter } from '@/components/fvc/SpreadMeter';
+import { SpecimenLabel } from '@/components/fvc/SpecimenLabel';
 import { StrainCard } from '@/components/fvc/StrainCard';
 import { getLatestStrain, getOutbreaks, getStrains, site } from '@/lib/content';
 
@@ -28,6 +29,14 @@ export default function Home() {
             {pair(0).map((s, i) => (
               <StrainCard key={s.id} strain={s} className={i === 0 ? 'fvc-col-l' : undefined} />
             ))}
+            {/* Only one strain so far: fill the second column with its specimen label. */}
+            {pair(0).length === 1 && (
+              <div style={{ padding: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: '100%', maxWidth: 560 }}>
+                  <SpecimenLabel strain={pair(0)[0]} />
+                </div>
+              </div>
+            )}
           </section>
         )}
 

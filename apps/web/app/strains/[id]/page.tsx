@@ -9,7 +9,7 @@ import { TopBar } from '@/components/fvc/TopBar';
 import { VinylRecord } from '@/components/fvc/Vinyl';
 import { TrackButton } from '@/components/player/TrackButton';
 import { getStrain, getStrains, type QueueTrack, strainQueue, type Track } from '@/lib/content';
-import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, spreadBlocks, totalIncubation, trackTime } from '@/lib/format';
+import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, spreadBlocks, strainSummary, totalIncubation, trackTime } from '@/lib/format';
 import s from './strain.module.css';
 
 export function generateStaticParams() {
@@ -29,12 +29,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-function Side({ name, tracks, queue }: { name: 'A' | 'B'; tracks: Track[]; queue: QueueTrack[] }) {
+function Side({ name, tracks, queue, rated }: { name: 'A' | 'B'; tracks: Track[]; queue: QueueTrack[]; rated: boolean }) {
   if (!tracks.length) return null;
   return (
     <tbody>
       <tr>
-        <th colSpan={4} scope="rowgroup" className={s.side}>
+        <th colSpan={rated ? 4 : 3} scope="rowgroup" className={s.side}>
           Side {name}
         </th>
       </tr>
@@ -45,9 +45,11 @@ function Side({ name, tracks, queue }: { name: 'A' | 'B'; tracks: Track[]; queue
             {t.no}
           </td>
           <td>{t.audio ? <TrackButton queue={queue} index={queue.findIndex((q) => q.side === name && q.no === t.no)} /> : ph(t.title, 'Track Title')}</td>
-          <td className="fvc-mono" aria-label={t.spread ? `Spread ${t.spread} of 5` : 'Spread not rated'}>
-            {spreadBlocks(t.spread ?? null)}
-          </td>
+          {rated && (
+            <td className="fvc-mono" aria-label={t.spread ? `Spread ${t.spread} of 5` : 'Spread not rated'}>
+              {spreadBlocks(t.spread ?? null)}
+            </td>
+          )}
           <td className="fvc-mono" style={{ textAlign: 'right' }}>
             {trackTime(t)}
           </td>
@@ -61,6 +63,7 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
   const strain = getStrain((await params).id);
   if (!strain) notFound();
   const queue = strainQueue(strain);
+  const rated = [...strain.sideA, ...strain.sideB].some((t) => t.spread != null);
   const all = getStrains().filter((x) => x.id !== strain.id);
   const related = [...all.filter((x) => x.coverStyle === strain.coverStyle), ...all.filter((x) => x.coverStyle !== strain.coverStyle)].slice(0, 2);
   const links = [
@@ -80,11 +83,16 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
           <div className={s.meta}>
             <div className="fvc-section-label">
               <span>Strain {catalogNo(strain.id)}</span>
-              <span>Isolated {isolatedLabel(strain.isolated)} Seoul</span>
+              <span>{strain.isolated ? `Isolated ${isolatedLabel(strain.isolated)} ` : ''}Seoul</span>
             </div>
             <h1 className={s.catalog}>{strain.id}</h1>
             <p className={s.title}>
-              {ph(strain.carrier, 'Artist')} — <span className="fvc-serif">{ph(strain.title, 'Release Title')}</span>
+              {ph(strain.carrier, 'Artist')}
+              {!isPlaceholder(strain.title) && (
+                <>
+                  {' '}— <span className="fvc-serif">{strain.title}</span>
+                </>
+              )}
             </p>
             <div className={s.pills}>
               <span className="fvc-pill" style={{ background: 'var(--fvc-white)' }}>
@@ -96,7 +104,7 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                 </span>
               ))}
             </div>
-            <p className="fvc-prose">{isPlaceholder(strain.blurb) ? `[Blurb] — one line about how ${strain.id} spreads.` : strain.blurb}</p>
+            <p className="fvc-prose">{isPlaceholder(strain.blurb) ? strainSummary(strain) : strain.blurb}</p>
             <dl className={`fvc-mono ${s.stats}`}>
               <div>
                 <dt>Incubation</dt>
@@ -117,7 +125,7 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                   {label} ↗
                 </a>
               ))}
-              {!links.length && <span className="fvc-mono" style={{ fontSize: 12 }}>Listen / Buy links coming soon.</span>}
+              {!links.length && <span className="fvc-mono" style={{ fontSize: 12 }}>Press play below — streaming links soon.</span>}
               <ShareButton title={`${strain.id} — FVC RECORDS`} className={`fvc-cta fvc-inv ${s.action}`} />
             </div>
           </div>
@@ -136,19 +144,19 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                 <tr>
                   <th scope="col">No.</th>
                   <th scope="col">Title</th>
-                  <th scope="col">Spread</th>
+                  {rated && <th scope="col">Spread</th>}
                   <th scope="col" style={{ textAlign: 'right' }}>
                     Incubation
                   </th>
                 </tr>
               </thead>
-              <Side name="A" tracks={strain.sideA} queue={queue} />
-              <Side name="B" tracks={strain.sideB} queue={queue} />
+              <Side name="A" tracks={strain.sideA} queue={queue} rated={rated} />
+              <Side name="B" tracks={strain.sideB} queue={queue} rated={rated} />
             </table>
           </div>
         </section>
 
-        {strain.vinyl && (
+        {strain.vinyl && strain.formats.some((f) => f.endsWith('vinyl')) && (
           <section className={s.vinyl} aria-labelledby="pp-h">
             <div className="fvc-section-label">
               <h2 id="pp-h" style={{ font: 'inherit', margin: 0 }}>

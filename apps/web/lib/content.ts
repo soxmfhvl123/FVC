@@ -92,12 +92,11 @@ export interface Site {
 }
 
 /**
- * Draft visibility. Every strain is a placeholder draft today, and the plan (00 §10) is to
- * launch on placeholders, so drafts are shown unless FVC_HIDE_DRAFTS=true.
- * Flip it once real releases exist (docs/06 Q1).
+ * Draft visibility (docs/06 Q1): entries with status "draft" are placeholders and stay hidden.
+ * Set FVC_SHOW_DRAFTS=true to preview them locally.
  */
-const HIDE_DRAFTS = process.env.FVC_HIDE_DRAFTS === 'true';
-const visible = (s: { status: Status }) => !HIDE_DRAFTS || s.status !== 'draft';
+const SHOW_DRAFTS = process.env.FVC_SHOW_DRAFTS === 'true';
+const visible = (s: { status: Status }) => SHOW_DRAFTS || s.status !== 'draft';
 
 const allStrains = strainsJson.strains as Strain[];
 

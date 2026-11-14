@@ -42,7 +42,7 @@ npm run lint        # eslint
 npm run typecheck   # app + engine
 ```
 Deploy: static export (`apps/web/out`) → GitHub Pages via `.github/workflows/pages.yml` on push to `main` (domain in `CNAME`). No server: no Route Handlers, forms POST to hosted endpoints.
-Env (all optional, see `apps/web/.env.example`): `FVC_HIDE_DRAFTS`, `NEXT_PUBLIC_SUBMIT_ENDPOINT`, `NEXT_PUBLIC_SPREAD_ENDPOINT`.
+Env (all optional, see `apps/web/.env.example`): `FVC_SHOW_DRAFTS`, `NEXT_PUBLIC_SUBMIT_ENDPOINT`, `NEXT_PUBLIC_SPREAD_ENDPOINT`.
 
 ## Repo map
 ```

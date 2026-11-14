@@ -1,6 +1,6 @@
 
 import type { Outbreak, Strain } from '@/lib/content';
-import { catalogNo, isolatedLabel, ph, shortDate } from '@/lib/format';
+import { catalogNo, formatLabel, isolatedLabel, ph, shortDate } from '@/lib/format';
 import { Clock } from '@/components/fvc/Clock';
 import { Germ } from '@/components/fvc/Germ';
 import { HeroGerm } from '@/components/fvc/HeroGerm';
@@ -13,6 +13,7 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
   const no = catalogNo(strain.id);
   const artist = ph(strain.carrier, 'Artist');
   const date = outbreak?.date ? isolatedLabel(outbreak.date) : '[Date]';
+  const facts = [ph(strain.strainType, 'Genre'), ...strain.formats.map(formatLabel), 'Seoul'].join(' ▮ ').toUpperCase();
   return (
     <header className={s.hero}>
       <h1 className="sr-only">FVC RECORDS — Fat Virus Carrier</h1>
@@ -34,7 +35,7 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
           </span>
         </div>
         <span className={s.heroBarSm}>
-          LOW-END SOUNDSYSTEM ▮ OUTBREAK NIGHT ▮ {date.toUpperCase()}
+          {outbreak ? `LOW-END SOUNDSYSTEM ▮ OUTBREAK NIGHT ▮ ${date.toUpperCase()}` : facts}
         </span>
       </div>
 
@@ -43,7 +44,7 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
 
       <div className={s.heroTop}>
         <span>
-          {shortDate(strain.isolated)} Strain·{no}
+          {strain.isolated ? `${shortDate(strain.isolated)} ` : ''}Strain·{no}
         </span>
         <Clock format="short" />
       </div>
@@ -58,13 +59,15 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
         <br />
         {artist}
       </div>
-      <div className={`${s.heroInfo} fvc-hide-sm`} style={{ left: '52%', top: 250, textAlign: 'right' }}>
-        (B) Outbreak Night:
-        <br />
-        {date} {outbreak?.doors ?? '23:00'}
-        <br />
-        Location undisclosed
-      </div>
+      {outbreak && (
+        <div className={`${s.heroInfo} fvc-hide-sm`} style={{ left: '52%', top: 250, textAlign: 'right' }}>
+          (B) Outbreak Night:
+          <br />
+          {date} {outbreak?.doors ?? '23:00'}
+          <br />
+          Location undisclosed
+        </div>
+      )}
 
       <LiveWordmark className={s.heroMark} letterStyle={{ width: 'min(300px, 24vw)', height: 'auto' }} />
 

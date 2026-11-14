@@ -9,7 +9,9 @@ import { isolatedLabel, ph } from '@/lib/format';
 import s from '../outbreaks.module.css';
 
 export function generateStaticParams() {
-  return getOutbreaks().map((o) => ({ id: o.id }));
+  const ids = getOutbreaks().map((o) => ({ id: o.id }));
+  // Static export needs at least one path; with nothing scheduled it renders the 404 page.
+  return ids.length ? ids : [{ id: 'none' }];
 }
 export const dynamicParams = false;
 
@@ -77,7 +79,7 @@ export default async function OutbreakPage({ params }: { params: Promise<{ id: s
               </a>
             ) : (
               <p className="fvc-mono" style={{ fontSize: 12, margin: 0 }}>
-                Tickets: by word of mouth. Join the Spread Report to hear first.
+                Tickets: by word of mouth.
               </p>
             )}
           </div>

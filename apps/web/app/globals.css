@@ -220,6 +220,9 @@ svg {
 }
 
 /* ---------- strain card ---------- */
+.fvc-grid2 > article.fvc-col-l {
+  border-right: var(--fvc-rule);
+}
 .fvc-card {
   padding: 18px;
   display: flex;

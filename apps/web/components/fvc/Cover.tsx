@@ -1,7 +1,7 @@
 import { color } from '@fvc/engine';
 import type { CSSProperties } from 'react';
 import type { CoverStyle, Strain } from '@/lib/content';
-import { catalogNo, formatLabel, ph, shortDate } from '@/lib/format';
+import { catalogNo, displayTitle, formatLabel, ph, shortDate } from '@/lib/format';
 import { GermG } from './Germ';
 
 const INFO = 'Inter Tight, sans-serif';
@@ -30,7 +30,7 @@ export function Cover({ strain, style, className }: { strain: Strain; style?: CS
   const s = strain;
   const g = { ...COVER_GERM[s.coverStyle], eyes: s.eyes };
   const no = catalogNo(s.id);
-  const title = ph(s.title, 'Release Title');
+  const title = displayTitle(s);
   const artist = ph(s.carrier, 'Artist').toUpperCase();
   const vinyl = s.formats.some((f) => f.endsWith('vinyl'));
   const clip = `cv-${s.id}`;
@@ -44,7 +44,7 @@ export function Cover({ strain, style, className }: { strain: Strain; style?: CS
             <GermG seed={s.seed} spot={s.spot} size={290} {...g} />
           </g>
           <text x="14" y="34" fontFamily={INFO} fontWeight="500" fontSize="24" letterSpacing="-0.5" fill={color.ink}>
-            {shortDate(s.isolated)} {ph(s.strainType, 'Genre')}
+            {s.isolated ? `${shortDate(s.isolated)} ` : ''}{ph(s.strainType, 'Genre')}
           </text>
           <text x="386" y="34" textAnchor="end" fontFamily={INFO} fontWeight="500" fontSize="24" fill={color.ink}>
             {vinyl ? '33⅓' : formatLabel(s.formats[0])}

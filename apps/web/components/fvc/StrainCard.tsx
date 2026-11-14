@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Strain } from '@/lib/content';
-import { formatLabel, isPlaceholder, ph, spreadBlocks, totalIncubation } from '@/lib/format';
+import { formatLabel, isPlaceholder, ph, spreadBlocks, strainSummary, totalIncubation } from '@/lib/format';
 import { Cover } from './Cover';
 import { CtaButton } from './Ui';
 
@@ -11,9 +11,7 @@ export function StrainCard({ strain: s, className, headingLevel = 3 }: { strain:
   const meta = film
     ? `${ph(s.strainType, 'Genre').toUpperCase()} ▮ FILM ▮ SPREAD ${spreadBlocks(s.spreadLevel)}`
     : `INCUBATION ${totalIncubation(s)} ▮ SPREAD ${spreadBlocks(s.spreadLevel)}`;
-  const blurb = isPlaceholder(s.blurb)
-    ? `${ph(s.carrier, 'Carrier')} — ${ph(s.title, film ? 'Live Session Title' : 'Release Title')}. ${film ? 'Recorded at an Outbreak Night.' : 'One line about how this strain spreads.'}`
-    : s.blurb;
+  const blurb = isPlaceholder(s.blurb) ? strainSummary(s) : s.blurb;
   const href = `/strains/${s.id}`;
   return (
     <article className={`fvc-card ${className ?? ''}`}>
