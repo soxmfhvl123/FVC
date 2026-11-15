@@ -17,7 +17,7 @@ const PATHS = {
 const WHITE = '#F2F1ED';
 
 /**
- * Live pixel eyes laid over the hero germ (seed 7, N 140, eyes 'none').
+ * Live pixel eyes laid over a two-eyed hero germ drawn with eyes 'none' (N 140).
  * Pupils follow the pointer relative to the enclosing <header> (centre ≈ 62% / 32%),
  * wander slowly when there is no pointer, and stay centred with reduced motion.
  */
