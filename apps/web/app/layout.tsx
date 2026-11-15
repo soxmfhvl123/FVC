@@ -6,7 +6,7 @@ import './globals.css';
 import { FvcDefs } from '@/components/fvc/Marks';
 import { PlayerBar } from '@/components/player/PlayerBar';
 import { PlayerProvider } from '@/components/player/PlayerProvider';
-import { defaultQueue, site } from '@/lib/content';
+import { allQueue, site, startIndex } from '@/lib/content';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${site.domain}`),
@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </a>
         <FvcDefs />
         {/* The player lives here so page navigation never stops the music. */}
-        <PlayerProvider initialQueue={defaultQueue()}>
+        <PlayerProvider initialQueue={allQueue()} initialIndex={startIndex(allQueue())}>
           {children}
           <PlayerBar />
         </PlayerProvider>

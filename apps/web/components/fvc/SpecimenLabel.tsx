@@ -1,6 +1,6 @@
 import { barcodePath, color } from '@fvc/engine';
 import type { Strain } from '@/lib/content';
-import { catalogNo, isolatedLabel, ph, spreadBlocks, totalIncubation } from '@/lib/format';
+import { catalogNo, isolatedLabel, isPlaceholder, ph, spreadBlocks, totalIncubation } from '@/lib/format';
 import { germPaths } from './Germ';
 
 const INFO = 'Instrument Sans, sans-serif';
@@ -13,7 +13,7 @@ export function SpecimenLabel({ strain: s }: { strain: Strain }) {
   const darkSpot = [color.ink, color.cobalt].includes(s.spot as never);
   const rows: [string, string][] = [
     ['STRAIN TYPE', ph(s.strainType, 'Genre').toUpperCase()],
-    ['CARRIER', ph(s.carrier, 'Artist').toUpperCase()],
+    ['CARRIER', isPlaceholder(s.carrier) ? '—' : s.carrier.toUpperCase()],
     ['INCUBATION', totalIncubation(s)],
     ['SPREAD', spreadBlocks(s.spreadLevel)],
     ['ISOLATED', s.isolated ? `${isolatedLabel(s.isolated)} SEOUL` : 'SEOUL'],

@@ -1,4 +1,4 @@
-import type { Format, Strain, Track } from './content';
+import type { Format, QueueTrack, Strain, Track } from './content';
 
 /** A string is a placeholder when it still holds `[PLACEHOLDER]` (or is empty). */
 export const isPlaceholder = (v: string | null | undefined) => !v || /^\[.*\]$/.test(v.trim());
@@ -74,3 +74,9 @@ export function strainSummary(s: Strain): string {
 
 /** Release title, or the artist while the title is still unknown. */
 export const displayTitle = (s: Strain) => (isPlaceholder(s.title) ? ph(s.carrier, 'Artist') : s.title);
+
+/** Title as shown: hidden tracks stay "#????" until revealed; revealed ones add their label. */
+export function trackName(t: Pick<QueueTrack, 'title' | 'hidden' | 'label'>, revealed = false): string {
+  if (t.hidden && !revealed) return '#????';
+  return t.label ? `${t.title} ${t.label}` : t.title;
+}

@@ -9,7 +9,7 @@ import { TopBar } from '@/components/fvc/TopBar';
 import { VinylRecord } from '@/components/fvc/Vinyl';
 import { PlayStrainButton } from '@/components/player/PlayStrainButton';
 import { TrackButton } from '@/components/player/TrackButton';
-import { getStrain, getStrains, type QueueTrack, strainQueue, type Track } from '@/lib/content';
+import { allQueue, getStrain, getStrains, type QueueTrack, type Track } from '@/lib/content';
 import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, spreadBlocks, totalIncubation, trackTime } from '@/lib/format';
 import s from './strain.module.css';
 
@@ -30,24 +30,26 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-function Side({ name, label, tracks, queue, rated }: { name: 'A' | 'B'; label?: string; tracks: Track[]; queue: QueueTrack[]; rated: boolean }) {
+function Side({ name, label, tracks, queue, rated, header = true }: { name: 'A' | 'B'; label?: string; tracks: Track[]; queue: QueueTrack[]; rated: boolean; header?: boolean }) {
   if (!tracks.length) return null;
   return (
     <tbody>
-      <tr>
-        <th colSpan={rated ? 4 : 3} scope="rowgroup" className={s.side}>
-          Side {name}
-          {label && ` — ${label}`}
-        </th>
-      </tr>
+      {header && (
+        <tr>
+          <th colSpan={rated ? 4 : 3} scope="rowgroup" className={s.side}>
+            Side {name}
+            {label && ` — ${label}`}
+          </th>
+        </tr>
+      )}
       {tracks.map((t) => (
         <tr key={`${name}${t.no}`}>
           <td className="fvc-mono" style={{ width: 60 }}>
-            {name}
+            {header && name}
             {t.no}
           </td>
           <td>
-            {t.audio ? <TrackButton queue={queue} index={queue.findIndex((q) => q.side === name && q.no === t.no)} /> : ph(t.title, 'Track Title')}
+            {t.audio ? <TrackButton queue={queue} index={queue.findIndex((q) => q.src === t.audio)} /> : ph(t.title, 'Track Title')}
             {t.mutationOf && (
               <span className={`fvc-mono ${s.source}`} aria-label={`mutation of ${t.mutationOf}`}>
                 ← {t.mutationOf}
@@ -71,7 +73,9 @@ function Side({ name, label, tracks, queue, rated }: { name: 'A' | 'B'; label?: 
 export default async function StrainPage({ params }: { params: Promise<{ id: string }> }) {
   const strain = getStrain((await params).id);
   if (!strain) notFound();
-  const queue = strainQueue(strain);
+  const queue = allQueue();
+  // One-sided releases (FVC-002) read as a plain 1–6 list, no "Side A" header.
+  const sided = strain.sideB.length > 0 || !!strain.sides;
   const rated = [...strain.sideA, ...strain.sideB].some((t) => t.spread != null);
   const all = getStrains().filter((x) => x.id !== strain.id);
   const related = [...all.filter((x) => x.coverStyle === strain.coverStyle), ...all.filter((x) => x.coverStyle !== strain.coverStyle)].slice(0, 2);
@@ -96,7 +100,7 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
             </div>
             <h1 className={s.catalog}>{strain.id}</h1>
             <p className={s.title}>
-              {ph(strain.carrier, 'Artist')}
+              {isPlaceholder(strain.carrier) ? ph(strain.strainType, 'Genre') : strain.carrier}
               {!isPlaceholder(strain.title) && (
                 <>
                   {' '}— <span className="fvc-serif">{strain.title}</span>
@@ -134,7 +138,7 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                   {label}
                 </a>
               ))}
-              {queue.length > 0 && <PlayStrainButton queue={queue} label={strain.id} />}
+              <PlayStrainButton queue={queue} strainId={strain.id} />
               <ShareButton title={`${strain.id}, FVC RECORDS`} className="fvc-cta" />
             </div>
           </div>
@@ -159,7 +163,7 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                   </th>
                 </tr>
               </thead>
-              <Side name="A" label={strain.sides?.A} tracks={strain.sideA} queue={queue} rated={rated} />
+              <Side name="A" label={strain.sides?.A} tracks={strain.sideA} queue={queue} rated={rated} header={sided} />
               <Side name="B" label={strain.sides?.B} tracks={strain.sideB} queue={queue} rated={rated} />
             </table>
           </div>

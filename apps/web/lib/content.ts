@@ -23,6 +23,13 @@ export interface Track {
   side?: 'A' | 'B';
   /** Source track this one mutates, e.g. "A1" for a Side B version of A1. */
   mutationOf?: string | null;
+  /** Germ drawn in place of a title (FVC-002: "the germ is the title"). */
+  seed?: number;
+  phase?: 'FEVER' | 'DORMANT';
+  /** Shown as #???? until it has been played. */
+  hidden?: boolean;
+  /** Name revealed together with a hidden track, e.g. SPECIMEN. */
+  label?: string;
 }
 
 /** A playable track for the global player. */
@@ -34,6 +41,10 @@ export interface QueueTrack {
   strainId: string;
   carrier: string;
   incubation: string;
+  seed?: number;
+  phase?: 'FEVER' | 'DORMANT';
+  hidden?: boolean;
+  label?: string;
 }
 
 export interface Strain {
@@ -133,17 +144,24 @@ export function getLatestStrain(): Strain {
 /** Every track of a strain that has audio, in Side A → Side B order. */
 export function strainQueue(s: Strain): QueueTrack[] {
   const side = (name: 'A' | 'B', tracks: Track[]) =>
-    tracks.filter((t) => t.audio).map((t) => ({ src: t.audio!, title: t.title, no: t.no, side: name, strainId: s.id, carrier: s.carrier, incubation: t.incubation }));
+    tracks
+      .filter((t) => t.audio)
+      .map((t) => ({ src: t.audio!, title: t.title, no: t.no, side: name, strainId: s.id, carrier: s.carrier, incubation: t.incubation, seed: t.seed, phase: t.phase, hidden: t.hidden, label: t.label }));
   return [...side('A', s.sideA), ...side('B', s.sideB)];
 }
 
-/** The player's starting queue: the newest strain that has audio (nothing plays until pressed). */
-export function defaultQueue(): QueueTrack[] {
+/** One playlist for the whole site: every released track, in catalog order (FVC-001 A1 … FVC-002 #0002). */
+export function allQueue(): QueueTrack[] {
+  return getStrains().flatMap(strainQueue);
+}
+
+/** Where the player starts (nothing plays until pressed): the newest strain's first track. */
+export function startIndex(queue: QueueTrack[]): number {
   for (const s of getStrainsNewest()) {
-    const q = strainQueue(s);
-    if (q.length) return q;
+    const i = queue.findIndex((t) => t.strainId === s.id);
+    if (i >= 0) return i;
   }
-  return [];
+  return 0;
 }
 
 export function getOutbreaks(): Outbreak[] {

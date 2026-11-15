@@ -14,7 +14,8 @@
       "sideA/sideB": "tracks; side = \"A\" | \"B\"; incubation = duration m:ss (ffprobe); spread = 1-5 or null; audio = path under apps/web/public or null; mutationOf = source track on the other side (e.g. \"A1\")",
       "vinyl": "Pressing Plant params when a vinyl exists",
       "status": "draft | scheduled | live | dormant",
-      "sides": "optional side names, e.g. {\"A\": \"STRAIN\", \"B\": \"MUTATION\"}"
+      "sides": "optional side names, e.g. {\"A\": \"STRAIN\", \"B\": \"MUTATION\"}",
+      "tracks.seed/phase/hidden/label": "optional per track: seed = germ drawn instead of a title; phase = \"FEVER\" | \"DORMANT\"; hidden = shown as #???? until played; label = name revealed with it (e.g. SPECIMEN)"
     }
   },
   "strains": [
@@ -109,30 +110,71 @@
       "seed": 41,
       "title": "[PLACEHOLDER]",
       "carrier": "[PLACEHOLDER]",
-      "strainType": "Club",
+      "strainType": "Experimental",
       "formats": [
         "digital"
       ],
       "isolated": null,
-      "spreadLevel": 5,
+      "spreadLevel": null,
       "coverStyle": "creatura",
       "eyes": "cyclops",
       "spot": "#0B0B0B",
       "sideA": [
         {
           "no": 1,
-          "title": "[PLACEHOLDER]",
-          "incubation": "0:00"
+          "title": "#0417",
+          "seed": 417,
+          "phase": "FEVER",
+          "incubation": "2:35",
+          "spread": null,
+          "audio": "/audio/fvc-002/01.mp3"
         },
         {
           "no": 2,
-          "title": "[PLACEHOLDER]",
-          "incubation": "0:00"
+          "title": "#2203",
+          "seed": 2203,
+          "phase": "DORMANT",
+          "incubation": "2:14",
+          "spread": null,
+          "audio": "/audio/fvc-002/02.mp3"
         },
         {
           "no": 3,
-          "title": "[PLACEHOLDER]",
-          "incubation": "0:00"
+          "title": "#0088",
+          "seed": 88,
+          "phase": "FEVER",
+          "incubation": "2:41",
+          "spread": null,
+          "audio": "/audio/fvc-002/03.mp3"
+        },
+        {
+          "no": 4,
+          "title": "#1113",
+          "seed": 1113,
+          "phase": "DORMANT",
+          "incubation": "3:07",
+          "spread": null,
+          "audio": "/audio/fvc-002/04.mp3"
+        },
+        {
+          "no": 5,
+          "title": "#3009",
+          "seed": 3009,
+          "phase": "FEVER",
+          "incubation": "3:11",
+          "spread": null,
+          "audio": "/audio/fvc-002/05.mp3"
+        },
+        {
+          "no": 6,
+          "title": "#0002",
+          "seed": 2,
+          "phase": "DORMANT",
+          "incubation": "0:40",
+          "spread": null,
+          "audio": "/audio/fvc-002/06.mp3",
+          "hidden": true,
+          "label": "SPECIMEN"
         }
       ],
       "sideB": [],
@@ -143,7 +185,7 @@
         "bandcamp": null
       },
       "vinyl": null,
-      "status": "draft"
+      "status": "live"
     },
     {
       "id": "FVC-003",

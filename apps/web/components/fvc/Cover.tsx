@@ -68,7 +68,7 @@ export function Cover({ strain, style, className }: { strain: Strain; style?: CS
               (B) SIDE B:
             </text>
             <text x="386" y="38" textAnchor="end">
-              {ph(s.sideB[0]?.title, 'TRACK TITLE').toUpperCase()}
+              {ph(s.sideB[0]?.title ?? s.sideA.filter((t) => !t.hidden).at(-1)?.title, 'TRACK TITLE').toUpperCase()}
             </text>
             <text x="236" y="70" textAnchor="end">
               PLAY LOUD

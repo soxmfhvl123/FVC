@@ -23,6 +23,14 @@ export function subscribeLevels(cb: (l: Levels) => void) {
   };
 }
 
+/* ---------- spectrogram analyser (unsmoothed, wide dB range so faint images show) ---------- */
+
+let specAnalyser: AnalyserNode | null = null;
+/** The analyser behind the Spectrogram view; null until the first play. */
+export function getSpectrumAnalyser() {
+  return specAnalyser;
+}
+
 /* ---------- player state ---------- */
 
 interface PlayerApi {
@@ -30,6 +38,8 @@ interface PlayerApi {
   index: number;
   track: QueueTrack | undefined;
   playing: boolean;
+  /** Hidden tracks (#????) show their number once they have been played. */
+  revealed: ReadonlySet<string>;
   time: number;
   duration: number;
   /** Load a queue and start the given track (always from a user gesture). */
@@ -53,13 +63,14 @@ export function usePlayer() {
  * Nothing plays until the visitor presses play (no autoplay). The Web Audio graph
  * (MediaElementSource → Analyser → speakers) is created on the first play.
  */
-export function PlayerProvider({ initialQueue, children }: { initialQueue: QueueTrack[]; children: ReactNode }) {
+export function PlayerProvider({ initialQueue, initialIndex = 0, children }: { initialQueue: QueueTrack[]; initialIndex?: number; children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const graph = useRef<{ ctx: AudioContext; analyser: AnalyserNode; freq: Uint8Array<ArrayBuffer>; wave: Uint8Array<ArrayBuffer> } | null>(null);
   const raf = useRef(0);
   const [queue, setQueue] = useState(initialQueue);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(initialIndex);
   const [playing, setPlaying] = useState(false);
+  const [revealed, setRevealed] = useState<ReadonlySet<string>>(() => new Set());
   const [time, setTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const track = queue[index];
@@ -74,6 +85,13 @@ export function PlayerProvider({ initialQueue, children }: { initialQueue: Queue
     analyser.smoothingTimeConstant = 0.6;
     src.connect(analyser);
     analyser.connect(ctx.destination);
+    const spec = ctx.createAnalyser();
+    spec.fftSize = 2048;
+    spec.smoothingTimeConstant = 0;
+    spec.minDecibels = -100;
+    spec.maxDecibels = -40;
+    src.connect(spec);
+    specAnalyser = spec;
     graph.current = { ctx, analyser, freq: new Uint8Array(analyser.frequencyBinCount), wave: new Uint8Array(analyser.fftSize) };
   }, []);
 
@@ -182,7 +200,10 @@ export function PlayerProvider({ initialQueue, children }: { initialQueue: Queue
     setTime(t);
   }, []);
 
-  const api = useMemo<PlayerApi>(() => ({ queue, index, track, playing, time, duration, playQueue, toggle, next, prev, seek }), [queue, index, track, playing, time, duration, playQueue, toggle, next, prev, seek]);
+  const api = useMemo<PlayerApi>(
+    () => ({ queue, index, track, playing, revealed, time, duration, playQueue, toggle, next, prev, seek }),
+    [queue, index, track, playing, revealed, time, duration, playQueue, toggle, next, prev, seek],
+  );
 
   return (
     <Ctx.Provider value={api}>
@@ -190,7 +211,10 @@ export function PlayerProvider({ initialQueue, children }: { initialQueue: Queue
       <audio
         ref={audioRef}
         preload="none"
-        onPlay={() => setPlaying(true)}
+        onPlay={() => {
+          setPlaying(true);
+          if (track?.hidden && !revealed.has(track.src)) setRevealed((r) => new Set(r).add(track.src));
+        }}
         onPause={() => setPlaying(false)}
         onTimeUpdate={(e) => setTime(e.currentTarget.currentTime)}
         onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}

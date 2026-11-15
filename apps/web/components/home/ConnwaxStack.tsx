@@ -7,18 +7,18 @@ import s from './home.module.css';
 
 /** Section 2 — Connwax stack + ink ticker for the latest strain. */
 export function ConnwaxStack({ strain }: { strain: Strain }) {
-  const artist = ph(strain.carrier, 'Artist').toUpperCase();
+  const artist = isPlaceholder(strain.carrier) ? '' : strain.carrier.toUpperCase();
   const title = ph(strain.title, 'Release Title').toUpperCase();
   const out = strain.isolated ? isolatedLabel(strain.isolated) : '';
   // Only say what is true right now (no placeholders, no closed forms).
-  const tape = [strain.id, artist, isPlaceholder(strain.title) ? null : title, 'HIGHLY CONTAGIOUS', 'NO KNOWN CURE', SUBMIT_ENDPOINT ? 'SAMPLE SUBMISSION OPEN' : null]
+  const tape = [strain.id, artist || null, isPlaceholder(strain.title) ? null : title, 'HIGHLY CONTAGIOUS', 'NO KNOWN CURE', SUBMIT_ENDPOINT ? 'SAMPLE SUBMISSION OPEN' : null]
     .filter(Boolean)
     .map((x) => `${x} ▮ `)
     .join('');
   return (
     <section id="now-spreading" aria-labelledby="ns-h" className={s.connwax}>
       <h2 id="ns-h" className="sr-only">
-        Now spreading: {strain.id}, {artist}{isPlaceholder(strain.title) ? '' : `, ${title}`}{out ? `, out ${out}` : ''}
+        Now spreading: {strain.id}{artist ? `, ${artist}` : ''}{isPlaceholder(strain.title) ? '' : `, ${title}`}{out ? `, out ${out}` : ''}
       </h2>
       <div className={s.connwaxRow} aria-hidden="true">
         <span className={s.cwLabel}>FAT VIRUS CARRIER RECORDS</span>
@@ -28,7 +28,7 @@ export function ConnwaxStack({ strain }: { strain: Strain }) {
         <span className="fvc-mono" style={{ fontSize: 22 }}>
           +
         </span>
-        <span className={s.cwBar}>{artist}</span>
+        {artist && <span className={s.cwBar}>{artist}</span>}
         {!isPlaceholder(strain.title) && <span className={s.cwWord}>{title}</span>}
         <span className={s.cwWord} style={{ background: strain.spot, padding: '0 10px' }}>
           {strain.isolated ? `OUT ${out}` : 'OUT NOW'}

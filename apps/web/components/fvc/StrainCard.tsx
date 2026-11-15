@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { PlayStrainButton } from '@/components/player/PlayStrainButton';
-import { type Strain, strainQueue } from '@/lib/content';
-import { formatLabel, isPlaceholder, ph, spreadBlocks, totalIncubation } from '@/lib/format';
+import { allQueue, type Strain } from '@/lib/content';
+import { formatLabel, isPlaceholder, ph, spreadBlocks, totalIncubation, trackName } from '@/lib/format';
 import { Cover } from './Cover';
 import { CtaButton } from './Ui';
 
@@ -12,8 +12,9 @@ export function StrainCard({ strain: s, className, headingLevel = 3 }: { strain:
   const tracks = s.sideA.length + s.sideB.length;
   const meta = `${tracks} track${tracks === 1 ? '' : 's'}, ${totalIncubation(s)}`;
   // Until there is a blurb, the track titles say more than a template sentence would.
-  const blurb = isPlaceholder(s.blurb) ? [...s.sideA, ...s.sideB].map((t) => ph(t.title, 'Track')).join(' / ') : s.blurb;
-  const queue = strainQueue(s);
+  const blurb = isPlaceholder(s.blurb) ? [...s.sideA, ...s.sideB].map((t) => (isPlaceholder(t.title) ? '[Track]' : trackName(t))).join(' / ') : s.blurb;
+  const queue = allQueue();
+  const playable = queue.some((t) => t.strainId === s.id);
   const href = `/strains/${s.id}`;
   return (
     <article className={`fvc-card ${className ?? ''}`}>
@@ -38,7 +39,7 @@ export function StrainCard({ strain: s, className, headingLevel = 3 }: { strain:
             </span>
           )}
         </span>
-        {queue.length ? <PlayStrainButton queue={queue} label={s.id} /> : <CtaButton href={href}>{film ? 'Watch' : 'Open'}</CtaButton>}
+        {playable ? <PlayStrainButton queue={queue} strainId={s.id} /> : <CtaButton href={href}>{film ? 'Watch' : 'Open'}</CtaButton>}
       </div>
     </article>
   );

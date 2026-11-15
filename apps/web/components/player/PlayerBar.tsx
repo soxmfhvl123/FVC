@@ -1,7 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
-import { isPlaceholder } from '@/lib/format';
+import { useEffect, useState } from 'react';
+import { isPlaceholder, trackName } from '@/lib/format';
+import { useReducedMotion } from '@/lib/hooks';
+import { Spectrogram } from './Spectrogram';
 import { usePlayer } from './PlayerProvider';
 import s from './player.module.css';
 
@@ -28,6 +30,9 @@ function ownsSpace(el: EventTarget | null) {
 export function PlayerBar() {
   const p = usePlayer();
   const t = p.track;
+  const reduce = useReducedMotion();
+  const [spectro, setSpectro] = useState(false);
+  const showSpectro = spectro && !reduce;
 
   // Space toggles play/pause anywhere except where Space already acts (buttons, fields, links).
   useEffect(() => {
@@ -44,13 +49,15 @@ export function PlayerBar() {
 
   if (!t) return null;
   const total = p.duration || parseIncubation(t.incubation);
-  const carrier = isPlaceholder(t.carrier) ? '[Artist]' : t.carrier;
-  const label = `${t.title}, ${t.strainId}`;
+  const carrier = isPlaceholder(t.carrier) ? '' : t.carrier;
+  const name = trackName(t, p.revealed.has(t.src) || (p.playing && p.track?.src === t.src));
+  const label = `${name}, ${t.strainId}`;
 
   return (
     <>
     {/* Keeps the footer clear of the fixed bar. */}
     <div className={s.spacer} aria-hidden="true" />
+    {showSpectro && <Spectrogram playing={p.playing} />}
     <div className={s.bar} role="region" aria-label="Player">
       <div className={s.controls}>
         <button type="button" className={s.btn} onClick={p.prev} aria-label="Previous track" disabled={p.index === 0 && p.time < 3}>
@@ -79,8 +86,8 @@ export function PlayerBar() {
       <div className={s.now} aria-live="polite">
         <span className={s.strain}>{t.strainId}</span>
         <span className={s.title}>
-          {t.side}
-          {t.no} {t.title}
+          {t.seed == null && `${t.side}${t.no} `}
+          {name}
         </span>
         <span className={s.carrier}>{carrier}</span>
       </div>
@@ -97,6 +104,12 @@ export function PlayerBar() {
         aria-valuetext={`${mmss(p.time)} of ${mmss(total)}`}
         style={{ ['--pct' as string]: `${(Math.min(p.time, total) / Math.max(1, total)) * 100}%` }}
       />
+
+      {!reduce && (
+        <button type="button" className={`${s.toggle} ${spectro ? s.toggleOn : ''}`} aria-pressed={spectro} onClick={() => setSpectro((v) => !v)}>
+          Spectrogram
+        </button>
+      )}
 
       <span className={s.time}>
         <span className={s.timeLabel}>Incubation</span> {mmss(p.time)} / {mmss(total)}

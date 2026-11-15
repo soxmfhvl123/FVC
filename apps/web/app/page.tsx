@@ -1,3 +1,4 @@
+import { color } from '@fvc/engine';
 import { ConnwaxStack } from '@/components/home/ConnwaxStack';
 import { Dictionary } from '@/components/home/Dictionary';
 import { Hero } from '@/components/home/Hero';
@@ -16,11 +17,12 @@ export default function Home() {
   const outbreak = getOutbreaks().find((o) => o.strain === latest.id);
   const pair = (a: number) => strains.slice(a, a + 2);
   // One spot ink per piece: the page takes the latest strain's spot (coral by default).
-  const spot = latest.spot;
+  // An ink-only strain would turn every spot plate black; fall back to the house coral.
+  const spot = latest.spot === color.ink ? color.spot : latest.spot;
 
   return (
     <>
-      <Hero strain={latest} outbreak={outbreak} />
+      <Hero strain={latest} outbreak={outbreak} spot={spot} />
       <main id="main">
         <ConnwaxStack strain={latest} />
 

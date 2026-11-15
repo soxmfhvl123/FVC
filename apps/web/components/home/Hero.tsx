@@ -1,6 +1,6 @@
 
 import type { Outbreak, Strain } from '@/lib/content';
-import { catalogNo, formatLabel, isolatedLabel, ph, shortDate } from '@/lib/format';
+import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, shortDate } from '@/lib/format';
 import { Clock } from '@/components/fvc/Clock';
 import { Germ } from '@/components/fvc/Germ';
 import { HeroGerm } from '@/components/fvc/HeroGerm';
@@ -9,16 +9,17 @@ import { BitNoiseOval, Crosshair, DishLogo, Grain } from '@/components/fvc/Marks
 import s from './home.module.css';
 
 /** Section 1 — Golova / Into the Noise hero. */
-export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak }) {
+export function Hero({ strain, outbreak, spot }: { strain: Strain; outbreak?: Outbreak; spot: string }) {
   const no = catalogNo(strain.id);
-  const artist = ph(strain.carrier, 'Artist');
+  // Unknown artist: leave the bar out rather than print [Artist].
+  const artist = isPlaceholder(strain.carrier) ? '' : strain.carrier;
   const date = outbreak?.date ? isolatedLabel(outbreak.date) : '[Date]';
   const facts = [ph(strain.strainType, 'Genre'), ...strain.formats.map(formatLabel), 'Seoul'].join(' ▮ ').toUpperCase();
   return (
     <header className={s.hero}>
       <h1 className="sr-only">FVC RECORDS — Fat Virus Carrier</h1>
 
-      <HeroGerm seed={strain.seed} spot={strain.spot} eyes={strain.eyes} className={s.heroGerm} />
+      <HeroGerm seed={strain.seed} spot={spot} eyes={strain.eyes} className={s.heroGerm} />
       <div className={`${s.heroSat} fvc-hide-sm`}>
         <Germ seed={150} N={60} two={false} lumps={4} dust={0.004} className="fvc-wander" style={{ width: '100%', height: '100%' }} />
       </div>
@@ -33,7 +34,7 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
         <div className={s.row}>
           <BitNoiseOval id="hov" w={96} h={27} />
           <span className={s.heroBarSm} style={{ fontSize: 18, padding: '0 8px' }}>
-            {artist.toUpperCase()}
+            {(artist || ph(strain.strainType, 'Genre')).toUpperCase()}
           </span>
         </div>
         <span className={s.heroBarSm}>

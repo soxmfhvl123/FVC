@@ -1,27 +1,50 @@
 'use client';
 
-import { color, HERO_EYES, pixelRing } from '@fvc/engine';
-import { useEffect, useRef, useState } from 'react';
+import { color, type EyeSet, HERO_EYES, pixelRing } from '@fvc/engine';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useReducedMotion, useTick } from '@/lib/hooks';
 
 const CELL = 300 / 140;
-const E = HERO_EYES;
-const PATHS = {
-  w1: pixelRing(E.left.white, 0, CELL),
-  r1: pixelRing(E.left.ring[0], E.left.ring[1], CELL),
-  p1: pixelRing(E.left.pupil, 0, CELL),
-  w2: pixelRing(E.right.white, 0, CELL),
-  r2: pixelRing(E.right.ring[0], E.right.ring[1], CELL),
-  p2: pixelRing(E.right.pupil, 0, CELL),
+
+interface Eye {
+  cx: number;
+  cy: number;
+  white: number;
+  ring: [number, number];
+  pupil: number;
+  travel: number;
+}
+
+/** Same layout as the engine's EYES table (body units, plane ±1.45 → 300 box). */
+const UNITS: Record<'cyclops' | 'three', number[][]> = {
+  cyclops: [[0, -0.08, 0.34, 0.15]],
+  three: [
+    [-0.36, -0.12, 0.15, 0.07],
+    [0, -0.32, 0.13, 0.06],
+    [0.34, -0.1, 0.17, 0.08],
+  ],
 };
+const px = (u: number) => ((u + 1.45) / 2.9) * 300;
+const len = (u: number) => (u / 2.9) * 300;
+
+function layout(set: EyeSet): Eye[] {
+  if (set === 'two') return [HERO_EYES.left, HERO_EYES.right].map((e) => ({ ...e, ring: e.ring as [number, number] }));
+  if (set === 'none') return [];
+  return UNITS[set].map(([x, y, r, pr]) => {
+    const white = Math.round(len(r) * 2) / 2;
+    return { cx: px(x), cy: px(y), white, ring: [white - 1, Math.max(3, white * 0.22)], pupil: Math.round(len(pr) * 2) / 2, travel: Math.round(white * 0.37) };
+  });
+}
+
 const WHITE = '#F2F1ED';
 
 /**
- * Live pixel eyes laid over a two-eyed hero germ drawn with eyes 'none' (N 140).
+ * Live pixel eyes laid over a hero germ drawn with eyes 'none' (N 140), for any eye set.
  * Pupils follow the pointer relative to the enclosing <header> (centre ≈ 62% / 32%),
  * wander slowly when there is no pointer, and stay centred with reduced motion.
  */
-export function HeroEyes() {
+export function HeroEyes({ set = 'two' }: { set?: EyeSet }) {
+  const eyes = useMemo(() => layout(set).map((e) => ({ ...e, w: pixelRing(e.white, 0, CELL), r: pixelRing(e.ring[0], e.ring[1], CELL), p: pixelRing(e.pupil, 0, CELL) })), [set]);
   const ref = useRef<SVGSVGElement>(null);
   const reduce = useReducedMotion();
   const [pointer, setPointer] = useState<{ mx: number; my: number } | null>(null);
@@ -75,20 +98,15 @@ export function HeroEyes() {
 
   return (
     <svg ref={ref} viewBox="0 0 300 300" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
-      <g transform={`translate(${E.left.cx} ${E.left.cy})`}>
-        <path d={PATHS.w1} fill={WHITE} />
-        <path d={PATHS.r1} fill={color.ink} />
-        <g style={pupil(E.left.travel)}>
-          <path d={PATHS.p1} fill={color.ink} />
+      {eyes.map((e, i) => (
+        <g key={i} transform={`translate(${e.cx} ${e.cy})`}>
+          <path d={e.w} fill={WHITE} />
+          <path d={e.r} fill={color.ink} />
+          <g style={pupil(e.travel)}>
+            <path d={e.p} fill={color.ink} />
+          </g>
         </g>
-      </g>
-      <g transform={`translate(${E.right.cx} ${E.right.cy})`}>
-        <path d={PATHS.w2} fill={WHITE} />
-        <path d={PATHS.r2} fill={color.ink} />
-        <g style={pupil(E.right.travel)}>
-          <path d={PATHS.p2} fill={color.ink} />
-        </g>
-      </g>
+      ))}
     </svg>
   );
 }
