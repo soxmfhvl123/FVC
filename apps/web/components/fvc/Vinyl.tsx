@@ -52,7 +52,7 @@ export function VinylRecord({ seed, base, pal, labelSeed, catalog, size = 520 }:
       <text x="150" y="190" textAnchor="middle" fontFamily="Archivo, sans-serif" fontWeight="900" fontStretch="125%" fontSize="9" fill={color.ink}>
         {catalog ?? `FVC-${seed}`}
       </text>
-      <text x="150" y="199" textAnchor="middle" fontFamily="Inter Tight, sans-serif" fontSize="5.5" fill={color.ink}>
+      <text x="150" y="199" textAnchor="middle" fontFamily="Instrument Sans, sans-serif" fontSize="5.5" fill={color.ink}>
         SIDE A · 33⅓
       </text>
       <circle cx="150" cy="150" r="3.5" fill={color.paper} />

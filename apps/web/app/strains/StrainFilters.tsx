@@ -18,8 +18,8 @@ export function StrainFilters({ strains, cards }: { strains: Strain[]; cards: Re
 
   const pills = <T extends string>(label: string, all: T[], cur: T | null, set: (v: T | null) => void, name: (v: T) => string) => (
     <div role="group" aria-label={label} className={s.pills}>
-      <span className="fvc-mono" style={{ fontSize: 11, minWidth: 92 }}>
-        {label.toUpperCase()}
+      <span className="fvc-note" style={{ minWidth: 92 }}>
+        {label}
       </span>
       <button type="button" aria-pressed={cur == null} className={s.pill} onClick={() => set(null)}>
         All

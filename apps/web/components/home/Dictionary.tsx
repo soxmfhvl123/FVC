@@ -39,7 +39,7 @@ export function Dictionary({ vocabulary, spot = color.spot, limit = 8 }: { vocab
           const look: CSSProperties = r.look === 'ink' ? { background: color.ink, color: color.white } : r.look === 'spot' ? { background: spot } : { border: `2px solid ${color.ink}` };
           return (
             <div key={r.key} className={`${s.dictRow} fvc-inv`} style={look}>
-              <dt className="fvc-mono">{r.from.toUpperCase()} →</dt>
+              <dt className="fvc-note">{r.from}</dt>
               <dd style={r.type}>{word}</dd>
             </div>
           );

@@ -21,7 +21,7 @@ export function MiniLab({ spot = color.spot }: { spot?: string }) {
     <section className="fvc-grid2 fvc-rule-b" aria-label="FVC Lab, mini tools">
       <div className={`fvc-col-l ${s.mini}`} style={{ background: color.grey, borderRight: 'var(--fvc-rule)' }}>
         <div className={s.miniHead}>
-          <h2 style={{ font: 'inherit', margin: 0 }}>FVC Lab ▮ Germinator</h2>
+          <h2 style={{ font: 'inherit', margin: 0 }}>Germinator</h2>
           <span aria-live="polite">Seed {seed}</span>
         </div>
         <div className={s.miniOut}>
@@ -39,7 +39,7 @@ export function MiniLab({ spot = color.spot }: { spot?: string }) {
       </div>
       <div ref={ref} className={s.mini} style={{ background: color.white }}>
         <div className={s.miniHead}>
-          <h2 style={{ font: 'inherit', margin: 0 }}>FVC Lab ▮ Mutator</h2>
+          <h2 style={{ font: 'inherit', margin: 0 }}>Mutator</h2>
           <span className="fvc-serif">catch your name</span>
         </div>
         <div className={s.miniOut}>
@@ -63,7 +63,7 @@ export function MiniLab({ spot = color.spot }: { spot?: string }) {
             ↻ Mutate
           </button>
           <Link href="/lab" style={{ color: color.paper, fontSize: 13 }}>
-            All 4 tools →
+            All four tools
           </Link>
         </div>
       </div>

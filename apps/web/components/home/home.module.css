@@ -26,11 +26,10 @@
 }
 .heroSat {
   position: absolute;
-  left: 25%;
-  top: 56px;
+  left: 22%;
+  top: 40px;
   width: 150px;
   height: 150px;
-  transform: rotate(18deg);
 }
 .heroStack {
   position: absolute;

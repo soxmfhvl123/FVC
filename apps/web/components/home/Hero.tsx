@@ -19,7 +19,9 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
       <h1 className="sr-only">FVC RECORDS — Fat Virus Carrier</h1>
 
       <HeroGerm seed={strain.seed} spot={strain.spot} eyes={strain.eyes} className={s.heroGerm} />
-      <Germ seed={150} N={60} two={false} lumps={4} dust={0.004} className={`${s.heroSat} fvc-hide-sm`} />
+      <div className={`${s.heroSat} fvc-hide-sm`}>
+        <Germ seed={150} N={60} two={false} lumps={4} dust={0.004} className="fvc-wander" style={{ width: '100%', height: '100%' }} />
+      </div>
 
       <div className={`${s.heroStack} fvc-hide-sm`} aria-hidden="true">
         <div className={s.row}>
@@ -31,7 +33,7 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
         <div className={s.row}>
           <BitNoiseOval id="hov" w={96} h={27} />
           <span className={s.heroBarSm} style={{ fontSize: 18, padding: '0 8px' }}>
-            {artist.toUpperCase()} {artist.toUpperCase()}
+            {artist.toUpperCase()}
           </span>
         </div>
         <span className={s.heroBarSm}>
@@ -52,13 +54,6 @@ export function Hero({ strain, outbreak }: { strain: Strain; outbreak?: Outbreak
         <DishLogo />
       </div>
 
-      <div className={`${s.heroInfo} fvc-hide-sm`} style={{ left: '34%', top: 160 }}>
-        (A) Strain:
-        <br />
-        {strain.id}
-        <br />
-        {artist}
-      </div>
       {outbreak && (
         <div className={`${s.heroInfo} fvc-hide-sm`} style={{ left: '52%', top: 250, textAlign: 'right' }}>
           (B) Outbreak Night:

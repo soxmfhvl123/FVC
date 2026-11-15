@@ -75,10 +75,10 @@ export default async function OutbreakPage({ params }: { params: Promise<{ id: s
             </table>
             {o.ticketUrl ? (
               <a href={o.ticketUrl} className="fvc-submit" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} target="_blank" rel="noopener noreferrer">
-                Get tickets ↗
+                Get tickets
               </a>
             ) : (
-              <p className="fvc-mono" style={{ fontSize: 12, margin: 0 }}>
+              <p className="fvc-note" style={{ margin: 0 }}>
                 Tickets: by word of mouth.
               </p>
             )}

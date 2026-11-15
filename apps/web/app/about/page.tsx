@@ -87,7 +87,7 @@ export default function AboutPage() {
         <section aria-labelledby="sheet-h">
           <div className="fvc-section-label" style={{ padding: '18px 18px 12px', borderBottom: 'var(--fvc-rule)' }}>
             <h2 id="sheet-h" style={{ font: 'inherit', margin: 0 }}>
-              Specimen sheet ▮ Ttung-gyun
+              Specimen sheet: Ttung-gyun
             </h2>
             <span>Habitat: headphones, car speakers, your ears</span>
           </div>

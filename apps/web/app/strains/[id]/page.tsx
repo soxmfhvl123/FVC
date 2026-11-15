@@ -7,9 +7,10 @@ import { SpecimenLabel } from '@/components/fvc/SpecimenLabel';
 import { StrainCard } from '@/components/fvc/StrainCard';
 import { TopBar } from '@/components/fvc/TopBar';
 import { VinylRecord } from '@/components/fvc/Vinyl';
+import { PlayStrainButton } from '@/components/player/PlayStrainButton';
 import { TrackButton } from '@/components/player/TrackButton';
 import { getStrain, getStrains, type QueueTrack, strainQueue, type Track } from '@/lib/content';
-import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, spreadBlocks, strainSummary, totalIncubation, trackTime } from '@/lib/format';
+import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, spreadBlocks, totalIncubation, trackTime } from '@/lib/format';
 import s from './strain.module.css';
 
 export function generateStaticParams() {
@@ -104,8 +105,8 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                 </span>
               ))}
             </div>
-            <p className="fvc-prose">{isPlaceholder(strain.blurb) ? strainSummary(strain) : strain.blurb}</p>
-            <dl className={`fvc-mono ${s.stats}`}>
+            {!isPlaceholder(strain.blurb) && <p className="fvc-prose">{strain.blurb}</p>}
+            <dl className={s.stats}>
               <div>
                 <dt>Incubation</dt>
                 <dd>{totalIncubation(strain)}</dd>
@@ -121,12 +122,12 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
             </dl>
             <div className={s.actions}>
               {links.map(([label, href]) => (
-                <a key={label} href={href} className={`fvc-cta fvc-inv ${s.action}`} target="_blank" rel="noopener noreferrer">
-                  {label} ↗
+                <a key={label} href={href} className="fvc-cta" target="_blank" rel="noopener noreferrer">
+                  {label}
                 </a>
               ))}
-              {!links.length && <span className="fvc-mono" style={{ fontSize: 12 }}>Press play below — streaming links soon.</span>}
-              <ShareButton title={`${strain.id} — FVC RECORDS`} className={`fvc-cta fvc-inv ${s.action}`} />
+              {queue.length > 0 && <PlayStrainButton queue={queue} label={strain.id} />}
+              <ShareButton title={`${strain.id}, FVC RECORDS`} className="fvc-cta" />
             </div>
           </div>
         </section>
@@ -160,10 +161,10 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
           <section className={s.vinyl} aria-labelledby="pp-h">
             <div className="fvc-section-label">
               <h2 id="pp-h" style={{ font: 'inherit', margin: 0 }}>
-                Pressing Plant ▮ Pressing Nº {strain.vinyl.seed}
+                Pressing Plant, pressing Nº {strain.vinyl.seed}
               </h2>
               <span>
-                {strain.vinyl.base} base ▮ {strain.vinyl.palette} splat
+                {strain.vinyl.base} base, {strain.vinyl.palette} splat
               </span>
             </div>
             <VinylRecord seed={strain.vinyl.seed} base={strain.vinyl.base} pal={strain.vinyl.palette} labelSeed={strain.seed + 3} catalog={strain.id} size={560} />

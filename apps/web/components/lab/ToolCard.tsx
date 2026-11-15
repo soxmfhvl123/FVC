@@ -102,7 +102,7 @@ export function ToolCard({
         <div className="lab-controls">{controls}</div>
         {href && (
           <Link href={href} className="lab-open">
-            Open {name} →
+            Open {name}
           </Link>
         )}
       </section>

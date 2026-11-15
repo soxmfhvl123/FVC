@@ -20,7 +20,7 @@ export default function OutbreaksPage() {
       <main id="main">
         <div className="fvc-pagehead">
           <div className="fvc-section-label">
-            <span>Release parties ▮ {outbreaks.length} on file</span>
+            <span>Release parties, {outbreaks.length} on file</span>
             <span>Entry by word of mouth</span>
           </div>
           <h1>
@@ -35,8 +35,8 @@ export default function OutbreaksPage() {
                   <span className={s.date}>{o.date ? isolatedLabel(o.date) : '[Date]'}</span>
                   <span className={s.title}>
                     {o.title}
-                    <span className="fvc-mono" style={{ fontSize: 12, display: 'block', marginTop: 6 }}>
-                      {o.id} ▮ {ph(o.venue, 'Venue')}, {o.city} ▮ Doors {o.doors}
+                    <span className="fvc-note" style={{ display: 'block', marginTop: 6 }}>
+                      {o.id}, {ph(o.venue, 'Venue')}, {o.city}, doors {o.doors}
                     </span>
                   </span>
                   <span className={s.lineup}>
@@ -55,7 +55,7 @@ export default function OutbreaksPage() {
             No Outbreak Nights scheduled yet. The next one will be announced here.
           </p>
         )}
-        <BannerSeries ids={['b3', 'b4', 'b5']} title="Outbreak banners ▮ shuffle to remix" freeze />
+        <BannerSeries ids={['b3', 'b4', 'b5']} title="Outbreak banners. Shuffle to remix." freeze />
       </main>
       <Footer />
     </>

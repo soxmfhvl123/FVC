@@ -30,8 +30,8 @@ export function SpreadMeter({ strainId, initial = 4, spot = color.spot }: { stra
     <section className="fvc-grid2 fvc-meter" aria-labelledby="meter-h">
       <div className="fvc-col-l fvc-meter-l">
         <div>
-          <div className="fvc-mono fvc-upper" style={{ fontSize: 12 }}>
-            Spread Meter ▮ {strainId}
+          <div className="fvc-note">
+            Spread meter, {strainId}
           </div>
           <h2 id="meter-h" className="fvc-meter-h">
             How <span className="fvc-goth">catchy</span>

@@ -14,7 +14,7 @@ export default function SpreadReportPage() {
       <TopBar />
       <main id="main" className="fvc-pagehead" style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', gap: 26 }}>
         <div className="fvc-section-label">
-          <span>Newsletter → Spread Report</span>
+          <span>Newsletter</span>
           <span>No known cure</span>
         </div>
         <h1>

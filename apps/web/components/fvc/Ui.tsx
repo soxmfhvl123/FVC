@@ -18,17 +18,17 @@ export function Pill({ children, fill = 'transparent', style, as: Tag = 'span' }
   );
 }
 
-/** Outlined mono CTA that inverts on hover (`Catch it ↗`). External links open in a new tab. */
+/** Underlined text link used for calls to action. External links open in a new tab. */
 export function CtaButton({ href, children, style }: { href: string; children: ReactNode; style?: CSSProperties }) {
   const external = /^https?:/.test(href);
   if (external)
     return (
-      <a href={href} className="fvc-cta fvc-inv" style={style} target="_blank" rel="noopener noreferrer">
+      <a href={href} className="fvc-cta" style={style} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
     );
   return (
-    <Link href={href} className="fvc-cta fvc-inv" style={style}>
+    <Link href={href} className="fvc-cta" style={style}>
       {children}
     </Link>
   );

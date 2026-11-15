@@ -16,7 +16,7 @@ export default function SubmitPage() {
       <main id="main" className="fvc-grid2 fvc-rule-b">
         <div className="fvc-col-l fvc-pagehead" style={{ borderRight: 'var(--fvc-rule)', borderBottom: 'none', background: 'var(--fvc-grey)' }}>
           <div className="fvc-section-label">
-            <span>Demo → Sample Submission</span>
+            <span>Demos</span>
             <span>Open</span>
           </div>
           <h1>

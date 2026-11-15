@@ -3,7 +3,7 @@ import { barcodePath } from '@fvc/engine';
 import { germPaths } from './Germ';
 import { vinylPaths } from './Vinyl';
 
-const INFO = 'Inter Tight, sans-serif';
+const INFO = 'Instrument Sans, sans-serif';
 
 /** Kit tile 04: colony repeat pattern (tote / sleeve). */
 export function PatternArt() {

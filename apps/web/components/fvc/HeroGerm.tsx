@@ -14,10 +14,12 @@ export function HeroGerm({ seed, spot, eyes = 'two', className, style }: { seed:
   const live = seed === LIVE_EYE_SEED;
   return (
     <div className={className} style={{ position: 'relative', aspectRatio: '1', ...style }} aria-hidden="true">
+      <div className="fvc-float" style={{ position: 'absolute', inset: 0 }}>
       <BassPulse>
         <Germ seed={seed} spot={spot} N={140} lumps={5} hair={60} eyes={live ? 'none' : eyes} offset={[1.2, 0.8]} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
         {live && <HeroEyes />}
       </BassPulse>
+      </div>
     </div>
   );
 }

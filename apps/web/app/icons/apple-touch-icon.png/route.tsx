@@ -11,7 +11,7 @@ export function GET() {
   return new ImageResponse(
     (
       <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: color.ink }}>
-        {/* eslint-disable-next-line jsx-a11y/alt-text */}
+        {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
         <img src={germDataUri(41, color.spot, { N: 70, eyes: 'cyclops', dust: 0.002 }, color.paper)} width={180} height={180} />
       </div>
     ),

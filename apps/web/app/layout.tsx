@@ -31,6 +31,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="stylesheet" href={GOOGLE_FONTS_URL} />
+        {/* Root layout, so this loads on every page; the rule targets the old pages/ router. */}
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" />
       </head>
       <body>
         <a href="#main" className="fvc-skip">

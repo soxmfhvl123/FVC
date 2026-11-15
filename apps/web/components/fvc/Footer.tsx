@@ -41,7 +41,7 @@ export function Footer({ seed = 131, spot = color.spot }: { seed?: number; spot?
       <div className="fvc-footer-legal">
         <span>©2026 {site.name}</span>
         <span>
-          {site.domain} ▮ {site.city}
+          {site.domain}, {site.city}
         </span>
       </div>
     </footer>

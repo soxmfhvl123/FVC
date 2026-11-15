@@ -3,7 +3,7 @@ import type { Strain } from '@/lib/content';
 import { catalogNo, isolatedLabel, ph, spreadBlocks, totalIncubation } from '@/lib/format';
 import { germPaths } from './Germ';
 
-const INFO = 'Inter Tight, sans-serif';
+const INFO = 'Instrument Sans, sans-serif';
 
 /** Kit tile 01: black header, big wide catalog no., field rows, CERTIFIED CARRIER bar, barcode. */
 export function SpecimenLabel({ strain: s }: { strain: Strain }) {

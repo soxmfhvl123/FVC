@@ -21,7 +21,7 @@ async function post(url: string, data: Record<string, unknown>): Promise<Status>
 function OpensSoon({ what }: { what: string }) {
   return (
     <p role="status" className="fvc-prose" style={{ fontSize: 24, fontWeight: 500, letterSpacing: '-0.02em', margin: 0 }}>
-      {what} opens soon. <span className="fvc-serif">Check back.</span>
+      {what} isn’t open yet.
     </p>
   );
 }
@@ -123,7 +123,7 @@ export function SubmissionForm() {
         )}
       </div>
       <button type="submit" className="fvc-submit" disabled={st.kind === 'sending'}>
-        {st.kind === 'sending' ? 'Sending…' : 'Send sample ↗'}
+        {st.kind === 'sending' ? 'Sending…' : 'Send sample'}
       </button>
     </form>
   );

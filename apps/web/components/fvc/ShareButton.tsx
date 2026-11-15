@@ -20,9 +20,9 @@ export function ShareButton({ title, className }: { title: string; className?: s
   return (
     <>
       <button type="button" className={className} onClick={share}>
-        Share ↗
+        Share
       </button>
-      <span role="status" className="fvc-mono" style={{ fontSize: 12 }}>
+      <span role="status" className="fvc-note">
         {msg}
       </span>
     </>

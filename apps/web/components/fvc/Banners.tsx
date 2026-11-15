@@ -8,7 +8,7 @@ import { Letter } from './Letter';
 
 export type BannerId = 'b1' | 'b2' | 'b3' | 'b4' | 'b5' | 'b6';
 
-const INFO = 'Inter Tight, sans-serif';
+const INFO = 'Instrument Sans, sans-serif';
 const DISPLAY = 'Archivo, sans-serif';
 
 const LABEL: Record<BannerId, string> = {
@@ -230,7 +230,7 @@ export function Banner({ id, BN }: { id: BannerId; BN: BannerSet }) {
  * A stack of banners that mutate once a second (one letter per word), with Shuffle (new seed)
  * and optionally Freeze / Go live. Paused off-screen, static with reduced motion.
  */
-export function BannerSeries({ ids, title = 'Infected type ▮ banner series', freeze = false, initialSeed = 7 }: { ids: BannerId[]; title?: string; freeze?: boolean; initialSeed?: number }) {
+export function BannerSeries({ ids, title = 'Infected type, a banner series', freeze = false, initialSeed = 7 }: { ids: BannerId[]; title?: string; freeze?: boolean; initialSeed?: number }) {
   const ref = useRef<HTMLElement>(null);
   const [seed, setSeed] = useState(initialSeed);
   const [live, setLive] = useState(true);
@@ -240,7 +240,7 @@ export function BannerSeries({ ids, title = 'Infected type ▮ banner series', f
   return (
     <section ref={ref} aria-label="Slogans" className="fvc-banners">
       <div className="fvc-banners-head">
-        <span className="fvc-mono fvc-upper" style={{ fontSize: 12 }}>
+        <span className="fvc-note">
           {title}
           {freeze && <span style={{ marginLeft: 12 }}>Seed {seed}</span>}
         </span>

@@ -4,7 +4,7 @@ import type { CoverStyle, Strain } from '@/lib/content';
 import { catalogNo, displayTitle, formatLabel, ph, shortDate } from '@/lib/format';
 import { GermG } from './Germ';
 
-const INFO = 'Inter Tight, sans-serif';
+const INFO = 'Instrument Sans, sans-serif';
 const DISPLAY = 'Archivo, sans-serif';
 const GOTH = 'Grenze Gotisch, serif';
 const SERIF = 'Instrument Serif, serif';

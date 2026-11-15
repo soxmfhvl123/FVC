@@ -25,7 +25,7 @@ export default function GoodsPage() {
       <main id="main">
         <div className="fvc-pagehead">
           <div className="fvc-section-label">
-            <span>{goods.length} items ▮ sold through an external store</span>
+            <span>{goods.length} items, sold through an outside store</span>
             <span>Handle with care</span>
           </div>
           <h1>
@@ -39,22 +39,22 @@ export default function GoodsPage() {
                 <h2 className="fvc-card-title" style={{ fontSize: 34 }}>
                   {g.name}
                 </h2>
-                <span className="fvc-mono" style={{ fontSize: 12 }}>
+                <span className="fvc-note">
                   {g.id}
                 </span>
               </div>
               {ART[g.graphic] ?? null}
               <div className="fvc-card-foot">
-                <span className="fvc-mono" style={{ fontSize: 12 }}>
-                  {g.price ?? '[Price]'}
+                <span className="fvc-note">
+                  {g.price ?? ''}
                 </span>
                 {g.url ? (
-                  <a href={g.url} className="fvc-cta fvc-inv" target="_blank" rel="noopener noreferrer">
-                    Buy at store ↗
+                  <a href={g.url} className="fvc-cta" target="_blank" rel="noopener noreferrer">
+                    Buy
                   </a>
                 ) : (
-                  <span className="fvc-cta" aria-disabled="true" style={{ opacity: 0.75 }}>
-                    Store link soon
+                  <span className="fvc-note">
+                    Not in the store yet
                   </span>
                 )}
               </div>

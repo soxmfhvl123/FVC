@@ -47,3 +47,9 @@ fvc.ai.kr stays on GitHub Pages (decided 2026-11-15), so the site is built with 
 - OG cards are real files: `/og/site.png`, `/og/FVC-###.png`; app icon `/icons/apple-touch-icon.png`.
 - `/dev/components` exports as a 404 page.
 - One-time setup: Settings → Pages → Source = **GitHub Actions**.
+
+## Update — type and tone (2026-11-15)
+
+- Info typeface is now **Instrument Sans** (pairs with Instrument Serif); `tokens.css` / `tokens.json` updated. DM Mono stays for numbers only.
+- Removed template tells: tracked mono caps labels, `→` / `↗` arrows, `▮` separators in running UI, outlined caps buttons. CTAs are underlined words; cards play the strain directly.
+- Hero: the big germ floats (13 s loop), the small one wanders the top band (38 s); both stop with reduced motion.
