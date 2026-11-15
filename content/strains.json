@@ -11,9 +11,10 @@
       "coverStyle": "golova | creatura | glitch | connwax — which cover template",
       "eyes": "two | cyclops | three | none",
       "spot": "one spot ink hex from tokens",
-      "sideA/sideB": "tracks; incubation = duration m:ss (measured with ffprobe); spread = 1-5 or null; audio = path under apps/web/public or null",
+      "sideA/sideB": "tracks; side = \"A\" | \"B\"; incubation = duration m:ss (ffprobe); spread = 1-5 or null; audio = path under apps/web/public or null; mutationOf = source track on the other side (e.g. \"A1\")",
       "vinyl": "Pressing Plant params when a vinyl exists",
-      "status": "draft | scheduled | live | dormant"
+      "status": "draft | scheduled | live | dormant",
+      "sides": "optional side names, e.g. {\"A\": \"STRAIN\", \"B\": \"MUTATION\"}"
     }
   },
   "strains": [
@@ -31,30 +32,65 @@
       "coverStyle": "golova",
       "eyes": "two",
       "spot": "#FF5B47",
+      "sides": {
+        "A": "STRAIN",
+        "B": "MUTATION"
+      },
       "sideA": [
         {
           "no": 1,
           "title": "Hazy Groove",
           "incubation": "3:22",
           "spread": null,
-          "audio": "/audio/fvc-001/01.mp3"
+          "audio": "/audio/fvc-001/01.mp3",
+          "side": "A"
         },
         {
           "no": 2,
           "title": "Bitcrushed Chaos",
           "incubation": "3:01",
           "spread": null,
-          "audio": "/audio/fvc-001/02.mp3"
+          "audio": "/audio/fvc-001/02.mp3",
+          "side": "A"
         },
         {
           "no": 3,
           "title": "Bittersweet Outro",
           "incubation": "2:57",
           "spread": null,
-          "audio": "/audio/fvc-001/03.mp3"
+          "audio": "/audio/fvc-001/03.mp3",
+          "side": "A"
         }
       ],
-      "sideB": [],
+      "sideB": [
+        {
+          "no": 1,
+          "side": "B",
+          "title": "Hazy Groove [FAT]",
+          "incubation": "3:23",
+          "spread": null,
+          "audio": "/audio/fvc-001/04.mp3",
+          "mutationOf": "A1"
+        },
+        {
+          "no": 2,
+          "side": "B",
+          "title": "Bitcrushed Chaos [1-BIT]",
+          "incubation": "2:07",
+          "spread": null,
+          "audio": "/audio/fvc-001/05.mp3",
+          "mutationOf": "A2"
+        },
+        {
+          "no": 3,
+          "side": "B",
+          "title": "Bittersweet Outro [DORMANT]",
+          "incubation": "2:38",
+          "spread": null,
+          "audio": "/audio/fvc-001/06.mp3",
+          "mutationOf": "A3"
+        }
+      ],
       "blurb": "[PLACEHOLDER]",
       "links": {
         "listen": null,

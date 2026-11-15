@@ -30,13 +30,14 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-function Side({ name, tracks, queue, rated }: { name: 'A' | 'B'; tracks: Track[]; queue: QueueTrack[]; rated: boolean }) {
+function Side({ name, label, tracks, queue, rated }: { name: 'A' | 'B'; label?: string; tracks: Track[]; queue: QueueTrack[]; rated: boolean }) {
   if (!tracks.length) return null;
   return (
     <tbody>
       <tr>
         <th colSpan={rated ? 4 : 3} scope="rowgroup" className={s.side}>
           Side {name}
+          {label && ` — ${label}`}
         </th>
       </tr>
       {tracks.map((t) => (
@@ -45,7 +46,14 @@ function Side({ name, tracks, queue, rated }: { name: 'A' | 'B'; tracks: Track[]
             {name}
             {t.no}
           </td>
-          <td>{t.audio ? <TrackButton queue={queue} index={queue.findIndex((q) => q.side === name && q.no === t.no)} /> : ph(t.title, 'Track Title')}</td>
+          <td>
+            {t.audio ? <TrackButton queue={queue} index={queue.findIndex((q) => q.side === name && q.no === t.no)} /> : ph(t.title, 'Track Title')}
+            {t.mutationOf && (
+              <span className={`fvc-mono ${s.source}`} aria-label={`mutation of ${t.mutationOf}`}>
+                ← {t.mutationOf}
+              </span>
+            )}
+          </td>
           {rated && (
             <td className="fvc-mono" aria-label={t.spread ? `Spread ${t.spread} of 5` : 'Spread not rated'}>
               {spreadBlocks(t.spread ?? null)}
@@ -151,8 +159,8 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                   </th>
                 </tr>
               </thead>
-              <Side name="A" tracks={strain.sideA} queue={queue} rated={rated} />
-              <Side name="B" tracks={strain.sideB} queue={queue} rated={rated} />
+              <Side name="A" label={strain.sides?.A} tracks={strain.sideA} queue={queue} rated={rated} />
+              <Side name="B" label={strain.sides?.B} tracks={strain.sideB} queue={queue} rated={rated} />
             </table>
           </div>
         </section>

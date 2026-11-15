@@ -20,6 +20,9 @@ export interface Track {
   spread?: number | null;
   /** Path under public/ (e.g. /audio/fvc-001/01.mp3), null when there is no audio yet. */
   audio?: string | null;
+  side?: 'A' | 'B';
+  /** Source track this one mutates, e.g. "A1" for a Side B version of A1. */
+  mutationOf?: string | null;
 }
 
 /** A playable track for the global player. */
@@ -45,6 +48,8 @@ export interface Strain {
   coverStyle: CoverStyle;
   eyes: EyeSet;
   spot: string;
+  /** Optional side names, e.g. { A: 'STRAIN', B: 'MUTATION' }. */
+  sides?: { A?: string; B?: string };
   sideA: Track[];
   sideB: Track[];
   blurb: string;

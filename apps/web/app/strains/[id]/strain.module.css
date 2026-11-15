@@ -121,3 +121,8 @@
     border-bottom: var(--fvc-rule);
   }
 }
+.source {
+  margin-left: 10px;
+  font-size: 12px;
+  white-space: nowrap;
+}

@@ -79,7 +79,8 @@ export function PlayerBar() {
       <div className={s.now} aria-live="polite">
         <span className={s.strain}>{t.strainId}</span>
         <span className={s.title}>
-          {String(t.no).padStart(2, '0')} {t.title}
+          {t.side}
+          {t.no} {t.title}
         </span>
         <span className={s.carrier}>{carrier}</span>
       </div>
