@@ -7,7 +7,8 @@ import { ShareButton } from '@/components/fvc/ShareButton';
 import { SpecimenLabel } from '@/components/fvc/SpecimenLabel';
 import { StrainCard } from '@/components/fvc/StrainCard';
 import { TopBar } from '@/components/fvc/TopBar';
-import { VinylRecord } from '@/components/fvc/Vinyl';
+import { SidePoster } from '@/components/fvc/SidePoster';
+import { type TextLabel, VinylRecord } from '@/components/fvc/Vinyl';
 import { PlayStrainButton } from '@/components/player/PlayStrainButton';
 import { TrackButton } from '@/components/player/TrackButton';
 import { allQueue, getStrain, getStrains, type QueueTrack, type Track } from '@/lib/content';
@@ -31,15 +32,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-function Side({ name, label, tracks, queue, rated, header = true }: { name: 'A' | 'B'; label?: string; tracks: Track[]; queue: QueueTrack[]; rated: boolean; header?: boolean }) {
+function Side({ name, title, tracks, queue, rated, bpm, header = true }: { name: 'A' | 'B'; title: string; tracks: Track[]; queue: QueueTrack[]; rated: boolean; bpm: boolean; header?: boolean }) {
   if (!tracks.length) return null;
+  const cols = 3 + (rated ? 1 : 0) + (bpm ? 1 : 0);
   return (
     <tbody>
       {header && (
         <tr>
-          <th colSpan={rated ? 4 : 3} scope="rowgroup" className={s.side}>
-            Side {name}
-            {label && ` — ${label}`}
+          <th colSpan={cols} scope="rowgroup" className={s.side}>
+            {title}
           </th>
         </tr>
       )}
@@ -57,6 +58,11 @@ function Side({ name, label, tracks, queue, rated, header = true }: { name: 'A' 
               </span>
             )}
           </td>
+          {bpm && (
+            <td className="fvc-mono" aria-label={t.bpm ? `${t.bpm} beats per minute` : 'no beat'}>
+              {t.bpm ?? '—'}
+            </td>
+          )}
           {rated && (
             <td className="fvc-mono" aria-label={t.spread ? `Spread ${t.spread} of 5` : 'Spread not rated'}>
               {spreadBlocks(t.spread ?? null)}
@@ -78,6 +84,13 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
   // One-sided releases (FVC-002) read as a plain 1–6 list, no "Side A" header.
   const sided = strain.sideB.length > 0 || !!strain.sides;
   const rated = [...strain.sideA, ...strain.sideB].some((t) => t.spread != null);
+  const bpm = [...strain.sideA, ...strain.sideB].some((t) => t.bpm != null);
+  const sideTitle = (k: 'A' | 'B') => strain.sideTitles?.[k] ?? `Side ${k}${strain.sides?.[k] ? ` — ${strain.sides[k]}` : ''}`;
+  const textLabel = (k: 'A' | 'B'): TextLabel => {
+    const [side, name] = sideTitle(k).split(' — ');
+    return { side: side.toUpperCase(), name: (name ?? '').toUpperCase(), tracks: (k === 'A' ? strain.sideA : strain.sideB).map((t) => ({ no: `${k}${t.no}`, title: t.title.toUpperCase(), time: trackTime(t) })) };
+  };
+  const posters = (['A', 'B'] as const).filter((k) => strain.posters?.[k]);
   const all = getStrains().filter((x) => x.id !== strain.id);
   const related = [...all.filter((x) => x.coverStyle === strain.coverStyle), ...all.filter((x) => x.coverStyle !== strain.coverStyle)].slice(0, 2);
   const links = [
@@ -163,14 +176,15 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                 <tr>
                   <th scope="col">No.</th>
                   <th scope="col">Title</th>
+                  {bpm && <th scope="col">BPM</th>}
                   {rated && <th scope="col">Spread</th>}
                   <th scope="col" style={{ textAlign: 'right' }}>
                     Incubation
                   </th>
                 </tr>
               </thead>
-              <Side name="A" label={strain.sides?.A} tracks={strain.sideA} queue={queue} rated={rated} header={sided} />
-              <Side name="B" label={strain.sides?.B} tracks={strain.sideB} queue={queue} rated={rated} />
+              <Side name="A" title={sideTitle('A')} tracks={strain.sideA} queue={queue} rated={rated} bpm={bpm} header={sided} />
+              <Side name="B" title={sideTitle('B')} tracks={strain.sideB} queue={queue} rated={rated} bpm={bpm} />
             </table>
           </div>
         </section>
@@ -185,7 +199,30 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
                 {strain.vinyl.base} base, {strain.vinyl.palette} splat
               </span>
             </div>
-            <VinylRecord seed={strain.vinyl.seed} base={strain.vinyl.base} pal={strain.vinyl.palette} labelSeed={strain.seed + 3} catalog={strain.id} size={560} />
+            {strain.vinyl.label === 'text' ? (
+              <div className={s.records}>
+                {(['A', 'B'] as const)
+                  .filter((k) => (k === 'A' ? strain.sideA : strain.sideB).length)
+                  .map((k) => (
+                    <VinylRecord key={k} seed={strain.vinyl!.seed} base={strain.vinyl!.base} pal={strain.vinyl!.palette} catalog={strain.id} size={520} text={textLabel(k)} side={k} />
+                  ))}
+              </div>
+            ) : (
+              <VinylRecord seed={strain.vinyl.seed} base={strain.vinyl.base} pal={strain.vinyl.palette} labelSeed={strain.seed + 3} catalog={strain.id} size={560} />
+            )}
+          </section>
+        )}
+
+        {posters.length > 0 && (
+          <section className={`fvc-grid2 fvc-rule-b ${s.posters}`} aria-labelledby="posters-h">
+            <h2 id="posters-h" className="sr-only">
+              Side posters
+            </h2>
+            {posters.map((k, i) => (
+              <div key={k} className={`${s.cell} ${i === 0 ? 'fvc-col-l' : ''}`} style={i === 0 ? { borderRight: 'var(--fvc-rule)' } : undefined}>
+                <SidePoster poster={strain.posters![k]!} caption={sideTitle(k)} />
+              </div>
+            ))}
           </section>
         )}
 

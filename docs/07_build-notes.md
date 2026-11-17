@@ -70,3 +70,10 @@ Plan: `docs/fvc-lab-v2.md`. Contact sheet: `docs/lab-v2/contact-sheet-9-bodies.j
 - **Germinator** (`/lab/germinator`): gene rows with Lock + roll-one-gene, Grid adds Micro (200), Inverse ink, species name + genome code in the spec panel and specimen code. URL `?seed=417&g=B5-S2-E3Dz-P5-R0`; `v=1` (or an old link with `?eyes=`) draws with engine v1.
 - Lock keeps the gene's *type*; the seed still varies the individual shape (a new seed = a new individual of the same species).
 - Not in L1: sliders (FAT/HAIR/EYE/CHAOS exist in the engine, no UI yet), Mutate/Breed/Evolve, keyboard shortcuts, other renders, export.
+
+## Update — FVC-001 v2: CHICAGO / DETROIT (2026-11-17)
+
+- FVC-001 is now an 8-track 12" club record: This Side A — CHICAGO (A1–A4), That Side B — DETROIT (B1–B4). Audio `/audio/fvc-001/a1–b4.mp3` (copied, metadata stripped, not re-encoded). The old six tracks (Side A STRAIN / Side B MUTATION) are off the site; their files remain in git history.
+- New optional content fields: `track.bpm` (BPM column shows when any track has one; B4 is beatless → "—"), `sideTitles` (full side headings), `posters` (side posters: looping muted mp4 + still jpg), `vinyl.label: "text"` (type-only paper label in coral, one record per side).
+- Pressing Plant gains a `silver` base and an `Acid` splat palette (acid green + metal greys) for this pressing.
+- Side posters come from the two Midjourney GIFs (320 px), converted to H.264 at 640 px with nearest-neighbour scaling. They play only on screen and stay on the still frame with reduced motion.

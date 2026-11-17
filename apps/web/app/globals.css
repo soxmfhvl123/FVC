@@ -624,3 +624,28 @@ svg {
     animation: none;
   }
 }
+
+/* Side poster: square clip/still with a caption under it. */
+.fvc-poster {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.fvc-poster video,
+.fvc-poster img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--fvc-ink);
+}
+.fvc-poster figcaption {
+  font-family: var(--fvc-font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}

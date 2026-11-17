@@ -23,10 +23,11 @@
       "id": "FVC-001",
       "seed": 23,
       "engine": 1,
-      "title": "[PLACEHOLDER]",
+      "title": "Chicago / Detroit",
       "carrier": "HUGO CHO",
-      "strainType": "Glitch / IDM",
+      "strainType": "Acid House / Techno",
       "formats": [
+        "12in-vinyl",
         "digital"
       ],
       "isolated": null,
@@ -35,65 +36,10 @@
       "eyes": "two",
       "spot": "#FF5B47",
       "sides": {
-        "A": "STRAIN",
-        "B": "MUTATION"
+        "A": "CHICAGO",
+        "B": "DETROIT"
       },
-      "sideA": [
-        {
-          "no": 1,
-          "title": "Hazy Groove",
-          "incubation": "3:22",
-          "spread": null,
-          "audio": "/audio/fvc-001/01.mp3",
-          "side": "A"
-        },
-        {
-          "no": 2,
-          "title": "Bitcrushed Chaos",
-          "incubation": "3:01",
-          "spread": null,
-          "audio": "/audio/fvc-001/02.mp3",
-          "side": "A"
-        },
-        {
-          "no": 3,
-          "title": "Bittersweet Outro",
-          "incubation": "2:57",
-          "spread": null,
-          "audio": "/audio/fvc-001/03.mp3",
-          "side": "A"
-        }
-      ],
-      "sideB": [
-        {
-          "no": 1,
-          "side": "B",
-          "title": "Hazy Groove [FAT]",
-          "incubation": "3:23",
-          "spread": null,
-          "audio": "/audio/fvc-001/04.mp3",
-          "mutationOf": "A1"
-        },
-        {
-          "no": 2,
-          "side": "B",
-          "title": "Bitcrushed Chaos [1-BIT]",
-          "incubation": "2:07",
-          "spread": null,
-          "audio": "/audio/fvc-001/05.mp3",
-          "mutationOf": "A2"
-        },
-        {
-          "no": 3,
-          "side": "B",
-          "title": "Bittersweet Outro [DORMANT]",
-          "incubation": "2:38",
-          "spread": null,
-          "audio": "/audio/fvc-001/06.mp3",
-          "mutationOf": "A3"
-        }
-      ],
-      "blurb": "[PLACEHOLDER]",
+      "blurb": "An old-school 12-inch club record. This side: raw, simple Chicago house that moves the body first. That side: cold, cosmic, slightly sad Detroit techno. Each side starts raw, gets strange in the middle, and ends big on A, quiet on B.",
       "links": {
         "listen": null,
         "buy": null,
@@ -101,10 +47,103 @@
       },
       "vinyl": {
         "seed": 28,
-        "base": "smoke",
-        "palette": "outbreak"
+        "base": "silver",
+        "palette": "acid",
+        "label": "text"
       },
-      "status": "live"
+      "status": "live",
+      "sideTitles": {
+        "A": "This Side A — CHICAGO",
+        "B": "That Side B — DETROIT"
+      },
+      "sideA": [
+        {
+          "no": 1,
+          "side": "A",
+          "title": "ACID CARRIER",
+          "bpm": 124,
+          "incubation": "5:30",
+          "spread": null,
+          "audio": "/audio/fvc-001/a1.mp3"
+        },
+        {
+          "no": 2,
+          "side": "A",
+          "title": "CATCH IT",
+          "bpm": 122,
+          "incubation": "4:30",
+          "spread": null,
+          "audio": "/audio/fvc-001/a2.mp3"
+        },
+        {
+          "no": 3,
+          "side": "A",
+          "title": "INCUBATION",
+          "bpm": 120,
+          "incubation": "5:30",
+          "spread": null,
+          "audio": "/audio/fvc-001/a3.mp3"
+        },
+        {
+          "no": 4,
+          "side": "A",
+          "title": "OUTBREAK NIGHT",
+          "bpm": 126,
+          "incubation": "4:54",
+          "spread": null,
+          "audio": "/audio/fvc-001/a4.mp3"
+        }
+      ],
+      "sideB": [
+        {
+          "no": 1,
+          "side": "B",
+          "title": "SPREAD",
+          "bpm": 128,
+          "incubation": "5:30",
+          "spread": null,
+          "audio": "/audio/fvc-001/b1.mp3"
+        },
+        {
+          "no": 2,
+          "side": "B",
+          "title": "MUTATION",
+          "bpm": 130,
+          "incubation": "5:00",
+          "spread": null,
+          "audio": "/audio/fvc-001/b2.mp3"
+        },
+        {
+          "no": 3,
+          "side": "B",
+          "title": "NO KNOWN CURE",
+          "bpm": 132,
+          "incubation": "5:00",
+          "spread": null,
+          "audio": "/audio/fvc-001/b3.mp3"
+        },
+        {
+          "no": 4,
+          "side": "B",
+          "title": "SPECIMEN",
+          "bpm": null,
+          "incubation": "4:00",
+          "spread": null,
+          "audio": "/audio/fvc-001/b4.mp3"
+        }
+      ],
+      "posters": {
+        "A": {
+          "video": "/posters/fvc-001/side-a.mp4",
+          "still": "/posters/fvc-001/side-a.jpg",
+          "alt": "A city at night seen from high above, its streets glowing like veins, with one red tail light on the dark road below"
+        },
+        "B": {
+          "video": "/posters/fvc-001/side-b.mp4",
+          "still": "/posters/fvc-001/side-b.jpg",
+          "alt": "A round black-and-white photo of a lit city street with two faint eyes in the dark and a magenta light trail running down the road"
+        }
+      }
     },
     {
       "id": "FVC-002",

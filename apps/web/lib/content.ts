@@ -20,7 +20,7 @@ export interface Track {
   incubation: string;
   /** 1–5 catchiness for this track, null until rated. */
   spread?: number | null;
-  /** Path under public/ (e.g. /audio/fvc-001/01.mp3), null when there is no audio yet. */
+  /** Path under public/ (e.g. /audio/fvc-001/a1.mp3), null when there is no audio yet. */
   audio?: string | null;
   side?: 'A' | 'B';
   /** Source track this one mutates, e.g. "A1" for a Side B version of A1. */
@@ -32,6 +32,8 @@ export interface Track {
   hidden?: boolean;
   /** Name revealed together with a hidden track, e.g. SPECIMEN. */
   label?: string;
+  /** Tempo; null for beatless tracks. Shown as a column when any track has one. */
+  bpm?: number | null;
 }
 
 /** A playable track for the global player. */
@@ -67,16 +69,26 @@ export interface Strain {
   spot: string;
   /** Optional side names, e.g. { A: 'STRAIN', B: 'MUTATION' }. */
   sides?: { A?: string; B?: string };
+  /** Full side headings, e.g. { A: 'This Side A — CHICAGO' }; default "Side A — <sides.A>". */
+  sideTitles?: { A?: string; B?: string };
+  /** Side posters (looping video + still for reduced motion). */
+  posters?: { A?: Poster; B?: Poster };
   sideA: Track[];
   sideB: Track[];
   blurb: string;
   links: { listen: string | null; buy: string | null; bandcamp: string | null };
-  vinyl: { seed: number; base: VinylBase; palette: VinylPalette } | null;
+  /** label 'text': type-only centre label (side, tracks, times); default germ label. */
+  vinyl: { seed: number; base: VinylBase; palette: VinylPalette; label?: 'germ' | 'text' } | null;
   status: Status;
 }
 
-export type VinylBase = 'smoke' | 'clear' | 'black' | 'white';
-export type VinylPalette = 'outbreak' | 'photocopy' | 'riso';
+export type VinylBase = 'smoke' | 'clear' | 'black' | 'white' | 'silver';
+export type VinylPalette = 'outbreak' | 'photocopy' | 'riso' | 'acid';
+export interface Poster {
+  video: string;
+  still: string;
+  alt: string;
+}
 
 export interface Outbreak {
   id: string;
