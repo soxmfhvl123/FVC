@@ -26,20 +26,27 @@ export default function Home() {
       <main id="main">
         <ConnwaxStack strain={latest} />
 
-        {pair(0).length > 0 && (
-          <section className="fvc-grid2 fvc-rule-b" aria-label="Strains">
-            {pair(0).map((s, i) => (
-              <StrainCard key={s.id} strain={s} className={i === 0 ? 'fvc-col-l' : undefined} />
-            ))}
-            {/* Only one strain so far: fill the second column with its specimen label. */}
-            {pair(0).length === 1 && (
-              <div style={{ padding: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ width: '100%', maxWidth: 560 }}>
-                  <SpecimenLabel strain={pair(0)[0]} />
-                </div>
-              </div>
-            )}
+        {pair(0).length === 1 && pair(0)[0].posters ? (
+          // One release with side posters: the card spans both columns so the posters are big.
+          <section className="fvc-rule-b" aria-label="Strains">
+            <StrainCard strain={pair(0)[0]} />
           </section>
+        ) : (
+          pair(0).length > 0 && (
+            <section className="fvc-grid2 fvc-rule-b" aria-label="Strains">
+              {pair(0).map((s, i) => (
+                <StrainCard key={s.id} strain={s} className={i === 0 ? 'fvc-col-l' : undefined} />
+              ))}
+              {/* Only one strain so far: fill the second column with its specimen label. */}
+              {pair(0).length === 1 && (
+                <div style={{ padding: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div style={{ width: '100%', maxWidth: 560 }}>
+                    <SpecimenLabel strain={pair(0)[0]} />
+                  </div>
+                </div>
+              )}
+            </section>
+          )
         )}
 
         <Manifesto spot={spot} />

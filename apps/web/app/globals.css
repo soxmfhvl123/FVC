@@ -649,3 +649,18 @@ svg {
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
+
+/* Strain card with side posters: A | B side by side in place of the cover. */
+.fvc-card-posters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.fvc-card-posters .fvc-poster figcaption {
+  font-size: 18px;
+}
+@media (max-width: 760px) {
+  .fvc-card-posters {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

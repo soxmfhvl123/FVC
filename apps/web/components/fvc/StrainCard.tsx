@@ -3,9 +3,13 @@ import { PlayStrainButton } from '@/components/player/PlayStrainButton';
 import { allQueue, type Strain } from '@/lib/content';
 import { formatLabel, isPlaceholder, ph, spreadBlocks, totalIncubation, trackName } from '@/lib/format';
 import { Cover } from './Cover';
+import { SidePoster } from './SidePoster';
 import { CtaButton } from './Ui';
 
-/** Title row, cover, blurb, rule, then meta and Play (or Open). Two per row on the home page. */
+/**
+ * Title row, cover, blurb, rule, then meta and Play (or Open). Two per row on the home page.
+ * A strain with side posters shows them (A | B) in place of the generated cover.
+ */
 export function StrainCard({ strain: s, className, headingLevel = 3 }: { strain: Strain; className?: string; headingLevel?: 2 | 3 }) {
   const H = headingLevel === 2 ? 'h2' : 'h3';
   const film = s.formats.includes('film');
@@ -26,9 +30,18 @@ export function StrainCard({ strain: s, className, headingLevel = 3 }: { strain:
           {ph(s.strainType, 'Genre')}, {s.formats.map(formatLabel).join(' + ')}
         </span>
       </div>
-      <Link href={href} tabIndex={-1} aria-hidden="true">
-        <Cover strain={s} />
-      </Link>
+      {s.posters?.A || s.posters?.B ? (
+        <div className="fvc-card-posters">
+          {(['A', 'B'] as const).map((k) => {
+            const p = s.posters?.[k];
+            return p ? <SidePoster key={k} poster={p} caption={s.sideTitles?.[k] ?? `Side ${k}`} /> : null;
+          })}
+        </div>
+      ) : (
+        <Link href={href} tabIndex={-1} aria-hidden="true">
+          <Cover strain={s} />
+        </Link>
+      )}
       <p className="fvc-card-blurb">{blurb}</p>
       <div className="fvc-card-foot">
         <span className="fvc-note">
