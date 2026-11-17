@@ -8,7 +8,9 @@ import goodsJson from '@content/goods.json';
 import siteJson from '@content/site.json';
 import type { EyeSet } from '@fvc/engine';
 
-export type CoverStyle = 'golova' | 'creatura' | 'glitch' | 'connwax';
+export type CoverStyle = 'golova' | 'creatura' | 'glitch' | 'connwax' | 'colony';
+/** Palette of the Colony tool (coverStyle 'colony'). */
+export type ColonyPalette = 'robotron' | 'one-ink' | 'night';
 export type Status = 'draft' | 'scheduled' | 'live' | 'dormant';
 export type Format = '12in-vinyl' | '7in-vinyl' | 'cassette' | 'digital' | 'film' | 'goods' | 'editorial';
 
@@ -50,6 +52,8 @@ export interface QueueTrack {
 export interface Strain {
   id: string;
   seed: number;
+  /** Germ engine the art is drawn with. 1 = frozen v1 (every release so far); 2 = genome engine. */
+  engine?: 1 | 2;
   title: string;
   carrier: string;
   strainType: string;
@@ -57,6 +61,8 @@ export interface Strain {
   isolated: string | null;
   spreadLevel: number | null;
   coverStyle: CoverStyle;
+  /** coverStyle 'colony' only: Lab palette, default robotron. */
+  palette?: ColonyPalette;
   eyes: EyeSet;
   spot: string;
   /** Optional side names, e.g. { A: 'STRAIN', B: 'MUTATION' }. */

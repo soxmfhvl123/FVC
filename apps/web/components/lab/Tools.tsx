@@ -1,8 +1,28 @@
 'use client';
 
-import { colony, color, type EyeSet, hash, letter, type LetterMode, vinyl, WORDMARK_MODES } from '@fvc/engine';
+import {
+  BODIES,
+  color,
+  DEFAULT_GENOME,
+  EYE_COUNTS,
+  type EyeSet,
+  type Genome,
+  genomeCode,
+  germ2,
+  hash,
+  letter,
+  type LetterMode,
+  MOODS,
+  parseGenome,
+  PATTERNS,
+  rollGenome,
+  SURFACES,
+  vinyl,
+  WORDMARK_MODES,
+} from '@fvc/engine';
 import { type BaseName, type PalName, VINYL_BASES, VINYL_PALETTES, VinylRecord, vinylColours } from '@/components/fvc/Vinyl';
 import { useMemo, useRef, useState } from 'react';
+import { COLONY_PAL_NAMES, COLONY_PALETTES, ColonyG, type ColonyPal } from '@/components/fvc/Colony';
 import { germPaths } from '@/components/fvc/Germ';
 import { Letter } from '@/components/fvc/Letter';
 import { useGlyphs, useTick } from '@/lib/hooks';
@@ -22,28 +42,97 @@ interface ToolProps {
 const pick = <T extends string | number>(v: T, allowed: readonly T[], fallback: T): T => (allowed.includes(v) ? v : fallback);
 const posInt = (n: number, fallback: number) => (Number.isInteger(n) && n > 0 && n < 1e6 ? n : fallback);
 
-/* ============ 01 GERMINATOR ============ */
+/* ============ 01 GERMINATOR (engine v2: germ genome) ============ */
 
 export const SPOTS = { coral: color.spot, cobalt: color.cobalt, acid: color.acid, magenta: color.magenta } as const;
 type SpotName = keyof typeof SPOTS;
-const EYES: EyeSet[] = ['two', 'cyclops', 'three', 'none'];
-const GRIDS = [44, 80, 110, 140] as const;
+const SPOT_NAMES = Object.keys(SPOTS) as SpotName[];
+const V1_EYES: EyeSet[] = ['two', 'cyclops', 'three', 'none'];
+const GRIDS = [44, 80, 110, 140, 200] as const;
+const EYE_LABELS = ['0', '1', '2', '3', '5', 'Many'];
+
+type Row = 'body' | 'surface' | 'eyes' | 'pattern' | 'ink';
+
+/** A different random index in 0..n-1. */
+const other = (cur: number, n: number) => {
+  const v = Math.floor(Math.random() * (n - 1));
+  return v >= cur ? v + 1 : v;
+};
+
+/** Lock + "roll only this gene" buttons at the end of a gene row. */
+function GeneActions({ row, locked, onLock, onRoll }: { row: string; locked: boolean; onLock: () => void; onRoll: () => void }) {
+  return (
+    <span className="lab-gene-actions">
+      <button type="button" className={`fvc-b ${locked ? 'on' : ''}`} aria-pressed={locked} aria-label={`Lock ${row}`} onClick={onLock}>
+        {locked ? 'Locked' : 'Lock'}
+      </button>
+      <button type="button" className="fvc-b" aria-label={`Roll ${row} only`} onClick={onRoll}>
+        ↻
+      </button>
+    </span>
+  );
+}
 
 export function Germinator({ sync = false, href, headingLevel }: ToolProps) {
-  const [st, set] = useUrlState({ seed: 7, eyes: 'two', n: 110, inks: 2, spot: 'coral' }, sync);
+  const [st, set, has] = useUrlState({ seed: 7, g: '', n: 110, inks: 2, spot: 'coral', inv: 0, v: 2, eyes: 'two' }, sync);
+  const [locks, setLocks] = useState<Record<Row, boolean>>({ body: false, surface: false, eyes: false, pattern: false, ink: false });
   const seed = posInt(st.seed, 7);
-  const eyes = pick(st.eyes as EyeSet, EYES, 'two');
   const n = pick(st.n, GRIDS, 110);
   const two = st.inks !== 1;
-  const spotName = pick(st.spot as SpotName, Object.keys(SPOTS) as SpotName[], 'coral');
+  const inverse = st.inv === 1;
+  const spotName = pick(st.spot as SpotName, SPOT_NAMES, 'coral');
   const spot = SPOTS[spotName];
-  const G = useMemo(() => germPaths(seed, { N: n, eyes, two }), [seed, n, eyes, two]);
-  const body = (inkFill: string) => (
+  // v=1, or an old link that still carries ?eyes= without a genome, draws with the frozen v1 engine
+  const v1 = st.v === 1 || (has('eyes') && !has('g'));
+  const genome = parseGenome(st.g) ?? (has('seed') ? rollGenome(seed) : DEFAULT_GENOME);
+  const v1Eyes = pick(st.eyes as EyeSet, V1_EYES, 'two');
+
+  const gcode = genomeCode(genome, '');
+  const G = useMemo(() => {
+    if (v1) {
+      const p = germPaths(seed, { N: n, eyes: v1Eyes, two });
+      return { ink: p.ink, spot: p.spot, name: 'Ttung-gyun (engine v1)', code: `v1 · eyes ${v1Eyes}` };
+    }
+    return germ2(seed, parseGenome(gcode) ?? DEFAULT_GENOME, { N: n, two });
+  }, [v1, seed, n, two, v1Eyes, gcode]);
+
+  const setGenome = (patch: Partial<Genome>, extra: Record<string, string | number> = {}) => set({ g: genomeCode({ ...genome, ...patch }, ''), v: 2, ...extra });
+  const newGerm = () => {
+    const ns = randomSeed();
+    const rolled = rollGenome(ns);
+    const next: Genome = {
+      body: locks.body ? genome.body : rolled.body,
+      surface: locks.surface ? genome.surface : rolled.surface,
+      eyes: locks.eyes ? genome.eyes : rolled.eyes,
+      mood: locks.eyes ? genome.mood : rolled.mood,
+      pattern: locks.pattern ? genome.pattern : rolled.pattern,
+      render: 0,
+    };
+    const ink = locks.ink ? spotName : SPOT_NAMES[Math.floor(hash(ns, 3, 17) * SPOT_NAMES.length)];
+    set({ seed: ns, g: genomeCode(next, ''), spot: ink, v: 2 });
+  };
+  const roll: Record<Row, () => void> = {
+    body: () => setGenome({ body: other(genome.body, BODIES.length) }),
+    surface: () => setGenome({ surface: other(genome.surface, SURFACES.length) }),
+    eyes: () => setGenome({ eyes: other(genome.eyes, EYE_COUNTS.length), mood: other(genome.mood, MOODS.length) }),
+    pattern: () => setGenome({ pattern: other(genome.pattern, PATTERNS.length) }),
+    ink: () => setGenome({}, { spot: SPOT_NAMES[other(SPOT_NAMES.indexOf(spotName), SPOT_NAMES.length)] }),
+  };
+  const actions = (row: Row, label = row) => (
+    <GeneActions row={label} locked={locks[row]} onLock={() => setLocks((l) => ({ ...l, [row]: !l[row] }))} onRoll={roll[row]} />
+  );
+
+  const inkFill = inverse ? color.white : color.ink;
+  const body = (fill: string, bg?: string) => (
     <>
-      {two && <path d={G.spot} fill={spot} />}
-      <path d={G.ink} fill={inkFill} />
+      {bg && <rect width="300" height="300" fill={bg} />}
+      {G.spot && <path d={G.spot} fill={spot} />}
+      <path d={G.ink} fill={fill} />
     </>
   );
+  const specimen = `Specimen #${String(seed).padStart(4, '0')}`;
+  const codeSeed = [...G.code].reduce((a, c) => (a * 31 + c.charCodeAt(0)) % 99991, seed);
+
   return (
     <ToolCard
       name="Germinator"
@@ -58,37 +147,78 @@ export function Germinator({ sync = false, href, headingLevel }: ToolProps) {
           {body(color.white)}
         </svg>
       }
-      detailBg={color.grey}
+      detailBg={inverse ? color.ink : color.grey}
       detail={
         <svg viewBox="95 85 110 110" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-          {body(color.ink)}
+          {body(inkFill, inverse ? color.ink : undefined)}
         </svg>
       }
-      description="Grows a new Ttung-gyun from a single number. Body, hair, eyes and blotches all come from the seed, inside locked FVC rules: two inks, grain, bitmap only. Same seed, same germ, so every release keeps its own."
-      codeSeed={seed}
-      codeLines={['Specimen code', `SEED ${seed}`, 'Tool by FVC Lab']}
-      headLeft={`Seed ${seed}`}
-      headRight={`${n} px`}
+      extra={
+        <div className="lab-species">
+          <div className="lab-species-name">{G.name}</div>
+          <div className="fvc-mono lab-species-code">{G.code}</div>
+        </div>
+      }
+      description="Grows a new Ttung-gyun from a single number, split into genes: body, surface, eyes, pattern, render and ink. Lock the genes you like and roll the rest. Same seed and genome, same germ."
+      codeSeed={codeSeed}
+      codeLines={['Specimen code', G.code, `Seed ${seed}`]}
+      headLeft={<span className="lab-head-species">{G.name}</span>}
+      headRight={specimen}
       output={
-        <svg viewBox="0 0 300 300" role="img" aria-label={`Generated germ, seed ${seed}`} className="lab-art">
-          {body(color.ink)}
+        <svg viewBox="0 0 300 300" role="img" aria-label={`Generated germ ${G.name}, genome ${G.code}, seed ${seed}`} className="lab-art">
+          {body(inkFill, inverse ? color.ink : undefined)}
         </svg>
       }
       controls={
         <>
-          <div className="lab-row">
-            <button type="button" className="fvc-b" style={{ background: spot, padding: '0 16px' }} onClick={() => set({ seed: randomSeed() })}>
+          <div className="lab-row wrap">
+            <button type="button" className="fvc-b" style={{ background: spot, padding: '0 16px' }} onClick={newGerm}>
               ↻ New germ
             </button>
-            <button type="button" className="fvc-b sq" aria-label="Previous seed" onClick={() => set({ seed: Math.max(1, seed - 1) })}>
+            <button type="button" className="fvc-b sq" aria-label="Previous seed" onClick={() => set({ seed: Math.max(1, seed - 1), g: genomeCode(genome, '') })}>
               −
             </button>
-            <button type="button" className="fvc-b sq" aria-label="Next seed" onClick={() => set({ seed: seed + 1 })}>
+            <button type="button" className="fvc-b sq" aria-label="Next seed" onClick={() => set({ seed: seed + 1, g: genomeCode(genome, '') })}>
               +
             </button>
-            <span style={{ flex: 1 }} />
-            <span role="group" aria-label="Spot ink" style={{ display: 'flex', gap: 6 }}>
-              {(Object.keys(SPOTS) as SpotName[]).map((k) => (
+            <span className="lab-opt-label fvc-mono" style={{ marginLeft: 6 }}>
+              Seed {seed}
+            </span>
+            {v1 && (
+              <button type="button" className="fvc-b light" style={{ marginLeft: 'auto' }} onClick={() => setGenome({})}>
+                Engine v1 · switch to v2
+              </button>
+            )}
+          </div>
+          <div className="lab-gene">
+            <Options label="Body" value={genome.body} options={BODIES.map((b, i) => ({ v: i, label: b }))} onPick={(v) => setGenome({ body: v })} />
+            {actions('body')}
+          </div>
+          <div className="lab-gene">
+            <Options label="Surface" value={genome.surface} options={SURFACES.map((b, i) => ({ v: i, label: b }))} onPick={(v) => setGenome({ surface: v })} />
+            {actions('surface')}
+          </div>
+          <div className="lab-gene">
+            <span className="lab-gene-pair">
+              <Options label="Eyes" value={genome.eyes} options={EYE_LABELS.map((b, i) => ({ v: i, label: b }))} onPick={(v) => setGenome({ eyes: v })} />
+              <Options label="Mood" value={genome.mood} options={MOODS.map((b, i) => ({ v: i, label: b }))} onPick={(v) => setGenome({ mood: v })} />
+            </span>
+            {actions('eyes')}
+          </div>
+          <div className="lab-gene">
+            <Options label="Pattern" value={genome.pattern} options={PATTERNS.map((b, i) => ({ v: i, label: b }))} onPick={(v) => setGenome({ pattern: v })} />
+            {actions('pattern')}
+          </div>
+          <div className="lab-gene">
+            <span className="lab-gene-pair">
+              <Options label="Render" value={0} options={[{ v: 0, label: 'Bitmap' }]} onPick={() => setGenome({ render: 0 })} />
+              <Options label="Grid" value={n} options={[{ v: 44, label: 'Coarse' }, { v: 80, label: 'Mid' }, { v: 140, label: 'Fine' }, { v: 200, label: 'Micro' }]} onPick={(v) => set({ n: v })} />
+            </span>
+          </div>
+          <div className="lab-gene">
+            <span className="lab-opts" role="group" aria-label="Ink">
+              <span className="lab-opt-label">Ink</span>
+              {SPOT_NAMES.map((k) => (
                 <button
                   key={k}
                   type="button"
@@ -99,14 +229,14 @@ export function Germinator({ sync = false, href, headingLevel }: ToolProps) {
                   style={{ background: SPOTS[k], outline: k === spotName ? `2px solid ${color.white}` : 'none', outlineOffset: 2 }}
                 />
               ))}
+              <button type="button" className={`fvc-b ${two ? '' : 'on'}`} aria-pressed={!two} onClick={() => set({ inks: two ? 1 : 2 })}>
+                One ink
+              </button>
+              <button type="button" className={`fvc-b ${inverse ? 'on' : ''}`} aria-pressed={inverse} onClick={() => set({ inv: inverse ? 0 : 1 })}>
+                Inverse
+              </button>
             </span>
-          </div>
-          <div className="lab-row wrap">
-            <Options label="Eyes" value={eyes} options={[{ v: 'two', label: '2' }, { v: 'cyclops', label: '1' }, { v: 'three', label: '3' }, { v: 'none', label: '0' }]} onPick={(v) => set({ eyes: v })} />
-            <Options label="Grid" value={n} options={[{ v: 44, label: 'Coarse' }, { v: 80, label: 'Mid' }, { v: 140, label: 'Fine' }]} onPick={(v) => set({ n: v })} />
-            <button type="button" className="fvc-b light" style={{ marginLeft: 'auto' }} aria-pressed={two} onClick={() => set({ inks: two ? 1 : 2 })}>
-              {two ? 'Inks: 2' : 'Inks: 1'}
-            </button>
+            {actions('ink')}
           </div>
         </>
       }
@@ -178,29 +308,14 @@ export function PressingPlant({ sync = false, href, headingLevel }: ToolProps) {
 
 /* ============ 03 COLONY ============ */
 
-const COLONY_PALETTES = {
-  robotron: { n: 'Robotron', bg: color.white, fg: color.ink, p: { a: color.spot, b: color.cobalt, c: color.acid, d: color.magenta, ink: color.ink } },
-  'one-ink': { n: 'One ink', bg: color.grey, fg: color.ink, p: { a: color.ink, b: color.ink, c: color.spot, d: color.ink, ink: color.ink } },
-  night: { n: 'Night', bg: color.ink, fg: color.white, p: { a: color.white, b: color.acid, c: color.white, d: color.magenta, ink: color.white } },
-} as const;
-type ColonyPal = keyof typeof COLONY_PALETTES;
+
 
 export function Colony({ sync = false, href, headingLevel }: ToolProps) {
   const [st, set] = useUrlState({ seed: 7, pal: 'robotron' }, sync);
   const seed = posInt(st.seed, 7);
-  const pal = pick(st.pal as ColonyPal, Object.keys(COLONY_PALETTES) as ColonyPal[], 'robotron');
-  const CO = useMemo(() => colony(seed), [seed]);
+  const pal = pick(st.pal as ColonyPal, COLONY_PAL_NAMES, 'robotron');
   const P = COLONY_PALETTES[pal];
-  const cells = (eyes: boolean) => (
-    <>
-      <path d={CO.a} fill={P.p.a} />
-      <path d={CO.b} fill={P.p.b} />
-      <path d={CO.c} fill={P.p.c} />
-      <path d={CO.d} fill={P.p.d} />
-      {eyes && <path d={CO.white} fill="#FFFFFF" stroke={color.ink} strokeWidth="3" />}
-      <path d={CO.ink} fill={P.p.ink} />
-    </>
-  );
+  const cells = (eyes: boolean) => <ColonyG seed={seed} pal={pal} eyes={eyes} />;
   return (
     <ToolCard
       name="Colony"
@@ -237,7 +352,7 @@ export function Colony({ sync = false, href, headingLevel }: ToolProps) {
           <button type="button" className="fvc-b" style={{ background: color.acid, padding: '0 16px' }} onClick={() => set({ seed: randomSeed() })}>
             ↻ Regrow
           </button>
-          <Options label="Palette" value={pal} options={(Object.keys(COLONY_PALETTES) as ColonyPal[]).map((k) => ({ v: k, label: COLONY_PALETTES[k].n }))} onPick={(v) => set({ pal: v })} />
+          <Options label="Palette" value={pal} options={COLONY_PAL_NAMES.map((k) => ({ v: k, label: COLONY_PALETTES[k].n }))} onPick={(v) => set({ pal: v })} />
         </div>
       }
     />

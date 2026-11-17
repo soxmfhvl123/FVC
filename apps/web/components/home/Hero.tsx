@@ -3,6 +3,7 @@ import type { Outbreak, Strain } from '@/lib/content';
 import { catalogNo, formatLabel, isolatedLabel, isPlaceholder, ph, shortDate } from '@/lib/format';
 import { Clock } from '@/components/fvc/Clock';
 import { Germ } from '@/components/fvc/Germ';
+import { HeroColony } from '@/components/fvc/HeroColony';
 import { HeroGerm } from '@/components/fvc/HeroGerm';
 import { LiveWordmark } from '@/components/fvc/LiveWordmark';
 import { BitNoiseOval, Crosshair, DishLogo, Grain } from '@/components/fvc/Marks';
@@ -19,7 +20,11 @@ export function Hero({ strain, outbreak, spot }: { strain: Strain; outbreak?: Ou
     <header className={s.hero}>
       <h1 className="sr-only">FVC RECORDS — Fat Virus Carrier</h1>
 
-      <HeroGerm seed={strain.seed} spot={spot} eyes={strain.eyes} className={s.heroGerm} />
+      {strain.coverStyle === 'colony' ? (
+        <HeroColony seed={strain.seed} pal={strain.palette} className={s.heroGerm} />
+      ) : (
+        <HeroGerm seed={strain.seed} spot={spot} eyes={strain.eyes} className={s.heroGerm} />
+      )}
       <div className={`${s.heroSat} fvc-hide-sm`}>
         <Germ seed={150} N={60} two={false} lumps={4} dust={0.004} className="fvc-wander" style={{ width: '100%', height: '100%' }} />
       </div>

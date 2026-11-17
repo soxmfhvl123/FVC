@@ -28,6 +28,7 @@ export function ToolCard({
   controls,
   href,
   headingLevel = 2,
+  extra,
 }: {
   name: string;
   sidebarBg: string;
@@ -50,6 +51,8 @@ export function ToolCard({
   /** When set (Lab hub), the tool name links to its own page. */
   href?: string;
   headingLevel?: 1 | 2;
+  /** Extra spec lines under the tool name (Germinator: species name + genome code). */
+  extra?: ReactNode;
 }) {
   const H = headingLevel === 1 ? 'h1' : 'h2';
   const sideStyle: CSSProperties = { background: sidebarBg, color: sidebarFg };
@@ -78,6 +81,7 @@ export function ToolCard({
           <H className="lab-name">{href ? <Link href={href}>{name}</Link> : name}</H>
           <div style={{ fontSize: 22, lineHeight: 1.1 }}>Web Tool</div>
         </div>
+        {extra}
         <div className="lab-detail" style={{ background: detailBg, borderColor: sidebarFg }}>
           {detail}
           <span className="lab-detail-tag">×3 detail</span>

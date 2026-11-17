@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Cover } from '@/components/fvc/Cover';
 import { Footer } from '@/components/fvc/Footer';
@@ -140,6 +141,11 @@ export default async function StrainPage({ params }: { params: Promise<{ id: str
               ))}
               <PlayStrainButton queue={queue} strainId={strain.id} />
               <ShareButton title={`${strain.id}, FVC RECORDS`} className="fvc-cta" />
+              {strain.coverStyle === 'colony' && (
+                <Link href={`/lab/colony/?seed=${strain.seed}&pal=${strain.palette ?? 'robotron'}`} className="fvc-cta">
+                  Grow it in the Lab
+                </Link>
+              )}
             </div>
           </div>
         </section>

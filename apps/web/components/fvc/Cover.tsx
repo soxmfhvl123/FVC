@@ -1,7 +1,8 @@
 import { color } from '@fvc/engine';
 import type { CSSProperties } from 'react';
 import type { CoverStyle, Strain } from '@/lib/content';
-import { catalogNo, displayTitle, formatLabel, ph, shortDate } from '@/lib/format';
+import { catalogNo, displayTitle, formatLabel, isPlaceholder, ph, shortDate } from '@/lib/format';
+import { COLONY_PALETTES, ColonyG } from './Colony';
 import { GermG } from './Germ';
 
 const INFO = 'Instrument Sans, sans-serif';
@@ -16,6 +17,8 @@ export const COVER_GERM: Record<CoverStyle, { N: number; two: boolean; lumps?: n
   creatura: { N: 104, two: false, hair: 70 },
   glitch: { N: 84, two: true, lumps: 4 },
   connwax: { N: 70, two: false, lumps: 3 },
+  /** unused: the colony cover draws packed circles, not a bitmap germ */
+  colony: { N: 96, two: true },
 };
 
 const ALT: Record<CoverStyle, (s: Strain) => string> = {
@@ -23,6 +26,7 @@ const ALT: Record<CoverStyle, (s: Strain) => string> = {
   creatura: (s) => `Cover of ${s.id}: a one-colour bitmap germ with blackletter title`,
   glitch: (s) => `Cover of ${s.id}: glitch type on acid green with a bitmap germ`,
   connwax: (s) => `Cover of ${s.id}: photocopied black bars, a grain oval and a giant ${catalogNo(s.id).slice(-2)}`,
+  colony: (s) => `Cover of ${s.id}: a germ made of packed coloured circles, grown with the FVC Lab Colony tool from culture ${s.seed}`,
 };
 
 /** 400×300 cover template, chosen by `strain.coverStyle`. Everything is regenerated from the seed. */
@@ -34,6 +38,7 @@ export function Cover({ strain, style, className }: { strain: Strain; style?: CS
   const artist = ph(s.carrier, 'Artist').toUpperCase();
   const vinyl = s.formats.some((f) => f.endsWith('vinyl'));
   const clip = `cv-${s.id}`;
+  const P = COLONY_PALETTES[s.palette ?? 'robotron'];
 
   return (
     <svg viewBox="0 0 400 300" role="img" aria-label={ALT[s.coverStyle](s)} className={className} style={{ display: 'block', width: '100%', height: 'auto', ...style }}>
@@ -176,6 +181,36 @@ export function Cover({ strain, style, className }: { strain: Strain; style?: CS
           </text>
           <path d="M380 200 V240 M360 220 H400 M24 270 V296 M11 283 H37" stroke={color.ink} strokeWidth="1.5" />
           <rect width="400" height="300" filter="url(#fvc-grain)" opacity="0.2" style={{ mixBlendMode: 'multiply' }} />
+        </>
+      )}
+      {s.coverStyle === 'colony' && (
+        <>
+          <rect width="400" height="300" fill={P.bg} />
+          <g transform="translate(104 -2) scale(0.99)">
+            <ColonyG seed={s.seed} pal={s.palette ?? 'robotron'} />
+          </g>
+          <g fill={P.fg}>
+            <text x="14" y="28" fontFamily={MONO} fontSize="11">
+              Culture Nº {s.seed}
+            </text>
+            <text x="14" y="86" fontFamily={SERIF} fontStyle="italic" fontSize="50">
+              Colony
+            </text>
+            <text x="12" y="150" fontFamily={DISPLAY} fontWeight="900" fontStretch="125%" fontSize="58" letterSpacing="-2">
+              {no}
+            </text>
+            <text x="14" y="262" fontFamily={INFO} fontWeight="600" fontSize="16">
+              {title}
+            </text>
+            {!isPlaceholder(s.carrier) && (
+              <text x="14" y="280" fontFamily={INFO} fontSize="11">
+                {artist}
+              </text>
+            )}
+            <text x="386" y="290" textAnchor="end" fontFamily={MONO} fontSize="9">
+              Grown in FVC Lab
+            </text>
+          </g>
         </>
       )}
     </svg>

@@ -39,12 +39,10 @@ function layout(set: EyeSet): Eye[] {
 const WHITE = '#F2F1ED';
 
 /**
- * Live pixel eyes laid over a hero germ drawn with eyes 'none' (N 140), for any eye set.
- * Pupils follow the pointer relative to the enclosing <header> (centre ≈ 62% / 32%),
- * wander slowly when there is no pointer, and stay centred with reduced motion.
+ * Where the eyes look, -1..1 on each axis: follows the pointer relative to the enclosing
+ * <header> (centre ≈ 62% / 32%), wanders slowly without a pointer, 0 with reduced motion.
  */
-export function HeroEyes({ set = 'two' }: { set?: EyeSet }) {
-  const eyes = useMemo(() => layout(set).map((e) => ({ ...e, w: pixelRing(e.white, 0, CELL), r: pixelRing(e.ring[0], e.ring[1], CELL), p: pixelRing(e.pupil, 0, CELL) })), [set]);
+export function useGaze() {
   const ref = useRef<SVGSVGElement>(null);
   const reduce = useReducedMotion();
   const [pointer, setPointer] = useState<{ mx: number; my: number } | null>(null);
@@ -91,6 +89,17 @@ export function HeroEyes({ set = 'two' }: { set?: EyeSet }) {
       my = Math.cos(tick * 0.45) * 0.5;
     }
   }
+  return { ref, mx, my };
+}
+
+/**
+ * Live pixel eyes laid over a hero germ drawn with eyes 'none' (N 140), for any eye set.
+ * Pupils follow the pointer relative to the enclosing <header> (centre ≈ 62% / 32%),
+ * wander slowly when there is no pointer, and stay centred with reduced motion.
+ */
+export function HeroEyes({ set = 'two' }: { set?: EyeSet }) {
+  const eyes = useMemo(() => layout(set).map((e) => ({ ...e, w: pixelRing(e.white, 0, CELL), r: pixelRing(e.ring[0], e.ring[1], CELL), p: pixelRing(e.pupil, 0, CELL) })), [set]);
+  const { ref, mx, my } = useGaze();
   const pupil = (travel: number) => ({
     transform: `translate(${Math.round(mx * travel * 10) / 10}px, ${Math.round(my * travel * 10) / 10}px)`,
     transition: 'transform 0.18s ease-out',
@@ -106,6 +115,25 @@ export function HeroEyes({ set = 'two' }: { set?: EyeSet }) {
             <path d={e.p} fill={color.ink} />
           </g>
         </g>
+      ))}
+    </svg>
+  );
+}
+
+/** Live round pupils for a hero colony drawn with eyes 'whites' (positions from the engine). */
+export function ColonyEyes({ eyes, ink = color.ink }: { eyes: [number, number, number][]; ink?: string }) {
+  const { ref, mx, my } = useGaze();
+  return (
+    <svg ref={ref} viewBox="0 0 300 300" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
+      {eyes.map(([cx, cy, r], i) => (
+        <circle
+          key={i}
+          cx={cx}
+          cy={cy}
+          r={r * 0.48}
+          fill={ink}
+          style={{ transform: `translate(${Math.round(mx * r * 0.4 * 10) / 10}px, ${Math.round(my * r * 0.4 * 10) / 10}px)`, transition: 'transform 0.18s ease-out' }}
+        />
       ))}
     </svg>
   );

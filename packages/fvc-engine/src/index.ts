@@ -11,6 +11,7 @@
  */
 export * from './core.ts';
 export * from './germ.ts';
+export * from './v2/index.ts';
 export * from './glyph.ts';
 export * from './press.ts';
 export * from './banners.ts';

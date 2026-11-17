@@ -1,6 +1,7 @@
 import { color } from '@fvc/engine';
 import { ImageResponse } from 'next/og';
 import { getStrain, getStrains } from '@/lib/content';
+import { colonyDataUri } from '@/components/fvc/Colony';
 import { archivoWide, germDataUri } from '@/lib/og';
 
 /*
@@ -44,7 +45,7 @@ async function strainCard(id: string) {
     (
       <div style={{ width: '100%', height: '100%', display: 'flex', position: 'relative', background: color.grey, color: color.ink, fontFamily: font ? 'Archivo' : undefined }}>
         {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-        <img src={germDataUri(strain.seed, spot, { N: 120, eyes: strain.eyes, two })} width={720} height={720} style={{ position: 'absolute', right: -60, top: -50, transform: 'rotate(-9deg)' }} />
+        <img src={strain.coverStyle === 'colony' ? colonyDataUri(strain.seed, strain.palette === 'night' ? 'robotron' : strain.palette) : germDataUri(strain.seed, spot, { N: 120, eyes: strain.eyes, two })} width={720} height={720} style={{ position: 'absolute', right: -60, top: -50, transform: 'rotate(-9deg)' }} />
         <div style={{ position: 'absolute', left: 48, top: 40, display: 'flex', background: color.ink, color: color.grey, fontSize: 22, letterSpacing: 8, padding: '4px 14px' }}>{label}</div>
         <div style={{ position: 'absolute', left: 40, bottom: 120, display: 'flex', fontSize: 150, letterSpacing: -8, lineHeight: 1 }}>{strain.id}</div>
         <div style={{ position: 'absolute', left: 48, bottom: 52, display: 'flex', fontSize: 30 }}>HIGHLY CONTAGIOUS.</div>

@@ -53,3 +53,20 @@ fvc.ai.kr stays on GitHub Pages (decided 2026-11-15), so the site is built with 
 - Info typeface is now **Instrument Sans** (pairs with Instrument Serif); `tokens.css` / `tokens.json` updated. DM Mono stays for numbers only.
 - Removed template tells: tracked mono caps labels, `→` / `↗` arrows, `▮` separators in running UI, outlined caps buttons. CTAs are underlined words; cards play the strain directly.
 - Hero: the big germ floats (13 s loop), the small one wanders the top band (38 s); both stop with reduced motion.
+
+## Update — FVC-003 is grown with the Colony tool (2026-11-16)
+
+- New `coverStyle: "colony"` + optional `palette` (`robotron` | `one-ink` | `night`, the Lab Colony palettes). Cover, home hero, card and OG image are the packed-circle colony of the strain's seed.
+- Hero colony floats and pulses like the hero germ; its pupils follow the pointer (`ColonyEyes`, sharing `useGaze` with `HeroEyes`). Night falls back to Robotron on the paper hero.
+- The strain page links to `/lab/colony/?seed=&pal=`, which reproduces the exact cover.
+- Shared code lives in `components/fvc/Colony.tsx` (the Lab tool uses it too). Engine untouched.
+- FVC-003 stays `draft` until its audio arrives.
+
+## Update — FVC Lab v2, L1 "More Germs" (2026-11-16)
+
+Plan: `docs/fvc-lab-v2.md`. Contact sheet: `docs/lab-v2/contact-sheet-9-bodies.jpg`.
+- **Engine v1 frozen** in `packages/fvc-engine/src/v1/germ.ts` (`germ()` re-exports it). `test/v1-snapshot.test.ts` checks 495 germs (seeds 1–50 + 417, 2203, 88, 1113, 3009 × 9 settings) + 55 colonies against hashes taken from HEAD 964d606. Seed 2 (#0002 SPECIMEN) has its own test. Every strain has `"engine": 1`.
+- **Engine v2** in `src/v2/`: `genome.ts` (one random stream per gene, override per gene, code `B5-S2-E3·Dz-P5-R0`), `genes/body/bodies.ts` (9 bodies as mask fields), `genes/surface.ts` (7), `genes/eyes.ts` (count 0/1/2/3/5/Many × 6 moods), `genes/pattern.ts` (7), `germ2.ts` (layers in order), `rules.ts` (guardrails + `audit`), `name.ts` (species names). Render is Bitmap only for now. Fine grid ≈ 11 ms per germ.
+- **Germinator** (`/lab/germinator`): gene rows with Lock + roll-one-gene, Grid adds Micro (200), Inverse ink, species name + genome code in the spec panel and specimen code. URL `?seed=417&g=B5-S2-E3Dz-P5-R0`; `v=1` (or an old link with `?eyes=`) draws with engine v1.
+- Lock keeps the gene's *type*; the seed still varies the individual shape (a new seed = a new individual of the same species).
+- Not in L1: sliders (FAT/HAIR/EYE/CHAOS exist in the engine, no UI yet), Mutate/Breed/Evolve, keyboard shortcuts, other renders, export.
